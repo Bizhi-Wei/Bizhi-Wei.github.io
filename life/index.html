@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>魏必治的日常小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: #f7f3ea;
+      color: #2f2f2f;
+      line-height: 1.9;
+    }
+
+    a {
+      color: #7c4a27;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 40px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(rgba(255, 248, 235, 0.78), rgba(255, 248, 235, 0.86)),
+        url("../images/life-bg.jpg");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-card {
+      max-width: 900px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(120, 90, 60, 0.16);
+      border-radius: 28px;
+      padding: 46px 34px;
+      box-shadow: 0 16px 45px rgba(90, 65, 40, 0.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .small-label {
+      display: inline-block;
+      background: #fff0d9;
+      color: #8a5a2b;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 44px;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      color: #2d2118;
+    }
+
+    .intro {
+      font-size: 18px;
+      color: #4a4038;
+      margin-bottom: 26px;
+      max-width: 760px;
+    }
+
+    .nav {
+      margin-top: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .nav a {
+      display: inline-block;
+      padding: 10px 16px;
+      background: #ffffff;
+      border: 1px solid #eadcc8;
+      border-radius: 999px;
+      color: #6b4226;
+      font-weight: 600;
+    }
+
+    .nav a:hover {
+      background: #fff6e8;
+      text-decoration: none;
+    }
+
+    .main {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 70px 22px;
+    }
+
+    section {
+      margin-bottom: 70px;
+    }
+
+    h2 {
+      font-size: 30px;
+      color: #2d2118;
+      margin-bottom: 18px;
+    }
+
+    .section-desc {
+      color: #6b6259;
+      margin-bottom: 24px;
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: #fffaf2;
+      border: 1px solid #eadcc8;
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(90, 65, 40, 0.08);
+      transition: 0.22s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(90, 65, 40, 0.14);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #3b2a1d;
+    }
+
+    .card p {
+      color: #5f554c;
+      font-size: 15.5px;
+    }
+
+    .diary-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .diary-item {
+      background: #ffffff;
+      border-left: 5px solid #d8a15d;
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 8px 24px rgba(90, 65, 40, 0.07);
+    }
+
+    .diary-item .date {
+      font-size: 14px;
+      color: #a06a34;
+      margin-bottom: 6px;
+    }
+
+    .diary-item h3 {
+      margin-bottom: 8px;
+      color: #332418;
+    }
+
+    .diary-item p {
+      color: #5f554c;
+    }
+
+    .quote {
+      background: #3b2a1d;
+      color: #fff7ec;
+      padding: 34px 28px;
+      border-radius: 24px;
+      font-size: 20px;
+      text-align: center;
+      box-shadow: 0 12px 35px rgba(60, 35, 20, 0.18);
+    }
+
+    .about-box {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px;
+      border: 1px solid #eadcc8;
+      box-shadow: 0 10px 26px rgba(90, 65, 40, 0.08);
+    }
+
+    .about-box p {
+      margin-bottom: 14px;
+      color: #544b43;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 36px 20px 48px;
+      color: #8a8178;
+      background: #efe4d4;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .hero-card {
+        padding: 34px 24px;
+      }
+
+      .intro {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="hero" id="home">
+    <div class="hero-card">
+      <div class="small-label">一个普通医学生的日常记录</div>
+      <h1>必治的日常小站</h1>
+      <p class="intro">
+        这里不写太严肃的科研生活，也不刻意的去包装自己。  
+        这里主要记录我的一些真实的生活：焦虑、吃饭、健身、学习、发呆、恢复、出发，（为什么焦虑占在第一位呢因为我个人其实是个比较焦虑的人格）
+        那些看起来很小、但慢慢改变我的瞬间。（我会认真好好记录的,确信.jpg）
+      </p>
+
+      <div class="nav">
+        <a href="#daily">日常足迹</a>
+        <a href="#mood">心情记录</a>
+        <a href="#list">生活清单</a>
+        <a href="#about">关于这里</a>
+        <a href="../index.html">返回主站</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section id="daily">
+      <h2>日常碎片</h2>
+      <p class="section-desc">
+        暂时还没有正式文章，所以这里先放一些未来可能会写的方向。等以后有内容了，再把这些卡片改成文章入口。
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>健身和饮食</h3>
+          <p>
+            训练状态、减脂焦虑、蛋白粉、食堂饭、偶尔吃多后的自我和解。
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>医学生日常</h3>
+          <p>
+            上课、晚自习、解剖、组胚、考试周，以及“今天到底学了什么”的灵魂追问。
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>语言学习</h3>
+          <p>
+            英语、日语、背单词、看文献，还有那些明明很努力但进步很慢的时刻。
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>城市和路上</h3>
+          <p>
+            西安、邵阳、回家的路、去图书馆的路、一个人走路时冒出来的想法。
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>普通的一天</h3>
+          <p>
+            没有大事发生，但也不是毫无意义。普通生活本身也值得被记录。
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>自我修复</h3>
+          <p>
+            焦虑、疲惫、睡一觉、重新开始。慢慢学会不把一天的失败当成人生失败。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mood">
+      <h2>心情记录</h2>
+      <p class="section-desc">
+        这里以后可以写成短日记，不一定每篇都很完整，也不一定每篇都有结论。
+      </p>
+
+      <div class="diary-list">
+        <div class="diary-item">
+          <div class="date">置顶 · 写在开始</div>
+          <h3>先把这里留给真实生活</h3>
+          <p>
+            科研主页要认真，简历主页要严谨，但生活博客可以不用那么用力真的很累的好吧。
+            我想把这里留给那些不够正式、但很真实的东西。
+          </p>
+        </div>
+
+        <div class="diary-item">
+          <div class="date">未来文章</div>
+          <h3>也许会写：我的一天是怎么被消耗掉的</h3>
+          <p>
+            有时候不是不努力，而是时间被很多小事情切碎了。以后想认真记录一次。
+          </p>
+        </div>
+
+        <div class="diary-item">
+          <div class="date">未来文章</div>
+          <h3>也许会写：健身后的一点点自信</h3>
+          <p>
+            身材、力量、状态、饮食、负罪感，这些东西经常混在一起。
+            也许写出来会更清楚一点。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="quote">
+        “不一定每天都要很厉害，但至少可以诚实地记录自己正在往前走。”
+      </div>
+    </section>
+
+    <section id="list">
+      <h2>生活清单</h2>
+      <p class="section-desc">
+        不是目标管理，也不是自律展示，只是一些我想慢慢做的事。
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>想养成的习惯</h3>
+          <p>
+            早点睡、规律训练、少一点内耗、每天多少碰一点英语或日语。
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>想记录的东西</h3>
+          <p>
+            一周总结、训练变化、读到的句子、突然想明白的小事。
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>想去的地方</h3>
+          <p>
+            图书馆、医院、海边、日本、以及未来某个让我感觉人生真的展开了的地方。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>关于这个生活博客</h2>
+
+      <div class="about-box">
+        <p>
+          这个页面和我的科研主页不是同一种东西。
+        </p>
+        <p>
+          科研主页用来记录项目、论文、方法和成长；而这里更像一个小房间，
+          放一些生活的声音、疲惫的瞬间、重新振作的过程，以及我对自己的观察。
+        </p>
+        <p>
+          我不想把这里写得太完美。真实一点，松弛一点，慢慢来。
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 必治的日常小站 · 慢慢生活，慢慢记录
+  </footer>
+
+</body>
+</html>
