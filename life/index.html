@@ -18,19 +18,60 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
-      background: #f7f3ea;
-      color: #2f2f2f;
+      background: #0a0a0a;
+      color: #e0e0e0;
       line-height: 1.9;
       overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom Cursor */
+    .cursor {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #00ff88;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 10000;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor-dot {
+      width: 6px;
+      height: 6px;
+      background: #00ff88;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 10001;
+    }
+
+    .cursor.hover {
+      transform: scale(2);
+      background: rgba(0, 255, 136, 0.1);
     }
 
     a {
-      color: #7c4a27;
+      color: #00ff88;
       text-decoration: none;
+      cursor: none;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
+    }
+
+    /* Particle Canvas */
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
     }
 
     /* Hero Section */
@@ -40,13 +81,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background:
-        linear-gradient(rgba(255, 248, 235, 0.78), rgba(255, 248, 235, 0.86)),
-        url("../images/bg-2.png");
-      background-size: cover;
-      background-position: center;
       position: relative;
       overflow: hidden;
+      background: #0a0a0a;
     }
 
     .hero::before {
@@ -56,57 +93,117 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 20% 50%, rgba(216, 161, 93, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(120, 90, 60, 0.08) 0%, transparent 40%);
-      animation: heroGlow 8s ease-in-out infinite alternate;
+      background: 
+        radial-gradient(ellipse at 20% 50%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(0, 170, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 80%, rgba(255, 0, 128, 0.08) 0%, transparent 45%);
+      animation: heroGlow 6s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa3J6a3J6a3J6a3J6a3J6a3J6a3J6a3J6a3J6a3J6a3J6a3J6YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3;
+      filter: blur(2px);
+      animation: bgFloat 20s ease-in-out infinite;
+    }
+
+    @keyframes bgFloat {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.05) translateY(-10px); }
     }
 
     @keyframes heroGlow {
-      0% { opacity: 0.5; }
-      100% { opacity: 1; }
+      0% { opacity: 0.5; transform: rotate(0deg); }
+      100% { opacity: 1; transform: rotate(1deg); }
     }
 
     .hero-card {
       max-width: 900px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(120, 90, 60, 0.16);
+      background: rgba(15, 15, 15, 0.85);
+      border: 1px solid rgba(0, 255, 136, 0.2);
       border-radius: 28px;
       padding: 46px 34px;
-      box-shadow: 0 16px 45px rgba(90, 65, 40, 0.14);
-      backdrop-filter: blur(8px);
+      box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.15),
+        0 0 60px rgba(0, 255, 136, 0.05),
+        inset 0 0 30px rgba(0, 255, 136, 0.05);
+      backdrop-filter: blur(20px);
       position: relative;
       z-index: 2;
-      animation: cardFloat 6s ease-in-out infinite;
+      animation: cardFloat 6s ease-in-out infinite, neonPulse 2s ease-in-out infinite alternate;
     }
 
     @keyframes cardFloat {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes neonPulse {
+      0% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.15), 0 0 40px rgba(0, 255, 136, 0.05); }
+      100% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.25), 0 0 60px rgba(0, 255, 136, 0.1), 0 0 100px rgba(0, 255, 136, 0.05); }
     }
 
     .small-label {
       display: inline-block;
-      background: #fff0d9;
-      color: #8a5a2b;
-      padding: 6px 14px;
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      padding: 8px 18px;
       border-radius: 999px;
       font-size: 14px;
       margin-bottom: 18px;
       animation: fadeInDown 0.8s ease-out;
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
     }
 
     h1 {
-      font-size: 44px;
+      font-size: 52px;
       line-height: 1.25;
       margin-bottom: 18px;
-      color: #2d2118;
-      animation: fadeInDown 1s ease-out 0.2s both;
+      background: linear-gradient(135deg, #00ff88, #00aaff, #ff0080);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInDown 1s ease-out 0.2s both, titleShine 3s ease-in-out infinite;
+      position: relative;
+    }
+
+    @keyframes titleShine {
+      0% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+      100% { filter: brightness(1); }
+    }
+
+    h1::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 100%;
+      animation: shine 3s linear infinite;
+    }
+
+    @keyframes shine {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
     }
 
     .intro {
       font-size: 18px;
-      color: #4a4038;
+      color: #b0b0b0;
       margin-bottom: 26px;
       max-width: 760px;
       animation: fadeInDown 1s ease-out 0.4s both;
@@ -116,21 +213,24 @@
       margin-top: 26px;
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
       animation: fadeInDown 1s ease-out 0.6s both;
     }
 
     .nav a {
-      display: inline-block;
-      padding: 10px 16px;
-      background: #ffffff;
-      border: 1px solid #eadcc8;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: rgba(0, 255, 136, 0.05);
+      border: 1px solid rgba(0, 255, 136, 0.3);
       border-radius: 999px;
-      color: #6b4226;
+      color: #00ff88;
       font-weight: 600;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
+      cursor: none;
     }
 
     .nav a::before {
@@ -140,7 +240,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 248, 235, 0.8), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
       transition: left 0.5s;
     }
 
@@ -149,10 +249,78 @@
     }
 
     .nav a:hover {
-      background: #fff6e8;
+      background: rgba(0, 255, 136, 0.15);
       text-decoration: none;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(90, 65, 40, 0.15);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+      text-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+    }
+
+    /* Floating Elements */
+    .floating-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      animation: floatShape 15s linear infinite;
+    }
+
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      left: 10%;
+      animation-delay: 0s;
+      border-radius: 50%;
+    }
+
+    .shape:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      left: 30%;
+      animation-delay: -3s;
+      border-radius: 10px;
+      transform: rotate(45deg);
+    }
+
+    .shape:nth-child(3) {
+      width: 40px;
+      height: 40px;
+      left: 50%;
+      animation-delay: -6s;
+      border-radius: 50%;
+    }
+
+    .shape:nth-child(4) {
+      width: 70px;
+      height: 70px;
+      left: 70%;
+      animation-delay: -9s;
+      border-radius: 15px;
+    }
+
+    .shape:nth-child(5) {
+      width: 50px;
+      height: 50px;
+      left: 90%;
+      animation-delay: -12s;
+      border-radius: 50%;
+    }
+
+    @keyframes floatShape {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
     }
 
     /* Main Content */
@@ -160,6 +328,8 @@
       max-width: 1050px;
       margin: 0 auto;
       padding: 70px 22px;
+      position: relative;
+      z-index: 2;
     }
 
     section {
@@ -175,23 +345,27 @@
     }
 
     h2 {
-      font-size: 30px;
-      color: #2d2118;
+      font-size: 32px;
       margin-bottom: 18px;
       position: relative;
       display: inline-block;
+      background: linear-gradient(135deg, #00ff88, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     h2::after {
       content: '';
       position: absolute;
-      bottom: -5px;
+      bottom: -8px;
       left: 0;
       width: 0;
       height: 3px;
-      background: linear-gradient(90deg, #d8a15d, #7c4a27);
+      background: linear-gradient(90deg, #00ff88, #00aaff, #ff0080);
       border-radius: 2px;
-      transition: width 0.6s ease;
+      transition: width 0.8s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
     }
 
     section.visible h2::after {
@@ -199,7 +373,7 @@
     }
 
     .section-desc {
-      color: #6b6259;
+      color: #888;
       margin-bottom: 24px;
       max-width: 780px;
     }
@@ -212,14 +386,33 @@
     }
 
     .card {
-      background: #fffaf2;
-      border: 1px solid #eadcc8;
+      background: rgba(15, 15, 15, 0.8);
+      border: 1px solid rgba(0, 255, 136, 0.15);
       border-radius: 22px;
-      padding: 24px;
-      box-shadow: 0 8px 24px rgba(90, 65, 40, 0.08);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 28px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0;
       transform: translateY(30px) scale(0.95);
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), transparent, rgba(0, 170, 255, 0.1));
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
     }
 
     section.visible .card {
@@ -235,25 +428,45 @@
     section.visible .card:nth-child(6) { transition-delay: 0.6s; }
 
     .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 16px 40px rgba(90, 65, 40, 0.18);
-      border-color: #d8a15d;
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 
+        0 20px 50px rgba(0, 255, 136, 0.2),
+        0 0 30px rgba(0, 255, 136, 0.1);
+      border-color: rgba(0, 255, 136, 0.4);
     }
 
     .card h3 {
       font-size: 20px;
-      margin-bottom: 10px;
-      color: #3b2a1d;
-      transition: color 0.3s ease;
+      margin-bottom: 12px;
+      color: #fff;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
     }
 
     .card:hover h3 {
-      color: #7c4a27;
+      color: #00ff88;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
     }
 
     .card p {
-      color: #5f554c;
+      color: #999;
       font-size: 15.5px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Glowing Icons */
+    .card-icon {
+      font-size: 2em;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
 
     /* Diary Items */
@@ -263,14 +476,33 @@
     }
 
     .diary-item {
-      background: #ffffff;
-      border-left: 5px solid #d8a15d;
+      background: rgba(15, 15, 15, 0.8);
+      border-left: 4px solid #00ff88;
       border-radius: 18px;
-      padding: 22px 24px;
-      box-shadow: 0 8px 24px rgba(90, 65, 40, 0.07);
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
       opacity: 0;
       transform: translateX(-30px);
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .diary-item::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(0, 255, 136, 0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .diary-item:hover::after {
+      opacity: 1;
     }
 
     section.visible .diary-item {
@@ -285,44 +517,57 @@
 
     .diary-item:hover {
       transform: translateX(10px);
-      box-shadow: 0 12px 30px rgba(90, 65, 40, 0.12);
-      border-left-color: #7c4a27;
+      box-shadow: 
+        0 15px 40px rgba(0, 255, 136, 0.15),
+        0 0 20px rgba(0, 255, 136, 0.1);
+      border-left-color: #00aaff;
     }
 
     .diary-item .date {
-      font-size: 14px;
-      color: #a06a34;
-      margin-bottom: 6px;
+      font-size: 13px;
+      color: #00ff88;
+      margin-bottom: 8px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .diary-item h3 {
-      margin-bottom: 8px;
-      color: #332418;
-      transition: color 0.3s ease;
+      margin-bottom: 10px;
+      color: #fff;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
     }
 
     .diary-item:hover h3 {
-      color: #7c4a27;
+      color: #00ff88;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
     }
 
     .diary-item p {
-      color: #5f554c;
+      color: #888;
+      position: relative;
+      z-index: 1;
     }
 
     /* Quote */
     .quote {
-      background: #3b2a1d;
-      color: #fff7ec;
-      padding: 34px 28px;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      color: #fff;
+      padding: 40px 32px;
       border-radius: 24px;
-      font-size: 20px;
+      font-size: 22px;
       text-align: center;
-      box-shadow: 0 12px 35px rgba(60, 35, 20, 0.18);
+      box-shadow: 
+        0 0 40px rgba(0, 255, 136, 0.1),
+        inset 0 0 40px rgba(0, 255, 136, 0.05);
       opacity: 0;
       transform: scale(0.9);
       transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
+      border: 1px solid rgba(0, 255, 136, 0.2);
     }
 
     .quote::before {
@@ -332,13 +577,35 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(216, 161, 93, 0.1) 0%, transparent 50%);
-      animation: quoteGlow 4s ease-in-out infinite;
+      background: conic-gradient(from 0deg, transparent, rgba(0, 255, 136, 0.1), transparent, rgba(0, 170, 255, 0.1), transparent);
+      animation: quoteRotate 10s linear infinite;
     }
 
-    @keyframes quoteGlow {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(5%, 5%); }
+    @keyframes quoteRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .quote::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      border-radius: 22px;
+      z-index: 1;
+    }
+
+    .quote span {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(135deg, #00ff88, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
     }
 
     section.visible .quote {
@@ -348,11 +615,11 @@
 
     /* About Box */
     .about-box {
-      background: #ffffff;
+      background: rgba(15, 15, 15, 0.8);
       border-radius: 24px;
-      padding: 30px;
-      border: 1px solid #eadcc8;
-      box-shadow: 0 10px 26px rgba(90, 65, 40, 0.08);
+      padding: 35px;
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       opacity: 0;
       transform: translateY(30px);
       transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -364,24 +631,26 @@
     }
 
     .about-box p {
-      margin-bottom: 14px;
-      color: #544b43;
-      transition: transform 0.3s ease;
+      margin-bottom: 16px;
+      color: #b0b0b0;
+      transition: all 0.3s ease;
     }
 
     .about-box p:hover {
-      transform: translateX(5px);
+      transform: translateX(8px);
+      color: #00ff88;
     }
 
     /* Footer */
     .footer {
       text-align: center;
-      padding: 36px 20px 48px;
-      color: #8a8178;
-      background: #efe4d4;
+      padding: 40px 20px;
+      color: #666;
+      background: #0a0a0a;
       font-size: 14px;
       position: relative;
       overflow: hidden;
+      border-top: 1px solid rgba(0, 255, 136, 0.1);
     }
 
     .footer::before {
@@ -391,8 +660,8 @@
       left: 0;
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #d8a15d, transparent);
-      animation: footerLine 3s linear infinite;
+      background: linear-gradient(90deg, transparent, #00ff88, #00aaff, #ff0080, transparent);
+      animation: footerLine 4s linear infinite;
     }
 
     @keyframes footerLine {
@@ -407,9 +676,10 @@
       left: 0;
       width: 0%;
       height: 3px;
-      background: linear-gradient(90deg, #d8a15d, #7c4a27);
+      background: linear-gradient(90deg, #00ff88, #00aaff, #ff0080);
       z-index: 1000;
       transition: width 0.1s;
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
     }
 
     /* Back to Top Button */
@@ -417,31 +687,34 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      width: 50px;
-      height: 50px;
-      background: #3b2a1d;
-      color: #fff7ec;
+      width: 55px;
+      height: 55px;
+      background: linear-gradient(135deg, #00ff88, #00aaff);
+      color: #0a0a0a;
       border: none;
       border-radius: 50%;
-      cursor: pointer;
-      font-size: 20px;
+      cursor: none;
+      font-size: 22px;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(20px);
-      transition: all 0.4s ease;
+      transform: translateY(20px) rotate(0deg);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 999;
-      box-shadow: 0 4px 15px rgba(60, 35, 20, 0.3);
+      box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .back-to-top.visible {
       opacity: 1;
       visibility: visible;
-      transform: translateY(0);
+      transform: translateY(0) rotate(0deg);
     }
 
     .back-to-top:hover {
-      background: #7c4a27;
-      transform: translateY(-3px);
+      transform: translateY(-5px) rotate(360deg) scale(1.1);
+      box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
     }
 
     /* Loading Animation */
@@ -451,42 +724,107 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #f7f3ea;
+      background: #0a0a0a;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
     .loading.hidden {
       opacity: 0;
-      pointer-events: none;
+      visibility: hidden;
     }
 
     .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 3px solid #eadcc8;
-      border-top-color: #d8a15d;
+      width: 60px;
+      height: 60px;
+      border: 3px solid rgba(0, 255, 136, 0.1);
+      border-top-color: #00ff88;
       border-radius: 50%;
       animation: spin 1s linear infinite;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    }
+
+    .loading-text {
+      margin-top: 20px;
+      color: #00ff88;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: pulse 1.5s ease-in-out infinite;
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    /* Animations */
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Glitch Effect for Special Elements */
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 #ff0080;
+      clip-path: inset(0 0 0 0);
+      animation: glitch1 2s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: 2px 0 #00aaff;
+      clip-path: inset(0 0 0 0);
+      animation: glitch2 2s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch1 {
+      0% { clip-path: inset(40% 0 61% 0); }
+      20% { clip-path: inset(92% 0 1% 0); }
+      40% { clip-path: inset(43% 0 1% 0); }
+      60% { clip-path: inset(25% 0 58% 0); }
+      80% { clip-path: inset(54% 0 7% 0); }
+      100% { clip-path: inset(58% 0 43% 0); }
+    }
+
+    @keyframes glitch2 {
+      0% { clip-path: inset(65% 0 13% 0); }
+      20% { clip-path: inset(79% 0 2% 0); }
+      40% { clip-path: inset(48% 0 38% 0); }
+      60% { clip-path: inset(33% 0 61% 0); }
+      80% { clip-path: inset(82% 0 4% 0); }
+      100% { clip-path: inset(25% 0 52% 0); }
+    }
+
+    /* Magnetic Button Effect */
+    .magnetic {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Tilt Effect */
+    .tilt {
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
 
     @media (max-width: 900px) {
@@ -495,19 +833,28 @@
       }
 
       h1 {
-        font-size: 34px;
+        font-size: 36px;
       }
 
       .hero-card {
         padding: 34px 24px;
+        animation: none;
       }
 
       .intro {
         font-size: 16px;
       }
 
-      .hero-card {
-        animation: none;
+      body {
+        cursor: auto;
+      }
+
+      .cursor, .cursor-dot {
+        display: none;
+      }
+
+      .nav a, .card, .diary-item, .back-to-top {
+        cursor: pointer;
       }
     }
   </style>
@@ -515,9 +862,26 @@
 
 <body>
 
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
   <!-- Loading Screen -->
   <div class="loading" id="loading">
     <div class="loading-spinner"></div>
+    <div class="loading-text">Loading...</div>
+  </div>
+
+  <!-- Particle Canvas -->
+  <canvas id="particles"></canvas>
+
+  <!-- Floating Shapes -->
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
   </div>
 
   <!-- Scroll Progress Bar -->
@@ -527,9 +891,10 @@
   <button class="back-to-top" id="backToTop" title="返回顶部">↑</button>
 
   <header class="hero" id="home">
-    <div class="hero-card">
-      <div class="small-label">一个普通医学生的日常记录</div>
-      <h1>必治的日常小站</h1>
+    <div class="hero-bg"></div>
+    <div class="hero-card tilt">
+      <div class="small-label">✦ 一个普通医学生的日常记录</div>
+      <h1 class="glitch" data-text="必治的日常小站">必治的日常小站</h1>
       <p class="intro">
         这里不写太严肃的科研生活，也不刻意的去包装自己。  
         这里主要记录我的一些真实的生活：焦虑、吃饭、健身、学习、发呆、恢复、出发，（为什么焦虑占在第一位呢因为我个人其实是个比较焦虑的人格）
@@ -537,11 +902,11 @@
       </p>
 
       <div class="nav">
-        <a href="#daily">日常足迹</a>
-        <a href="#mood">心情记录</a>
-        <a href="#list">生活清单</a>
-        <a href="#about">关于这里</a>
-        <a href="../index.html">返回主站</a>
+        <a href="#daily" class="magnetic">🚀 日常足迹</a>
+        <a href="#mood" class="magnetic">💭 心情记录</a>
+        <a href="#list" class="magnetic">✨ 生活清单</a>
+        <a href="#about" class="magnetic">🏠 关于这里</a>
+        <a href="../index.html" class="magnetic">↩️ 返回主站</a>
       </div>
     </div>
   </header>
@@ -549,58 +914,52 @@
   <main class="main">
 
     <section id="daily">
-      <h2>日常碎片</h2>
+      <h2>✦ 日常碎片</h2>
       <p class="section-desc">
         暂时还没有正式文章，所以这里先放一些未来可能会写的方向。等以后有内容了，再把这些卡片改成文章入口。
       </p>
 
       <div class="grid">
-        <div class="card">
+        <div class="card tilt">
+          <div class="card-icon">💪</div>
           <h3>健身和饮食</h3>
-          <p>
-            训练状态、减脂焦虑、蛋白粉、食堂饭、偶尔吃多后的自我和解。
-          </p>
+          <p>训练状态、减脂焦虑、蛋白粉、食堂饭、偶尔吃多后的自我和解。</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt">
+          <div class="card-icon">📚</div>
           <h3>医学生日常</h3>
-          <p>
-            上课、晚自习、解剖、组胚、考试周，以及"今天到底学了什么"的灵魂追问。
-          </p>
+          <p>上课、晚自习、解剖、组胚、考试周，以及"今天到底学了什么"的灵魂追问。</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt">
+          <div class="card-icon">🌍</div>
           <h3>语言学习</h3>
-          <p>
-            英语、日语、背单词、看文献，还有那些明明很努力但进步很慢的时刻。
-          </p>
+          <p>英语、日语、背单词、看文献，还有那些明明很努力但进步很慢的时刻。</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt">
+          <div class="card-icon">🏙️</div>
           <h3>城市和路上</h3>
-          <p>
-            西安、邵阳、回家的路、去图书馆的路、一个人走路时冒出来的想法。
-          </p>
+          <p>西安、邵阳、回家的路、去图书馆的路、一个人走路时冒出来的想法。</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt">
+          <div class="card-icon">☀️</div>
           <h3>普通的一天</h3>
-          <p>
-            没有大事发生，但也不是毫无意义。普通生活本身也值得被记录。
-          </p>
+          <p>没有大事发生，但也不是毫无意义。普通生活本身也值得被记录。</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt">
+          <div class="card-icon">🌱</div>
           <h3>自我修复</h3>
-          <p>
-            焦虑、疲惫、睡一觉、重新开始。慢慢学会不把一天的失败当成人生失败。
-          </p>
+          <p>焦虑、疲惫、睡一觉、重新开始。慢慢学会不把一天的失败当成人生失败。</p>
         </div>
       </div>
     </section>
 
     <section id="mood">
-      <h2>心情记录</h2>
+      <h2>✦ 心情记录</h2>
       <p class="section-desc">
         这里以后可以写成短日记，不一定每篇都很完整，也不一定每篇都有结论。
       </p>
@@ -611,96 +970,76 @@
           <h3>
             <a href="father-and-medicine.html">父亲的高度，和我慢慢走向医学的路</a>
           </h3>
-          <p>
-            写给父亲，也写给自己。关于童年、亏欠、从医初心、家庭托举，以及我如何慢慢学着承担。
-          </p>
+          <p>写给父亲，也写给自己。关于童年、亏欠、从医初心、家庭托举，以及我如何慢慢学着承担。</p>
         </div>
         <div class="diary-item">
           <div class="date">置顶 · 写在开始</div>
           <h3>
             <a href="why-i-built-this-blog.html">写在开始：为什么我想搭建这个博客</a>
           </h3>
-          <p>
-            科研主页要认真，简历主页要严谨，但生活博客可以不用那么用力真的很累的好吧。
-            我想把这里留给那些不够正式、但很真实的东西。
-          </p>
+          <p>科研主页要认真，简历主页要严谨，但生活博客可以不用那么用力真的很累的好吧。我想把这里留给那些不够正式、但很真实的东西。</p>
         </div>
 
         <div class="diary-item">
           <div class="date">未来文章</div>
           <h3>也许会写：我的一天是怎么被消耗掉的</h3>
-          <p>
-            有时候不是不努力，而是时间被很多小事情切碎了。以后想认真记录一次。
-          </p>
+          <p>有时候不是不努力，而是时间被很多小事情切碎了。以后想认真记录一次。</p>
         </div>
         <div class="diary-item">
           <div class="date">未来文章</div>
           <h3>也许会写：健身后的一点点自信</h3>
-          <p>
-            身材、力量、状态、饮食、负罪感，这些东西经常混在一起。
-            也许写出来会更清楚一点。
-          </p>
+          <p>身材、力量、状态、饮食、负罪感，这些东西经常混在一起。也许写出来会更清楚一点。</p>
         </div>
       </div>
     </section>
 
     <section>
       <div class="quote">
-        "不一定每天都要很厉害，但至少可以诚实地记录自己正在往前走。"
+        <span>"不一定每天都要很厉害，但至少可以诚实地记录自己正在往前走。"</span>
       </div>
     </section>
 
     <section id="list">
-      <h2>生活清单</h2>
+      <h2>✦ 生活清单</h2>
       <p class="section-desc">
         不是目标管理，也不是自律展示，只是一些我想慢慢做的事。
       </p>
 
       <div class="grid">
-        <div class="card">
+        <div class="card tilt">
+          <div class="card-icon">🎯</div>
           <h3>想养成的习惯</h3>
-          <p>
-            早点睡、规律训练、少一点内耗、每天多少碰一点英语或日语。
-          </p>
+          <p>早点睡、规律训练、少一点内耗、每天多少碰一点英语或日语。</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt">
+          <div class="card-icon">📝</div>
           <h3>想记录的东西</h3>
-          <p>
-            一周总结、训练变化、读到的句子、突然想明白的小事。
-          </p>
+          <p>一周总结、训练变化、读到的句子、突然想明白的小事。</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt">
+          <div class="card-icon">🗺️</div>
           <h3>想去的地方</h3>
-          <p>
-            图书馆、医院、海边、日本、以及未来某个让我感觉人生真的展开了的地方。
-          </p>
+          <p>图书馆、医院、海边、日本、以及未来某个让我感觉人生真的展开了的地方。</p>
         </div>
       </div>
     </section>
 
     <section id="about">
-      <h2>关于这个生活博客</h2>
+      <h2>✦ 关于这个生活博客</h2>
 
       <div class="about-box">
-        <p>
-          这个页面和我的科研主页不是同一种东西。
-        </p>
-        <p>
-          科研主页用来记录项目、论文、方法和成长；而这里更像一个小房间，
-          放一些生活的声音、疲惫的瞬间、重新振作的过程，以及我对自己的观察。
-        </p>
-        <p>
-          我不想把这里写得太完美。真实一点，松弛一点，慢慢来。
-        </p>
+        <p>✦ 这个页面和我的科研主页不是同一种东西。</p>
+        <p>✦ 科研主页用来记录项目、论文、方法和成长；而这里更像一个小房间，放一些生活的声音、疲惫的瞬间、重新振作的过程，以及我对自己的观察。</p>
+        <p>✦ 我不想把这里写得太完美。真实一点，松弛一点，慢慢来。</p>
       </div>
     </section>
 
   </main>
 
   <footer class="footer">
-    © 2026 必治的日常小站 · 慢慢生活，慢慢记录
+    © 2026 必治的日常小站 · 慢慢生活，慢慢记录 ✦
   </footer>
 
   <script>
@@ -709,7 +1048,105 @@
       const loading = document.getElementById('loading');
       setTimeout(() => {
         loading.classList.add('hidden');
-      }, 500);
+      }, 1200);
+    });
+
+    // Custom Cursor
+    const cursor = document.getElementById('cursor');
+    const cursorDot = document.getElementById('cursorDot');
+    
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX - 10 + 'px';
+      cursor.style.top = e.clientY - 10 + 'px';
+      cursorDot.style.left = e.clientX - 3 + 'px';
+      cursorDot.style.top = e.clientY - 3 + 'px';
+    });
+
+    document.querySelectorAll('a, button, .card, .diary-item').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    // Particle System
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 80;
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = Math.random() * 0.5 + 0.1;
+        this.color = Math.random() > 0.5 ? '0, 255, 136' : '0, 170, 255';
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+        ctx.fill();
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = `rgba(${this.color}, 0.5)`;
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function connectParticles() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 150) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 255, 136, ${0.15 * (1 - distance / 150)})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      connectParticles();
+      requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
 
     // Scroll Progress Bar
@@ -735,7 +1172,6 @@
       });
     }, observerOptions);
 
-    // Observe all sections
     document.querySelectorAll('section').forEach(section => {
       observer.observe(section);
     });
@@ -772,16 +1208,39 @@
       });
     });
 
-    // Parallax effect on hero section
-    window.addEventListener('scroll', function() {
-      const hero = document.querySelector('.hero');
-      const scrolled = window.scrollY;
-      if (scrolled < window.innerHeight) {
-        hero.style.backgroundPositionY = -(scrolled * 0.3) + 'px';
-      }
+    // Tilt Effect
+    document.querySelectorAll('.tilt').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      });
     });
 
-    // Add typing effect to hero title
+    // Magnetic effect for buttons
+    document.querySelectorAll('.magnetic').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'translate(0, 0)';
+      });
+    });
+
+    // Typing effect for hero title
     const heroTitle = document.querySelector('h1');
     const originalText = heroTitle.textContent;
     heroTitle.textContent = '';
@@ -795,8 +1254,17 @@
       }
     }
     
-    // Start typing effect after page loads
-    setTimeout(typeWriter, 800);
+    setTimeout(typeWriter, 1500);
+
+    // Random color change for floating shapes
+    const shapes = document.querySelectorAll('.shape');
+    setInterval(() => {
+      shapes.forEach(shape => {
+        const hue = Math.random() * 60 + 120;
+        shape.style.background = `hsla(${hue}, 100%, 50%, 0.1)`;
+        shape.style.borderColor = `hsla(${hue}, 100%, 50%, 0.2)`;
+      });
+    }, 3000);
   </script>
 
 </body>
