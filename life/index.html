@@ -21,6 +21,7 @@
       background: #f7f3ea;
       color: #2f2f2f;
       line-height: 1.9;
+      overflow-x: hidden;
     }
 
     a {
@@ -32,6 +33,7 @@
       text-decoration: underline;
     }
 
+    /* Hero Section */
     .hero {
       min-height: 100vh;
       padding: 40px 22px;
@@ -43,6 +45,25 @@
         url("../images/bg-2.png");
       background-size: cover;
       background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(216, 161, 93, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(120, 90, 60, 0.08) 0%, transparent 40%);
+      animation: heroGlow 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroGlow {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
     }
 
     .hero-card {
@@ -54,6 +75,14 @@
       padding: 46px 34px;
       box-shadow: 0 16px 45px rgba(90, 65, 40, 0.14);
       backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 2;
+      animation: cardFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
 
     .small-label {
@@ -64,6 +93,7 @@
       border-radius: 999px;
       font-size: 14px;
       margin-bottom: 18px;
+      animation: fadeInDown 0.8s ease-out;
     }
 
     h1 {
@@ -71,6 +101,7 @@
       line-height: 1.25;
       margin-bottom: 18px;
       color: #2d2118;
+      animation: fadeInDown 1s ease-out 0.2s both;
     }
 
     .intro {
@@ -78,6 +109,7 @@
       color: #4a4038;
       margin-bottom: 26px;
       max-width: 760px;
+      animation: fadeInDown 1s ease-out 0.4s both;
     }
 
     .nav {
@@ -85,6 +117,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      animation: fadeInDown 1s ease-out 0.6s both;
     }
 
     .nav a {
@@ -95,13 +128,34 @@
       border-radius: 999px;
       color: #6b4226;
       font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 248, 235, 0.8), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
     }
 
     .nav a:hover {
       background: #fff6e8;
       text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(90, 65, 40, 0.15);
     }
 
+    /* Main Content */
     .main {
       max-width: 1050px;
       margin: 0 auto;
@@ -110,12 +164,38 @@
 
     section {
       margin-bottom: 70px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     h2 {
       font-size: 30px;
       color: #2d2118;
       margin-bottom: 18px;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #d8a15d, #7c4a27);
+      border-radius: 2px;
+      transition: width 0.6s ease;
+    }
+
+    section.visible h2::after {
+      width: 100%;
     }
 
     .section-desc {
@@ -124,6 +204,7 @@
       max-width: 780px;
     }
 
+    /* Grid Cards */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -136,18 +217,38 @@
       border-radius: 22px;
       padding: 24px;
       box-shadow: 0 8px 24px rgba(90, 65, 40, 0.08);
-      transition: 0.22s;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
     }
 
+    section.visible .card {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    section.visible .card:nth-child(1) { transition-delay: 0.1s; }
+    section.visible .card:nth-child(2) { transition-delay: 0.2s; }
+    section.visible .card:nth-child(3) { transition-delay: 0.3s; }
+    section.visible .card:nth-child(4) { transition-delay: 0.4s; }
+    section.visible .card:nth-child(5) { transition-delay: 0.5s; }
+    section.visible .card:nth-child(6) { transition-delay: 0.6s; }
+
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(90, 65, 40, 0.14);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 16px 40px rgba(90, 65, 40, 0.18);
+      border-color: #d8a15d;
     }
 
     .card h3 {
       font-size: 20px;
       margin-bottom: 10px;
       color: #3b2a1d;
+      transition: color 0.3s ease;
+    }
+
+    .card:hover h3 {
+      color: #7c4a27;
     }
 
     .card p {
@@ -155,6 +256,7 @@
       font-size: 15.5px;
     }
 
+    /* Diary Items */
     .diary-list {
       display: grid;
       gap: 18px;
@@ -166,6 +268,25 @@
       border-radius: 18px;
       padding: 22px 24px;
       box-shadow: 0 8px 24px rgba(90, 65, 40, 0.07);
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    section.visible .diary-item {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    section.visible .diary-item:nth-child(1) { transition-delay: 0.1s; }
+    section.visible .diary-item:nth-child(2) { transition-delay: 0.2s; }
+    section.visible .diary-item:nth-child(3) { transition-delay: 0.3s; }
+    section.visible .diary-item:nth-child(4) { transition-delay: 0.4s; }
+
+    .diary-item:hover {
+      transform: translateX(10px);
+      box-shadow: 0 12px 30px rgba(90, 65, 40, 0.12);
+      border-left-color: #7c4a27;
     }
 
     .diary-item .date {
@@ -177,12 +298,18 @@
     .diary-item h3 {
       margin-bottom: 8px;
       color: #332418;
+      transition: color 0.3s ease;
+    }
+
+    .diary-item:hover h3 {
+      color: #7c4a27;
     }
 
     .diary-item p {
       color: #5f554c;
     }
 
+    /* Quote */
     .quote {
       background: #3b2a1d;
       color: #fff7ec;
@@ -191,27 +318,175 @@
       font-size: 20px;
       text-align: center;
       box-shadow: 0 12px 35px rgba(60, 35, 20, 0.18);
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
     }
 
+    .quote::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(216, 161, 93, 0.1) 0%, transparent 50%);
+      animation: quoteGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes quoteGlow {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(5%, 5%); }
+    }
+
+    section.visible .quote {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* About Box */
     .about-box {
       background: #ffffff;
       border-radius: 24px;
       padding: 30px;
       border: 1px solid #eadcc8;
       box-shadow: 0 10px 26px rgba(90, 65, 40, 0.08);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    section.visible .about-box {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .about-box p {
       margin-bottom: 14px;
       color: #544b43;
+      transition: transform 0.3s ease;
     }
 
+    .about-box p:hover {
+      transform: translateX(5px);
+    }
+
+    /* Footer */
     .footer {
       text-align: center;
       padding: 36px 20px 48px;
       color: #8a8178;
       background: #efe4d4;
       font-size: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #d8a15d, transparent);
+      animation: footerLine 3s linear infinite;
+    }
+
+    @keyframes footerLine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Scroll Progress Bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, #d8a15d, #7c4a27);
+      z-index: 1000;
+      transition: width 0.1s;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: #3b2a1d;
+      color: #fff7ec;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      z-index: 999;
+      box-shadow: 0 4px 15px rgba(60, 35, 20, 0.3);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #7c4a27;
+      transform: translateY(-3px);
+    }
+
+    /* Loading Animation */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f7f3ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #eadcc8;
+      border-top-color: #d8a15d;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 900px) {
@@ -230,11 +505,26 @@
       .intro {
         font-size: 16px;
       }
+
+      .hero-card {
+        animation: none;
+      }
     }
   </style>
 </head>
 
 <body>
+
+  <!-- Loading Screen -->
+  <div class="loading" id="loading">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" title="返回顶部">↑</button>
 
   <header class="hero" id="home">
     <div class="hero-card">
@@ -275,7 +565,7 @@
         <div class="card">
           <h3>医学生日常</h3>
           <p>
-            上课、晚自习、解剖、组胚、考试周，以及“今天到底学了什么”的灵魂追问。
+            上课、晚自习、解剖、组胚、考试周，以及"今天到底学了什么"的灵魂追问。
           </p>
         </div>
 
@@ -317,19 +607,19 @@
 
       <div class="diary-list">
         <div class="diary-item">
-  <div class="date">2026.5.8 · 家庭与成长</div>
-  <h3>
-    <a href="father-and-medicine.html">父亲的高度，和我慢慢走向医学的路</a>
-  </h3>
-  <p>
-    写给父亲，也写给自己。关于童年、亏欠、从医初心、家庭托举，以及我如何慢慢学着承担。
-  </p>
-</div>
+          <div class="date">2026.5.8 · 家庭与成长</div>
+          <h3>
+            <a href="father-and-medicine.html">父亲的高度，和我慢慢走向医学的路</a>
+          </h3>
+          <p>
+            写给父亲，也写给自己。关于童年、亏欠、从医初心、家庭托举，以及我如何慢慢学着承担。
+          </p>
+        </div>
         <div class="diary-item">
           <div class="date">置顶 · 写在开始</div>
           <h3>
-  <a href="why-i-built-this-blog.html">写在开始：为什么我想搭建这个博客</a>
-</h3>
+            <a href="why-i-built-this-blog.html">写在开始：为什么我想搭建这个博客</a>
+          </h3>
           <p>
             科研主页要认真，简历主页要严谨，但生活博客可以不用那么用力真的很累的好吧。
             我想把这里留给那些不够正式、但很真实的东西。
@@ -343,7 +633,6 @@
             有时候不是不努力，而是时间被很多小事情切碎了。以后想认真记录一次。
           </p>
         </div>
-
         <div class="diary-item">
           <div class="date">未来文章</div>
           <h3>也许会写：健身后的一点点自信</h3>
@@ -357,7 +646,7 @@
 
     <section>
       <div class="quote">
-        “不一定每天都要很厉害，但至少可以诚实地记录自己正在往前走。”
+        "不一定每天都要很厉害，但至少可以诚实地记录自己正在往前走。"
       </div>
     </section>
 
@@ -413,6 +702,102 @@
   <footer class="footer">
     © 2026 必治的日常小站 · 慢慢生活，慢慢记录
   </footer>
+
+  <script>
+    // Loading Screen
+    window.addEventListener('load', function() {
+      const loading = document.getElementById('loading');
+      setTimeout(() => {
+        loading.classList.add('hidden');
+      }, 500);
+    });
+
+    // Scroll Progress Bar
+    window.addEventListener('scroll', function() {
+      const scrollProgress = document.getElementById('scrollProgress');
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      scrollProgress.style.width = scrollPercent + '%';
+    });
+
+    // Intersection Observer for Scroll Animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Back to Top Button
+    const backToTopButton = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
+      }
+    });
+
+    backToTopButton.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Parallax effect on hero section
+    window.addEventListener('scroll', function() {
+      const hero = document.querySelector('.hero');
+      const scrolled = window.scrollY;
+      if (scrolled < window.innerHeight) {
+        hero.style.backgroundPositionY = -(scrolled * 0.3) + 'px';
+      }
+    });
+
+    // Add typing effect to hero title
+    const heroTitle = document.querySelector('h1');
+    const originalText = heroTitle.textContent;
+    heroTitle.textContent = '';
+    
+    let i = 0;
+    function typeWriter() {
+      if (i < originalText.length) {
+        heroTitle.textContent += originalText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100);
+      }
+    }
+    
+    // Start typing effect after page loads
+    setTimeout(typeWriter, 800);
+  </script>
 
 </body>
 </html>
