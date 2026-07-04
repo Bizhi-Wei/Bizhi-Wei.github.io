@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>MIMIC数据库首次接触：AKI预测研究笔记 - 必治的日常小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.9;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #00ff88;
+      text-decoration: none;
+      margin-bottom: 30px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+      transform: translateX(-5px);
+    }
+
+    .article-header {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+    }
+
+    .date {
+      font-size: 13px;
+      color: #00ff88;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 36px;
+      line-height: 1.4;
+      background: linear-gradient(135deg, #00ff88, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 16px;
+    }
+
+    .content {
+      padding: 30px 0;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #00ff88;
+      margin: 40px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+    }
+
+    h3 {
+      font-size: 18px;
+      color: #00aaff;
+      margin: 25px 0 15px 0;
+    }
+
+    p {
+      color: #b0b0b0;
+      margin-bottom: 15px;
+    }
+
+    strong {
+      color: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(15, 15, 15, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 255, 136, 0.15);
+    }
+
+    th {
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+      color: #b0b0b0;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul, ol {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+
+    li {
+      color: #b0b0b0;
+      margin-bottom: 10px;
+    }
+
+    li strong {
+      color: #00ff88;
+    }
+
+    blockquote {
+      background: rgba(0, 255, 136, 0.05);
+      border-left: 4px solid #00ff88;
+      padding: 20px 25px;
+      margin: 20px 0;
+      border-radius: 0 12px 12px 0;
+    }
+
+    blockquote p {
+      color: #fff;
+      font-style: italic;
+    }
+
+    .highlight-box {
+      background: rgba(0, 170, 255, 0.05);
+      border: 1px solid rgba(0, 170, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .highlight-box h4 {
+      color: #00aaff;
+      margin-bottom: 10px;
+    }
+
+    code {
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(0, 255, 136, 0.2);
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: #00ff88;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      body {
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">← 返回生活博客</a>
+
+    <article>
+      <header class="article-header">
+        <div class="date">2026.7.4 · 学术研究笔记</div>
+        <h1>MIMIC数据库首次接触：学习、研究与规划过程</h1>
+        <p class="subtitle">首次接触大型一手数据的学习经历，以及术后AKI预测模型的研究规划</p>
+      </header>
+
+      <div class="content">
+        <h2>什么是MIMIC？</h2>
+        <p>
+          <strong>MIMIC</strong>（Medical Information Mart for Intensive Care）是由美国麻省医院公开在互联网上的一种可查询真实、有效、合法的数据库。
+        </p>
+
+        <div class="highlight-box">
+          <h4>数据库特点</h4>
+          <ul>
+            <li>主要偏向 <strong>ICU 成人患者</strong>，少量儿童数据</li>
+            <li>能进入ICU的患者一定是极其严重的病情</li>
+            <li>申请数据库需要完成对应的培训（如 <strong>CITI 医学伦理培训</strong>）</li>
+          </ul>
+        </div>
+
+        <h3>类似数据库</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>数据库</th>
+              <th>来源</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>MIMIC</td>
+              <td>美国麻省医院</td>
+            </tr>
+            <tr>
+              <td>ORION</td>
+              <td>欧洲数据库</td>
+            </tr>
+            <tr>
+              <td>CCM</td>
+              <td>国内数据库</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>研究流程规划</h2>
+
+        <h3>1. 数据筛选与队列定义</h3>
+        
+        <h4>纳入标准</h4>
+        <ul>
+          <li>年龄 ≥ 18岁</li>
+          <li><strong>首次进入ICU</strong></li>
+          <li>有手术相关记录（从小到切除阑尾炎，大到心脏移植，目前构建的是 <strong>Primary Cohort</strong>）</li>
+          <li>手术后必须有<strong>肌酐、尿量</strong>数据（后续会进一步精进）</li>
+          <li>在ICU待 ≥ 24h</li>
+        </ul>
+
+        <h4>排除标准</h4>
+        <p>初步排查入ICU前已有的以下情况：</p>
+        <ul>
+          <li>AKI（急性肾损伤）</li>
+          <li>ESRD（终末期肾病）</li>
+          <li>透析</li>
+          <li>肾移植</li>
+          <li>肾功能不完整</li>
+        </ul>
+
+        <blockquote>
+          <p>💡 提示：不用担心排除不完整，因为我们的模型也只是预测。</p>
+        </blockquote>
+
+        <h3>2. 结局变量定义</h3>
+        <p>采用 <strong>KDIGO 标准</strong>（Kidney Disease: Improving Global Outcomes）</p>
+
+        <h4>AKI诊断标准</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>指标</th>
+              <th>标准</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>血清肌酐</td>
+              <td>48h内升高 ≥ 0.3 mg/dL</td>
+            </tr>
+            <tr>
+              <td>血清肌酐</td>
+              <td>7天内升高至 baseline 的 ≥ 1.5倍</td>
+            </tr>
+            <tr>
+              <td>尿量</td>
+              <td>&lt; 0.5 mL/kg/h 持续 ≥ 6小时</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>3. 预测模型设计</h3>
+        <p>既然我们是预测模型，那么就不能只预测"发生 or 不发生"，那太没品味了。</p>
+
+        <h4>时间节点设定</h4>
+        <ul>
+          <li>入ICU <strong>0h</strong></li>
+          <li>入ICU <strong>6h</strong></li>
+          <li>入ICU <strong>12h</strong></li>
+        </ul>
+
+        <blockquote>
+          <p>研究问题：随着ICU早期指标变化，我们能否更准确预测术后AKI？</p>
+        </blockquote>
+
+        <h3>4. 数据提取与清洗</h3>
+        <p>这是一个比较难的点，至少目前来说很费眼睛。</p>
+
+        <h4>数据分表策略</h4>
+
+        <div class="highlight-box">
+          <h4>主要分析表（百分之百肯定的手术类型）</h4>
+          <ul>
+            <li>血管外科手术</li>
+            <li>胃肠道手术</li>
+            <li>心脏外科手术</li>
+            <li>等等</li>
+          </ul>
+        </div>
+
+        <div class="highlight-box">
+          <h4>敏感性分析表（模棱两可但数据美观）</h4>
+          <ul>
+            <li>单纯插管</li>
+            <li>单纯心电图测量</li>
+            <li>等等</li>
+          </ul>
+        </div>
+
+        <h4>排除事项</h4>
+        <ul>
+          <li><strong>产后患者</strong>会极大地影响数据，应该排除</li>
+        </ul>
+
+        <h2>学习心得</h2>
+        <blockquote>
+          <p>首次接触大型一手数据，从数据库申请、伦理培训、到数据筛选和清洗，每一步都是新的挑战。</p>
+        </blockquote>
+      </div>
+
+      <footer class="footer">
+        <p>© 2026 必治的日常小站 · <a href="index.html">返回首页</a></p>
+      </footer>
+    </article>
+  </div>
+</body>
+</html>
