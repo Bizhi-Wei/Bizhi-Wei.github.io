@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>超临界CO2系统中药物溶解度预测 - 必治的日常小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.9;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #00ff88;
+      text-decoration: none;
+      margin-bottom: 30px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+      transform: translateX(-5px);
+    }
+
+    .article-header {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+    }
+
+    .date {
+      font-size: 13px;
+      color: #00ff88;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 36px;
+      line-height: 1.4;
+      background: linear-gradient(135deg, #00ff88, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 16px;
+    }
+
+    .content {
+      padding: 30px 0;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #00ff88;
+      margin: 40px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+    }
+
+    h3 {
+      font-size: 18px;
+      color: #00aaff;
+      margin: 25px 0 15px 0;
+    }
+
+    h4 {
+      font-size: 16px;
+      color: #ff0080;
+      margin: 20px 0 10px 0;
+    }
+
+    p {
+      color: #b0b0b0;
+      margin-bottom: 15px;
+    }
+
+    strong {
+      color: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(15, 15, 15, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 255, 136, 0.15);
+    }
+
+    th {
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+      color: #b0b0b0;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul, ol {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+
+    li {
+      color: #b0b0b0;
+      margin-bottom: 10px;
+    }
+
+    li strong {
+      color: #00ff88;
+    }
+
+    blockquote {
+      background: rgba(0, 255, 136, 0.05);
+      border-left: 4px solid #00ff88;
+      padding: 20px 25px;
+      margin: 20px 0;
+      border-radius: 0 12px 12px 0;
+    }
+
+    blockquote p {
+      color: #fff;
+      font-style: italic;
+    }
+
+    .highlight-box {
+      background: rgba(0, 170, 255, 0.05);
+      border: 1px solid rgba(0, 170, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .highlight-box h4 {
+      color: #00aaff;
+      margin-bottom: 10px;
+    }
+
+    .warning-box {
+      background: rgba(255, 0, 128, 0.05);
+      border: 1px solid rgba(255, 0, 128, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .warning-box h4 {
+      color: #ff0080;
+      margin-bottom: 10px;
+    }
+
+    code {
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .effect-diagram {
+      background: rgba(0, 170, 255, 0.05);
+      border: 1px solid rgba(0, 170, 255, 0.2);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .effect-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin: 15px 0;
+    }
+
+    .effect-box {
+      padding: 15px 20px;
+      border-radius: 10px;
+      min-width: 200px;
+    }
+
+    .effect-positive {
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+
+    .effect-negative {
+      background: rgba(255, 0, 128, 0.1);
+      border: 1px solid rgba(255, 0, 128, 0.3);
+    }
+
+    .effect-arrow {
+      font-size: 24px;
+      color: #00aaff;
+    }
+
+    .model-card {
+      background: rgba(15, 15, 15, 0.8);
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+
+    .model-card h4 {
+      color: #00ff88;
+      margin-bottom: 10px;
+    }
+
+    .bagging-diagram {
+      background: rgba(0, 170, 255, 0.05);
+      border: 1px solid rgba(0, 170, 255, 0.2);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .bagging-step {
+      display: inline-block;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .step-input {
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      color: #00ff88;
+    }
+
+    .step-model {
+      background: rgba(0, 170, 255, 0.1);
+      border: 1px solid rgba(0, 170, 255, 0.3);
+      color: #00aaff;
+    }
+
+    .step-output {
+      background: rgba(255, 0, 128, 0.1);
+      border: 1px solid rgba(255, 0, 128, 0.3);
+      color: #ff0080;
+    }
+
+    .barnacle-card {
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 170, 255, 0.05));
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .principle-box {
+      background: rgba(255, 215, 0, 0.05);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .principle-box h4 {
+      color: #ffd700;
+      margin-bottom: 10px;
+    }
+
+    .footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(0, 255, 136, 0.2);
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: #00ff88;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      body {
+        padding: 20px 15px;
+      }
+
+      .effect-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">← 返回生活博客</a>
+
+    <article>
+      <header class="article-header">
+        <div class="date">2026.7.7 · 论文学习笔记</div>
+        <h1>超临界CO2系统中药物溶解度预测</h1>
+        <p class="subtitle">学习李老师的两篇论文：集成学习与优化算法在药物溶解度预测中的应用</p>
+      </header>
+
+      <div class="content">
+        <h2>论文概述</h2>
+
+        <div class="highlight-box">
+          <h4>两篇论文的核心</h4>
+          <p>本质上采用同一种模式，只是说法不同：</p>
+          <ul>
+            <li>在某种<strong>温度</strong>和<strong>压力</strong>下</li>
+            <li>机器学习构建模型预测CO2体系中某药物的<strong>溶解度</strong></li>
+          </ul>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>论文</th>
+              <th>标题</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>论文一</td>
+              <td>Employment of artificial intelligence approach for optimizing the solubility of drug in the supercritical CO2 system</td>
+            </tr>
+            <tr>
+              <td>论文二</td>
+              <td>Optimization of drug solubility inside the supercritical CO2 system via numerical simulation based on artificial intelligence approach</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>逆转效应（Reversal Effect）</h2>
+
+        <p>升温对药物溶解度有两种相反的效应：</p>
+
+        <div class="effect-diagram">
+          <h4 style="color: #00aaff; margin-bottom: 20px;">升温的双重效应</h4>
+          
+          <div class="effect-row">
+            <div class="effect-box effect-positive">
+              <strong>正效应</strong><br>
+              升温 → 分子热运动增强 → 溶解度↑
+            </div>
+            <span class="effect-arrow">⚡</span>
+            <div class="effect-box effect-negative">
+              <strong>负效应</strong><br>
+              升温 → CO2气体膨胀、体积增大 → 溶解度↓
+            </div>
+          </div>
+
+          <div style="margin-top: 25px;">
+            <h4 style="color: #00aaff; margin-bottom: 15px;">不同条件下的主导效应</h4>
+            <div class="effect-row">
+              <div class="effect-box effect-negative">
+                <strong>低压升温</strong><br>
+                负效应占主导
+              </div>
+              <div class="effect-box effect-positive">
+                <strong>高压升温</strong><br>
+                正效应占主导
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p><strong>结果</strong>：图像不是正比例函数，例如洋地黄毒苷、尼氟灭酸</p>
+
+        <div class="warning-box">
+          <h4>⚠️ 模型选择启示</h4>
+          <p>不能单纯用正比例模型，模型不能太死板，甚至可以采用<strong>多种模型混合</strong>的方式来解决这个问题。</p>
+        </div>
+
+        <h2>集成学习 - Bagging（袋装法）</h2>
+
+        <p>文章一采用4种擅长抓住曲线特征的回归模型：</p>
+
+        <div class="model-card">
+          <h4>1. 高斯过程回归（GPR）</h4>
+          <ul>
+            <li>基于贝叶斯理论的非参数模型</li>
+            <li>能给出预测的不确定性估计</li>
+            <li>适合小样本数据</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <h4>2. 贝叶斯脊回归（BRR）</h4>
+          <ul>
+            <li>贝叶斯框架下的正则化回归</li>
+            <li>自动学习正则化参数</li>
+            <li>防止过拟合</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <h4>3. 正交匹配追踪（OMP）</h4>
+          <ul>
+            <li>稀疏信号恢复算法</li>
+            <li>自动选择最重要的特征</li>
+            <li>适合高维数据</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <h4>4. 多项式回归（PR）</h4>
+          <ul>
+            <li>用多项式拟合非线性关系</li>
+            <li>能捕捉曲线特征</li>
+            <li>简单直观</li>
+          </ul>
+        </div>
+
+        <h3>Bagging工作流程</h3>
+
+        <div class="bagging-diagram">
+          <h4 style="color: #00aaff; margin-bottom: 20px;">Bagging集成学习流程</h4>
+          
+          <div>
+            <span class="bagging-step step-input">输入：温度、压力</span>
+          </div>
+          <div style="margin: 15px 0;">
+            <span class="bagging-step step-model">GPR</span>
+            <span class="bagging-step step-model">BRR</span>
+            <span class="bagging-step step-model">OMP</span>
+            <span class="bagging-step step-model">PR</span>
+          </div>
+          <div>
+            <span class="bagging-step step-output">取平均值 → 最终预测</span>
+          </div>
+        </div>
+
+        <h3>Bagging的优势</h3>
+        <ul>
+          <li><strong>平衡误差</strong>：取平均值平衡过拟合/欠拟合的极端误差</li>
+          <li><strong>适合小样本</strong>：超临界实验数据量少，易受死板公式走偏</li>
+          <li><strong>稳定性强</strong>：多个模型投票，减少单个模型的偏差</li>
+        </ul>
+
+        <h2>论文性质分析</h2>
+
+        <div class="highlight-box">
+          <h4>论文定位</h4>
+          <ul>
+            <li><strong>不属于创新性论文</strong></li>
+            <li>属于<strong>增量型论文</strong>、<strong>应用型研究</strong></li>
+            <li>第二篇比第一篇稍有新颖研究方法</li>
+          </ul>
+        </div>
+
+        <h2>第二篇的新颖方法：藤壶交配优化算法（BMO）</h2>
+
+        <div class="barnacle-card">
+          <h4 style="color: #00ff88;">藤壶交配优化算法（Barnacle Mating Optimization）</h4>
+          <p style="color: #b0b0b0;">2020年提出的智能优化算法</p>
+          
+          <h4 style="color: #00aaff; margin-top: 20px;">核心思想</h4>
+          <ul>
+            <li><strong>一个藤壶</strong> = 一组超参数组合（如多项式次数、模型权重）</li>
+            <li>算法计算每个藤壶的<strong>适应度</strong></li>
+            <li>通过迭代达到最优解</li>
+          </ul>
+        </div>
+
+        <h2>科研原则</h2>
+
+        <div class="principle-box">
+          <h4>奥卡姆剃刀（Occam's Razor）</h4>
+          <blockquote>
+            <p>"如无必要，勿增实体"</p>
+          </blockquote>
+          <p style="color: #b0b0b0; margin-top: 15px;">
+            在科学研究中，如果两个理论都能解释同一现象，应该选择更简单的那个。
+            不要引入不必要的复杂性。
+          </p>
+        </div>
+
+        <h2>学习心得</h2>
+
+        <blockquote>
+          <p>这两篇论文展示了机器学习在化学工程领域的应用。逆转效应的存在说明简单的线性模型不足以描述复杂的物理化学现象，而集成学习和优化算法提供了更好的解决方案。</p>
+        </blockquote>
+      </div>
+
+      <footer class="footer">
+        <p>© 2026 必治的日常小站 · <a href="index.html">返回首页</a> · <a href="data-processing-ml.html">上一篇：数据处理与机器学习</a></p>
+      </footer>
+    </article>
+  </div>
+</body>
+</html>
