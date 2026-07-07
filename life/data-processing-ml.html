@@ -219,6 +219,57 @@
       color: #00aaff;
     }
 
+    .model-card {
+      background: rgba(15, 15, 15, 0.8);
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+
+    .model-card h4 {
+      color: #00ff88;
+      margin-bottom: 10px;
+    }
+
+    .model-card .model-type {
+      color: #00aaff;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .cv-diagram {
+      background: rgba(0, 170, 255, 0.05);
+      border: 1px solid rgba(0, 170, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .cv-fold {
+      display: inline-block;
+      width: 60px;
+      height: 40px;
+      line-height: 40px;
+      margin: 5px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .fold-train {
+      background: rgba(0, 255, 136, 0.2);
+      border: 1px solid rgba(0, 255, 136, 0.4);
+      color: #00ff88;
+    }
+
+    .fold-test {
+      background: rgba(255, 0, 128, 0.2);
+      border: 1px solid rgba(255, 0, 128, 0.4);
+      color: #ff0080;
+    }
+
     .footer {
       margin-top: 60px;
       padding-top: 30px;
@@ -387,25 +438,224 @@
         <p>使用 <strong>80:20 patient-grouped split</strong></p>
 
         <h3>四种模型</h3>
+
+        <div class="model-card">
+          <h4>1. Logistic Regression（逻辑回归）</h4>
+          <div class="model-type">传统线性基线模型</div>
+          <ul>
+            <li>最经典的二分类算法</li>
+            <li>输出概率值（0-1之间）</li>
+            <li>可解释性强，系数直接反映特征重要性</li>
+            <li>作为<strong>基线模型</strong>，与其他复杂模型对比</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <h4>2. Random Forest（随机森林）</h4>
+          <div class="model-type">集成学习 - Bagging</div>
+          <ul>
+            <li>由多棵决策树组成</li>
+            <li><strong>Bagging思想</strong>：每棵树用随机抽样的数据训练</li>
+            <li>特征随机选择：每棵树只用部分特征</li>
+            <li><strong>优点</strong>：
+              <ul>
+                <li>不容易过拟合</li>
+                <li>能处理非线性关系</li>
+                <li>可输出特征重要性排序</li>
+              </ul>
+            </li>
+            <li><strong>缺点</strong>：模型较大，预测速度相对较慢</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <h4>3. XGBoost</h4>
+          <div class="model-type">集成学习 - Boosting</div>
+          <ul>
+            <li><strong>Boosting思想</strong>：每棵树纠正前一棵树的错误</li>
+            <li>梯度提升框架的高效实现</li>
+            <li><strong>核心特点</strong>：
+              <ul>
+                <li>正则化项防止过拟合</li>
+                <li>自动处理缺失值</li>
+                <li>支持并行计算</li>
+              </ul>
+            </li>
+            <li><strong>优势</strong>：竞赛常胜算法，性能强大</li>
+            <li><strong>注意</strong>：需要仔细调参，否则容易过拟合</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <h4>4. LightGBM</h4>
+          <div class="model-type">集成学习 - Boosting</div>
+          <ul>
+            <li>微软开发的梯度提升框架</li>
+            <li><strong>核心创新</strong>：
+              <ul>
+                <li>Leaf-wise生长策略（而非Level-wise）</li>
+                <li>直方图算法加速</li>
+                <li>支持类别特征直接输入</li>
+              </ul>
+            </li>
+            <li><strong>优势</strong>：
+              <ul>
+                <li>训练速度极快</li>
+                <li>内存占用低</li>
+                <li>适合大规模数据</li>
+              </ul>
+            </li>
+            <li><strong>与XGBoost对比</strong>：速度更快，但可能需要更多调参</li>
+          </ul>
+        </div>
+
+        <h3>内部验证：五折交叉验证（5-Fold Cross-Validation）</h3>
+
+        <div class="highlight-box">
+          <h4>什么是交叉验证？</h4>
+          <p>将训练集分成K份，每次用K-1份训练，1份验证，重复K次，取平均性能。</p>
+        </div>
+
+        <div class="cv-diagram">
+          <h4 style="color: #00aaff; margin-bottom: 15px;">五折交叉验证示意图</h4>
+          <div>
+            <span class="cv-fold fold-test">Fold 1</span>
+            <span class="cv-fold fold-train">Fold 2</span>
+            <span class="cv-fold fold-train">Fold 3</span>
+            <span class="cv-fold fold-train">Fold 4</span>
+            <span class="cv-fold fold-train">Fold 5</span>
+          </div>
+          <div>
+            <span class="cv-fold fold-train">Fold 1</span>
+            <span class="cv-fold fold-test">Fold 2</span>
+            <span class="cv-fold fold-train">Fold 3</span>
+            <span class="cv-fold fold-train">Fold 4</span>
+            <span class="cv-fold fold-train">Fold 5</span>
+          </div>
+          <div>
+            <span class="cv-fold fold-train">Fold 1</span>
+            <span class="cv-fold fold-train">Fold 2</span>
+            <span class="cv-fold fold-test">Fold 3</span>
+            <span class="cv-fold fold-train">Fold 4</span>
+            <span class="cv-fold fold-train">Fold 5</span>
+          </div>
+          <div>
+            <span class="cv-fold fold-train">Fold 1</span>
+            <span class="cv-fold fold-train">Fold 2</span>
+            <span class="cv-fold fold-train">Fold 3</span>
+            <span class="cv-fold fold-test">Fold 4</span>
+            <span class="cv-fold fold-train">Fold 5</span>
+          </div>
+          <div>
+            <span class="cv-fold fold-train">Fold 1</span>
+            <span class="cv-fold fold-train">Fold 2</span>
+            <span class="cv-fold fold-train">Fold 3</span>
+            <span class="cv-fold fold-train">Fold 4</span>
+            <span class="cv-fold fold-test">Fold 5</span>
+          </div>
+          <p style="margin-top: 15px; color: #888;">
+            <span style="color: #ff0080;">■</span> 验证集 &nbsp;&nbsp;
+            <span style="color: #00ff88;">■</span> 训练集
+          </p>
+        </div>
+
+        <h4>为什么用五折交叉验证？</h4>
+        <ul>
+          <li><strong>充分利用数据</strong>：每个样本都被用于验证一次</li>
+          <li><strong>更可靠的性能评估</strong>：减少单次划分的随机性</li>
+          <li><strong>防止过拟合</strong>：在训练过程中持续验证</li>
+        </ul>
+
+        <h4>流程</h4>
+        <ol>
+          <li>将训练集随机分成5份</li>
+          <li>第1轮：用第2-5份训练，第1份验证</li>
+          <li>第2轮：用第1、3-5份训练，第2份验证</li>
+          <li>...重复5次</li>
+          <li>取5次验证结果的平均值作为模型性能</li>
+        </ol>
+
+        <h3>超参数调优（Hyperparameter Tuning）</h3>
+
+        <div class="highlight-box">
+          <h4>什么是超参数？</h4>
+          <p>模型训练前需要设定的参数，不是通过训练学到的。</p>
+        </div>
+
+        <h4>各模型的超参数</h4>
         <table>
           <thead>
             <tr>
               <th>模型</th>
-              <th>类型</th>
-              <th>说明</th>
+              <th>主要超参数</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Logistic Regression</td>
-              <td>传统线性基线模型</td>
-              <td>基线对比</td>
+              <td>C（正则化强度）、penalty（正则化类型）</td>
             </tr>
             <tr>
-              <td colspan="3" style="text-align: center; color: #666;">其他三种模型待补充...</td>
+              <td>Random Forest</td>
+              <td>n_estimators（树的数量）、max_depth（最大深度）、min_samples_split</td>
+            </tr>
+            <tr>
+              <td>XGBoost</td>
+              <td>learning_rate、n_estimators、max_depth、subsample</td>
+            </tr>
+            <tr>
+              <td>LightGBM</td>
+              <td>num_leaves、learning_rate、n_estimators、feature_fraction</td>
             </tr>
           </tbody>
         </table>
+
+        <h4>调优方法</h4>
+        <div class="model-card">
+          <h4>网格搜索（Grid Search）</h4>
+          <ul>
+            <li>遍历所有参数组合</li>
+            <li>优点：找到最优解</li>
+            <li>缺点：计算量大，耗时长</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <h4>随机搜索（Random Search）</h4>
+          <ul>
+            <li>随机采样参数组合</li>
+            <li>优点：更快，效果接近网格搜索</li>
+            <li>缺点：可能错过最优解</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <h4>贝叶斯优化（Bayesian Optimization）</h4>
+          <ul>
+            <li>基于历史结果智能选择下一组参数</li>
+            <li>优点：效率最高</li>
+            <li>缺点：实现复杂</li>
+          </ul>
+        </div>
+
+        <h4>调优流程</h4>
+        <ol>
+          <li>定义参数搜索空间</li>
+          <li>选择调优方法（如Grid Search）</li>
+          <li>使用五折交叉验证评估每组参数</li>
+          <li>选择平均性能最好的参数组合</li>
+          <li>用最优参数在全训练集上重新训练</li>
+        </ol>
+
+        <div class="warning-box">
+          <h4>⚠️ 注意事项</h4>
+          <ul>
+            <li><strong>调参必须在训练集上进行</strong>，不能用测试集</li>
+            <li>交叉验证的结果是模型性能的<strong>无偏估计</strong></li>
+            <li>最终模型用最优参数在<strong>全训练集</strong>上训练</li>
+            <li>测试集只在<strong>最后评估</strong>时使用一次</li>
+          </ul>
+        </div>
 
         <h2>核心原则</h2>
         <blockquote>
