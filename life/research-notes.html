@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>学术笔记 · 必治的日常小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="--ac: var(--mint); --ac-line: rgba(126,232,178,.4);">
+  <span class="fs fs-1" aria-hidden="true"></span>
+  <span class="fs fs-2" aria-hidden="true"></span>
+
+  <div class="wrap">
+    <div class="topbar">
+      <a class="logo" href="index.html"><span class="lamp">🕯️</span>深夜书桌</a>
+      <a class="back-main" href="index.html">↩️ 返回小站首页</a>
+    </div>
+
+    <header class="page-head reveal">
+      <a class="crumb" href="index.html">首页 / 分类</a>
+      <h1>🔬 <span class="hl">学术笔记</span></h1>
+      <p class="sub">一个医学生摸石头过河的科研学习记录：数据库、机器学习、论文精读。写给以后的自己看，也写给同样在路上的你。</p>
+    </header>
+
+    <main>
+      <div class="entries">
+        <a class="entry reveal" href="mimic-aki-research.html">
+          <span class="arr">→</span>
+          <div class="meta"><span class="chip">2026.7.4</span><span class="chip">学术研究笔记</span></div>
+          <h3>MIMIC数据库首次接触：学习、研究与规划过程</h3>
+          <p>首次接触大型一手数据，从数据库申请、伦理培训、到数据筛选和清洗，每一步都是新的挑战。关于术后AKI预测模型的研究规划。</p>
+        </a>
+
+        <a class="entry reveal" href="data-processing-ml.html">
+          <span class="arr">→</span>
+          <div class="meta"><span class="chip">2026.7.6</span><span class="chip">学术研究笔记（续）</span></div>
+          <h3>数据处理与机器学习：深入理解</h3>
+          <p>数据集划分、缺失值处理、标准化与模型训练的核心概念。80:20划分、中位数填补、二元特征标记、避免数据泄漏。</p>
+        </a>
+
+        <a class="entry reveal" href="supercritical-co2-paper.html">
+          <span class="arr">→</span>
+          <div class="meta"><span class="chip">2026.7.7</span><span class="chip">论文学习笔记</span></div>
+          <h3>超临界CO2系统中药物溶解度预测</h3>
+          <p>学习李老师的两篇论文：逆转效应、集成学习Bagging、藤壶交配优化算法（BMO）、奥卡姆剃刀原则。</p>
+        </a>
+      </div>
+
+      <footer class="footer">© 2026 魏必治 · 必治的日常小站 · 慢慢来，比较快</footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+</body>
+</html>

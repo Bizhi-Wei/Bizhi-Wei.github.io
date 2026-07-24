@@ -4,363 +4,408 @@
   <meta charset="UTF-8">
   <title>Bizhi Wei | Academic Homepage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="description" content="Academic homepage of Bizhi Wei, an undergraduate medical student interested in vascular surgery, evidence-based medicine, and clinical prediction models.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* ============ 学术主页 · 双语文档样式 ============
+       性能原则：无 canvas / 无毛玻璃 / 仅 transform·opacity 动画
+       支持 prefers-reduced-motion */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #f5f6f2;
+      --card: #ffffff;
+      --ink: #20313a;
+      --dim: #5c6b73;
+      --faint: #8b979d;
+      --teal: #0d6b64;
+      --teal-soft: #e3efec;
+      --gold: #c08a2d;
+      --line: #e2e5de;
+      --disp: 'Fraunces', 'Noto Serif SC', serif;
+      --body: 'Noto Sans SC', -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+    body { font-family: var(--body); background: var(--bg); color: var(--ink); line-height: 1.75; }
+    ::selection { background: rgba(13, 107, 100, .18); }
+
+    /* 顶部签名色条（静态） */
+    body::before {
+      content: ''; position: fixed; top: 0; left: 0; right: 0; height: 4px; z-index: 60;
+      background: linear-gradient(90deg, var(--teal), var(--gold));
     }
 
-    html {
-      scroll-behavior: smooth;
+    .container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- 语言切换 ---------- */
+    .lang-toggle {
+      position: fixed; top: 20px; right: 20px; z-index: 100;
+      display: flex; background: var(--card); border: 1px solid var(--line);
+      border-radius: 999px; box-shadow: 0 6px 18px rgba(32, 49, 58, .10); overflow: hidden;
+    }
+    .lang-toggle button {
+      border: 0; background: transparent; padding: 8px 16px;
+      font-size: 13px; font-weight: 700; color: var(--dim);
+      cursor: pointer; font-family: var(--body);
+      transition: background .25s, color .25s;
+    }
+    .lang-toggle button.active { background: var(--teal); color: #fff; }
+
+    /* ---------- 页眉（学术信头式） ---------- */
+    .masthead { display: grid; grid-template-columns: 1.15fr .85fr; gap: 44px; align-items: center; padding: 72px 0 42px; }
+    .eyebrow {
+      font-family: var(--mono); font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--teal); display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+    }
+    .eyebrow::before { content: ''; width: 34px; height: 2px; background: var(--gold); }
+    h1 { font-family: var(--disp); font-size: clamp(46px, 6.5vw, 66px); font-weight: 700; line-height: 1.08; letter-spacing: -.5px; }
+    .subtitle { font-size: 19px; color: var(--teal); font-weight: 700; margin: 10px 0 16px; }
+    .summary { color: var(--dim); max-width: 560px; font-size: 16px; }
+    .mast-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 24px; }
+    .mast-links a {
+      color: var(--ink); font-weight: 700; font-size: 15px; text-decoration: none;
+      border-bottom: 2px solid var(--gold); padding-bottom: 2px;
+      transition: color .25s, border-color .25s;
+    }
+    .mast-links a:hover { color: var(--teal); border-color: var(--teal); }
+    .mast-photo { position: relative; }
+    .mast-photo::before {
+      content: ''; position: absolute; inset: 16px -16px -16px 16px;
+      border: 2px solid var(--teal); border-radius: 14px; opacity: .5;
+    }
+    .mast-photo::after {
+      content: ''; position: absolute; inset: -14px 16px 16px -14px; border-radius: 14px; z-index: -1;
+      background: linear-gradient(135deg, rgba(13, 107, 100, .12), rgba(192, 138, 45, .14));
+    }
+    .mast-photo img {
+      width: 100%; height: 300px; object-fit: cover; border-radius: 14px; display: block;
+      box-shadow: 0 14px 34px rgba(32, 49, 58, .14);
+    }
+    @media (max-width: 820px) {
+      .masthead { grid-template-columns: 1fr; padding-top: 84px; }
+      .mast-photo { max-width: 420px; }
     }
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      color: #222;
-      background: #ffffff;
-      line-height: 1.7;
+    /* ---------- 吸顶导航 ---------- */
+    .site-nav { position: sticky; top: 0; z-index: 50; background: rgba(245, 246, 242, .96); border-bottom: 1px solid var(--line); }
+    .site-nav .container { display: flex; gap: 26px; padding-top: 14px; padding-bottom: 14px; overflow-x: auto; }
+    .site-nav a { color: var(--dim); text-decoration: none; font-weight: 700; font-size: 14.5px; position: relative; white-space: nowrap; padding: 4px 0; transition: color .25s; }
+    .site-nav a::after {
+      content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 2px;
+      background: var(--teal); transform: scaleX(0); transform-origin: left; transition: transform .3s;
     }
+    .site-nav a:hover { color: var(--ink); }
+    .site-nav a:hover::after { transform: scaleX(1); }
 
-    a {
-      color: #0056b3;
-      text-decoration: none;
+    /* ---------- 区块 ---------- */
+    main.container { padding-bottom: 16px; }
+    section { padding: 54px 0 6px; }
+    .sec-label { font-family: var(--mono); font-size: 12px; letter-spacing: 2px; color: var(--gold); margin-bottom: 6px; }
+    h2 { font-family: var(--disp); font-size: 30px; font-weight: 700; margin-bottom: 22px; display: flex; align-items: center; gap: 16px; }
+    h2::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    .about-p { color: var(--dim); max-width: 720px; margin-bottom: 12px; }
+
+    /* 研究方向 */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 44px; max-width: 880px; list-style: none; }
+    .two-col li {
+      display: flex; gap: 12px; align-items: baseline; padding: 10px 0;
+      border-bottom: 1px dashed var(--line); transition: transform .25s;
     }
-
-    a:hover {
-      text-decoration: underline;
+    .two-col li::before {
+      content: ''; width: 8px; height: 8px; flex: none; transform: translateY(1px);
+      background: var(--teal-soft); border: 2px solid var(--teal); transition: background .25s;
     }
+    .two-col li:hover { transform: translateX(6px); }
+    .two-col li:hover::before { background: var(--teal); }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
 
-    .container {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 32px 22px 70px;
+    /* 代表项目（编号行） */
+    .proj {
+      display: grid; grid-template-columns: 88px 1fr; gap: 6px 26px;
+      padding: 26px 12px; border-top: 1px solid var(--line); border-radius: 10px;
+      transition: background .3s;
     }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 36px;
-      padding: 38px 0 42px;
-      border-bottom: 1px solid #e5e7eb;
+    .proj:last-of-type { border-bottom: 1px solid var(--line); }
+    .proj:hover { background: var(--card); }
+    .proj-num {
+      font-family: var(--disp); font-size: 40px; font-weight: 700; line-height: 1;
+      color: transparent; -webkit-text-stroke: 1.3px var(--teal); transition: color .35s;
     }
-
-    .intro {
-      flex: 1;
-    }
-
-    h1 {
-      font-size: 44px;
-      line-height: 1.2;
-      margin-bottom: 12px;
-      color: #111827;
-    }
-
-    .subtitle {
-      font-size: 20px;
-      color: #4b5563;
-      margin-bottom: 16px;
-    }
-
-    .summary {
-      max-width: 680px;
-      font-size: 16px;
-      color: #374151;
-      margin-bottom: 20px;
-    }
-
-    .links a {
-      display: inline-block;
-      margin-right: 16px;
-      font-weight: 600;
-      color: #0056b3;
-    }
-
-.profile-photo {
-  width: 420px;
-  height: 250px;
-  object-fit: cover;
-  object-position: center center;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  background: #f3f4f6;
-}
-
-    nav {
-      margin: 24px 0 36px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    nav a {
-      margin-right: 22px;
-      color: #374151;
-      font-weight: 600;
-    }
-
-    section {
-      margin-top: 42px;
-    }
-
-    h2 {
-      font-size: 26px;
-      color: #111827;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    h3 {
-      font-size: 19px;
-      color: #111827;
-      margin-bottom: 6px;
-    }
-
-    p {
-      color: #374151;
-      margin-bottom: 12px;
-    }
-
-    ul {
-      padding-left: 22px;
-      color: #374151;
-    }
-
-    li {
-      margin-bottom: 7px;
-    }
-
-    .item {
-      margin-bottom: 22px;
-    }
-
-    .meta {
-      color: #6b7280;
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-
+    .proj:hover .proj-num { color: var(--teal); }
+    .proj-meta { font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
+    .proj h3 { font-family: var(--disp); font-size: 21px; font-weight: 600; margin-bottom: 8px; transition: color .3s; }
+    .proj:hover h3 { color: var(--teal); }
+    .proj p { color: var(--dim); font-size: 15px; max-width: 640px; }
+    .tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
     .tag {
-      display: inline-block;
-      padding: 3px 9px;
-      margin-right: 6px;
-      margin-top: 6px;
-      border-radius: 999px;
-      background: #eef2ff;
-      color: #3730a3;
-      font-size: 13px;
+      font-size: 12.5px; font-weight: 700; color: var(--teal); background: var(--teal-soft);
+      padding: 3px 12px; border-radius: 999px; transition: background .25s, color .25s; cursor: default;
     }
+    .tag:hover { background: var(--teal); color: #fff; }
+    @media (max-width: 640px) { .proj { grid-template-columns: 1fr; } .proj-num { font-size: 30px; } }
 
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
+    /* 科研笔记 */
+    .note { display: block; text-decoration: none; padding: 22px 14px; border-top: 1px solid var(--line); border-radius: 10px; transition: background .3s; }
+    .note:last-of-type { border-bottom: 1px solid var(--line); }
+    .note:hover { background: var(--card); }
+    .note-meta { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: 1px; margin-bottom: 6px; }
+    .note h3 { font-family: var(--disp); font-size: 19px; color: var(--ink); transition: color .3s; }
+    .note:hover h3 { color: var(--teal); }
+    .note p { color: var(--dim); font-size: 14.5px; margin-top: 6px; max-width: 700px; }
+    .more-note { color: var(--faint); font-size: 14px; margin-top: 16px; font-style: italic; }
+
+    /* 联系 */
+    .contact-card {
+      background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--gold);
+      border-radius: 12px; padding: 26px 30px; max-width: 560px;
+      display: flex; flex-direction: column; gap: 10px;
     }
+    .contact-card .row { color: var(--dim); }
+    .contact-card a { color: var(--teal); font-weight: 700; text-decoration: none; }
+    .contact-card a:hover { text-decoration: underline; }
 
-    .footer {
-      margin-top: 60px;
-      padding-top: 22px;
-      border-top: 1px solid #e5e7eb;
-      color: #6b7280;
-      font-size: 14px;
-      text-align: center;
-    }
+    footer { border-top: 1px solid var(--line); margin-top: 64px; padding: 26px 0 36px; text-align: center; color: var(--faint); font-size: 13.5px; }
 
-    @media (max-width: 780px) {
-      header {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-      }
+    /* 滚动显现 */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
 
-  .profile-photo {
-    width: 100%;
-    max-width: 420px;
-    height: 240px;
-  }
-
-      h1 {
-        font-size: 34px;
-      }
-
-      .two-col {
-        grid-template-columns: 1fr;
-      }
-
-      nav a {
-        display: inline-block;
-        margin-bottom: 8px;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
-
 <body>
+  <!-- 中英双语切换 -->
+  <div class="lang-toggle" role="group" aria-label="Language">
+    <button id="lang-en" type="button">EN</button>
+    <button id="lang-zh" type="button">中文</button>
+  </div>
 
-  <div class="container">
+  <!-- 页眉 -->
+  <header class="container masthead">
+    <div>
+      <p class="eyebrow" data-en="Academic Homepage" data-zh="学术主页">Academic Homepage</p>
+      <h1 data-en="Bizhi Wei" data-zh="魏必治">Bizhi Wei</h1>
+      <p class="subtitle" data-en="Undergraduate Medical Student" data-zh="医学本科生">Undergraduate Medical Student</p>
+      <p class="summary"
+         data-en="I am an undergraduate medical student interested in vascular surgery, surgical critical care, evidence-based medicine, clinical database research, and translational medicine."
+         data-zh="我是一名医学本科生，对血管外科、外科重症监护、循证医学、临床数据库研究与转化医学抱有浓厚兴趣。">
+        I am an undergraduate medical student interested in vascular surgery, surgical critical care, evidence-based medicine, clinical database research, and translational medicine.
+      </p>
+      <div class="mast-links">
+        <a href="posts.html" data-en="Research Notes" data-zh="科研笔记">Research Notes</a>
+        <a href="projects.html" data-en="Projects" data-zh="项目">Projects</a>
+        <a href="life/index.html" data-en="Life Blog (中文)" data-zh="生活博客">Life Blog (中文)</a>
+        <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <div class="mast-photo">
+      <img src="images/profile.jpg" alt="Bizhi Wei" width="420" height="300">
+    </div>
+  </header>
 
-    <header>
-      <div class="intro">
-        <h1>Bizhi Wei</h1>
-        <div class="subtitle">Undergraduate Medical Student</div>
+  <!-- 吸顶导航 -->
+  <nav class="site-nav">
+    <div class="container">
+      <a href="#about" data-en="About" data-zh="关于">About</a>
+      <a href="#interests" data-en="Interests" data-zh="研究方向">Interests</a>
+      <a href="#projects" data-en="Projects" data-zh="代表项目">Projects</a>
+      <a href="#notes" data-en="Notes" data-zh="科研笔记">Notes</a>
+      <a href="#contact" data-en="Contact" data-zh="联系方式">Contact</a>
+    </div>
+  </nav>
 
-        <p class="summary">
-          I am an undergraduate medical student interested in vascular surgery,
-          surgical critical care, evidence-based medicine, clinical database research,
-          and translational medicine.
-        </p>
+  <main class="container">
+    <!-- 关于 -->
+    <section id="about" class="reveal">
+      <p class="sec-label">01</p>
+      <h2 data-en="About" data-zh="关于">About</h2>
+      <p class="about-p"
+         data-en="My current academic exploration focuses on surgical diseases, evidence-based medicine, clinical prediction models, and computational molecular research. I am especially interested in connecting clinical questions with practical research methods."
+         data-zh="我目前的学术探索聚焦于外科疾病、循证医学、临床预测模型与计算分子研究，尤其希望把临床问题与实用的研究方法连接起来。">
+        My current academic exploration focuses on surgical diseases, evidence-based medicine, clinical prediction models, and computational molecular research. I am especially interested in connecting clinical questions with practical research methods.
+      </p>
+      <p class="about-p"
+         data-en="This homepage serves as a concise academic profile. For more personal reflections and daily records, please visit my Chinese life blog."
+         data-zh="这个主页是一份简洁的学术档案。如果想看更生活化的记录与思考，欢迎访问我的中文生活博客。">
+        This homepage serves as a concise academic profile. For more personal reflections and daily records, please visit my Chinese life blog.
+      </p>
+    </section>
 
-        <div class="links">
-          <a href="posts.html">Research Notes</a>
-          <a href="projects.html">Projects</a>
-          <a href="life/index.html">Chinese Life Blog</a>
-          <a href="https://github.com/Bizhi-Wei" target="_blank">GitHub</a>
+    <!-- 研究方向 -->
+    <section id="interests" class="reveal">
+      <p class="sec-label">02</p>
+      <h2 data-en="Research Interests" data-zh="研究方向">Research Interests</h2>
+      <ul class="two-col">
+        <li data-en="Vascular surgery and endovascular treatment" data-zh="血管外科与腔内治疗">Vascular surgery and endovascular treatment</li>
+        <li data-en="Surgical critical care and postoperative complications" data-zh="外科重症监护与术后并发症">Surgical critical care and postoperative complications</li>
+        <li data-en="Systematic review and meta-analysis" data-zh="系统综述与 Meta 分析">Systematic review and meta-analysis</li>
+        <li data-en="MIMIC-IV database research" data-zh="MIMIC-IV 数据库研究">MIMIC-IV database research</li>
+        <li data-en="Clinical prediction modeling" data-zh="临床预测模型">Clinical prediction modeling</li>
+        <li data-en="Molecular docking and molecular dynamics" data-zh="分子对接与分子动力学">Molecular docking and molecular dynamics</li>
+      </ul>
+    </section>
+
+    <!-- 代表项目 -->
+    <section id="projects" class="reveal">
+      <p class="sec-label">03</p>
+      <h2 data-en="Selected Projects" data-zh="代表项目">Selected Projects</h2>
+
+      <div class="proj">
+        <div class="proj-num">01</div>
+        <div>
+          <p class="proj-meta" data-en="Systematic Review and Meta-analysis" data-zh="系统综述与 Meta 分析">Systematic Review and Meta-analysis</p>
+          <h3 data-en="EVAR versus Open Repair for Ruptured Infrarenal Abdominal Aortic Aneurysm" data-zh="破裂型肾下腹主动脉瘤：EVAR 与开放修复术比较">EVAR versus Open Repair for Ruptured Infrarenal Abdominal Aortic Aneurysm</h3>
+          <p data-en="A systematic review and meta-analysis focusing on hemodynamic selection bias and short-term mortality outcomes."
+             data-zh="聚焦血流动力学选择偏倚与短期死亡结局的系统综述与 Meta 分析。">
+            A systematic review and meta-analysis focusing on hemodynamic selection bias and short-term mortality outcomes.
+          </p>
+          <div class="tags">
+            <span class="tag" data-en="Vascular Surgery" data-zh="血管外科">Vascular Surgery</span>
+            <span class="tag" data-en="Meta-analysis" data-zh="Meta 分析">Meta-analysis</span>
+            <span class="tag" data-en="Selection Bias" data-zh="选择偏倚">Selection Bias</span>
+          </div>
         </div>
       </div>
 
-      <img src="images/profile.jpg" alt="Bizhi Wei" class="profile-photo">
-    </header>
+      <div class="proj">
+        <div class="proj-num">02</div>
+        <div>
+          <p class="proj-meta" data-en="MIMIC-IV Database Study" data-zh="MIMIC-IV 数据库研究">MIMIC-IV Database Study</p>
+          <h3 data-en="Dynamic Prediction of Postoperative Acute Kidney Injury in Surgical ICU Patients" data-zh="外科 ICU 患者术后急性肾损伤的动态预测">Dynamic Prediction of Postoperative Acute Kidney Injury in Surgical ICU Patients</h3>
+          <p data-en="A planned database study aiming to develop a dynamic prediction model for postoperative acute kidney injury in surgical ICU patients."
+             data-zh="一项计划中的数据库研究，旨在构建外科 ICU 患者术后急性肾损伤的动态预测模型。">
+            A planned database study aiming to develop a dynamic prediction model for postoperative acute kidney injury in surgical ICU patients.
+          </p>
+          <div class="tags">
+            <span class="tag" data-en="Surgical ICU" data-zh="外科 ICU">Surgical ICU</span>
+            <span class="tag" data-en="AKI" data-zh="急性肾损伤">AKI</span>
+            <span class="tag" data-en="Prediction Model" data-zh="预测模型">Prediction Model</span>
+          </div>
+        </div>
+      </div>
 
-    <nav>
-      <a href="#about">About</a>
-      <a href="#interests">Research Interests</a>
-      <a href="#projects">Selected Projects</a>
-      <a href="#notes">Notes</a>
-      <a href="#contact">Contact</a>
-    </nav>
+      <div class="proj">
+        <div class="proj-num">03</div>
+        <div>
+          <p class="proj-meta" data-en="Medical Device Innovation" data-zh="医疗器械创新">Medical Device Innovation</p>
+          <h3 data-en="Femoral Artery Compression Device after Interventional Procedures" data-zh="介入术后股动脉压迫装置">Femoral Artery Compression Device after Interventional Procedures</h3>
+          <p data-en="A device innovation project focusing on post-procedural femoral artery compression, anti-displacement structure, and passive mechanical feedback."
+             data-zh="聚焦介入术后股动脉压迫、防移位结构与被动机械反馈的器械创新项目。">
+            A device innovation project focusing on post-procedural femoral artery compression, anti-displacement structure, and passive mechanical feedback.
+          </p>
+          <div class="tags">
+            <span class="tag" data-en="Medical Device" data-zh="医疗器械">Medical Device</span>
+            <span class="tag" data-en="Hemostasis" data-zh="止血">Hemostasis</span>
+            <span class="tag" data-en="Innovation" data-zh="创新">Innovation</span>
+          </div>
+        </div>
+      </div>
 
-    <section id="about">
-      <h2>About</h2>
-      <p>
-        My current academic exploration focuses on surgical diseases, evidence-based medicine,
-        clinical prediction models, and computational molecular research. I am especially interested
-        in connecting clinical questions with practical research methods.
-      </p>
-      <p>
-        This homepage is used as a concise academic profile. For more personal reflections and
-        daily records, please visit my Chinese life blog.
-      </p>
-    </section>
-
-    <section id="interests">
-      <h2>Research Interests</h2>
-      <div class="two-col">
-        <ul>
-          <li>Vascular surgery and endovascular treatment</li>
-          <li>Surgical critical care and postoperative complications</li>
-          <li>Systematic review and meta-analysis</li>
-        </ul>
-        <ul>
-          <li>MIMIC-IV database research</li>
-          <li>Clinical prediction modeling</li>
-          <li>Molecular docking and molecular dynamics</li>
-        </ul>
+      <div class="proj">
+        <div class="proj-num">04</div>
+        <div>
+          <p class="proj-meta" data-en="Computational Molecular Research" data-zh="计算分子研究">Computational Molecular Research</p>
+          <h3 data-en="Molecular Docking and Molecular Dynamics in Abdominal Aortic Aneurysm" data-zh="腹主动脉瘤中的分子对接与分子动力学">Molecular Docking and Molecular Dynamics in Abdominal Aortic Aneurysm</h3>
+          <p data-en="A computational project exploring inflammation-related molecular targets and candidate small molecules in abdominal aortic aneurysm."
+             data-zh="探索腹主动脉瘤炎症相关分子靶点与候选小分子的计算研究项目。">
+            A computational project exploring inflammation-related molecular targets and candidate small molecules in abdominal aortic aneurysm.
+          </p>
+          <div class="tags">
+            <span class="tag" data-en="Molecular Docking" data-zh="分子对接">Molecular Docking</span>
+            <span class="tag" data-en="Molecular Dynamics" data-zh="分子动力学">Molecular Dynamics</span>
+            <span class="tag" data-en="AAA" data-zh="腹主动脉瘤">AAA</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="projects">
-      <h2>Selected Projects</h2>
+    <!-- 科研笔记 -->
+    <section id="notes" class="reveal">
+      <p class="sec-label">04</p>
+      <h2 data-en="Research Notes" data-zh="科研笔记">Research Notes</h2>
 
-      <div class="item">
-        <div class="meta">Systematic Review and Meta-analysis</div>
-        <h3>EVAR versus Open Repair for Ruptured Infrarenal Abdominal Aortic Aneurysm</h3>
-        <p>
-          A systematic review and meta-analysis focusing on hemodynamic selection bias
-          and short-term mortality outcomes.
-        </p>
-        <span class="tag">Vascular Surgery</span>
-        <span class="tag">Meta-analysis</span>
-        <span class="tag">Selection Bias</span>
-      </div>
-
-      <div class="item">
-        <div class="meta">MIMIC-IV Database Study</div>
-        <h3>Dynamic Prediction of Postoperative Acute Kidney Injury in Surgical ICU Patients</h3>
-        <p>
-          A planned database study aiming to develop a dynamic prediction model for
-          postoperative acute kidney injury in surgical ICU patients.
-        </p>
-        <span class="tag">Surgical ICU</span>
-        <span class="tag">AKI</span>
-        <span class="tag">Prediction Model</span>
-      </div>
-
-      <div class="item">
-        <div class="meta">Medical Device Innovation</div>
-        <h3>Femoral Artery Compression Device after Interventional Procedures</h3>
-        <p>
-          A device innovation project focusing on post-procedural femoral artery compression,
-          anti-displacement structure, and passive mechanical feedback.
-        </p>
-        <span class="tag">Medical Device</span>
-        <span class="tag">Hemostasis</span>
-        <span class="tag">Innovation</span>
-      </div>
-
-      <div class="item">
-        <div class="meta">Computational Molecular Research</div>
-        <h3>Molecular Docking and Molecular Dynamics in Abdominal Aortic Aneurysm</h3>
-        <p>
-          A computational project exploring inflammation-related molecular targets and
-          candidate small molecules in abdominal aortic aneurysm.
-        </p>
-        <span class="tag">Molecular Docking</span>
-        <span class="tag">Molecular Dynamics</span>
-        <span class="tag">AAA</span>
-      </div>
-    </section>
-
-    <section id="notes">
-      <h2>Research Notes</h2>
-
-      <div class="item">
-        <div class="meta">Systematic Review &amp; Meta-analysis · 2026.4.7</div>
-        <h3>
-          <a href="spl-appendectomy-meta-note.html">儿童单孔腹腔镜阑尾切除术 vs 传统腹腔镜：系统综述与Meta分析</a>
+      <a class="note" href="spl-appendectomy-meta-note.html">
+        <p class="note-meta" data-en="Systematic Review &amp; Meta-analysis · 2026.4.7" data-zh="系统综述与 Meta 分析 · 2026.4.7">Systematic Review &amp; Meta-analysis · 2026.4.7</p>
+        <h3 data-en="Pediatric Single-Port Laparoscopic Appendectomy vs. Conventional Laparoscopy: A Systematic Review and Meta-analysis"
+            data-zh="儿童单孔腹腔镜阑尾切除术 vs 传统腹腔镜：系统综述与Meta分析">
+          Pediatric Single-Port Laparoscopic Appendectomy vs. Conventional Laparoscopy: A Systematic Review and Meta-analysis
         </h3>
-        <p>
-          纳入24篇研究、3789例患儿，按单纯性/复杂性阑尾炎分层比较单孔腹腔镜与传统腹腔镜的手术疗效、炎症应激与并发症。结果显示：单纯性阑尾炎优先推荐单孔腹腔镜，复杂性阑尾炎需谨慎评估。
+        <p data-en="Including 24 studies and 3,789 pediatric patients, comparing single-port versus conventional laparoscopic appendectomy stratified by simple/complex appendicitis: single-port is preferred for simple appendicitis, while complex cases require cautious evaluation."
+           data-zh="纳入24篇研究、3789例患儿，按单纯性/复杂性阑尾炎分层比较单孔腹腔镜与传统腹腔镜的手术疗效、炎症应激与并发症。结果显示：单纯性阑尾炎优先推荐单孔腹腔镜，复杂性阑尾炎需谨慎评估。">
+          Including 24 studies and 3,789 pediatric patients, comparing single-port versus conventional laparoscopic appendectomy stratified by simple/complex appendicitis: single-port is preferred for simple appendicitis, while complex cases require cautious evaluation.
         </p>
-        <span class="tag">Pediatric Surgery</span>
-        <span class="tag">Laparoscopy</span>
-        <span class="tag">Meta-analysis</span>
-        <span class="tag">Appendicitis</span>
-      </div>
+      </a>
 
-      <div class="item">
-        <div class="meta">Medical Learning Note · 2026.3.18</div>
-        <h3>
-          <a href="pediatric-meningioma-note.html">从儿童发热想到小儿脑膜瘤</a>
-        </h3>
-        <p>
-          一篇医学生学习札记：从儿童发热的警惕性出发，整理小儿脑膜瘤、NF2、
-          MRI 序列和术前风险评估。
+      <a class="note" href="pediatric-meningioma-note.html">
+        <p class="note-meta" data-en="Medical Learning Note · 2026.3.18" data-zh="医学学习札记 · 2026.3.18">Medical Learning Note · 2026.3.18</p>
+        <h3 data-en="From Pediatric Fever to Pediatric Meningioma" data-zh="从儿童发热想到小儿脑膜瘤">From Pediatric Fever to Pediatric Meningioma</h3>
+        <p data-en="A medical student's learning note: starting from vigilance about pediatric fever, covering pediatric meningioma, NF2, MRI sequences, and preoperative risk assessment."
+           data-zh="一篇医学生学习札记：从儿童发热的警惕性出发，整理小儿脑膜瘤、NF2、MRI 序列和术前风险评估。">
+          A medical student's learning note: starting from vigilance about pediatric fever, covering pediatric meningioma, NF2, MRI sequences, and preoperative risk assessment.
         </p>
-      </div>
+      </a>
 
-      <p>
-        More research notes and learning records will be updated gradually.
-      </p>
+      <p class="more-note" data-en="More research notes and learning records will be updated gradually." data-zh="更多科研笔记与学习记录将逐步更新。">More research notes and learning records will be updated gradually.</p>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>
-        GitHub:
-        <a href="https://github.com/Bizhi-Wei" target="_blank">https://github.com/Bizhi-Wei</a>
-      </p>
-      <p>
-        Email: 1184477688@qq.com
-      </p>
+    <!-- 联系 -->
+    <section id="contact" class="reveal">
+      <p class="sec-label">05</p>
+      <h2 data-en="Contact" data-zh="联系方式">Contact</h2>
+      <div class="contact-card">
+        <p class="row"><span data-en="GitHub:" data-zh="GitHub：">GitHub:</span> <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">github.com/Bizhi-Wei</a></p>
+        <p class="row"><span data-en="Email:" data-zh="邮箱：">Email:</span> <a href="mailto:1184477688@qq.com">1184477688@qq.com</a></p>
+        <p class="row"><span data-en="ORCID:" data-zh="ORCID：">ORCID:</span> <a href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener">0009-0008-9481-3024</a></p>
+      </div>
     </section>
+  </main>
 
-    <div class="footer">
-      © 2026 Bizhi Wei · Academic Homepage
-    </div>
+  <footer>
+    <span data-en="© 2026 Bizhi Wei · Academic Homepage" data-zh="© 2026 魏必治 · 学术主页">© 2026 Bizhi Wei · Academic Homepage</span>
+  </footer>
 
-  </div>
+  <script>
+    (function () {
+      var btnEn = document.getElementById('lang-en');
+      var btnZh = document.getElementById('lang-zh');
 
+      // 双语切换：读取 data-en / data-zh，记忆用户选择
+      function applyLang(lang) {
+        var els = document.querySelectorAll('[data-en]');
+        for (var i = 0; i < els.length; i++) {
+          els[i].textContent = (lang === 'zh') ? els[i].getAttribute('data-zh') : els[i].getAttribute('data-en');
+        }
+        document.documentElement.lang = (lang === 'zh') ? 'zh-CN' : 'en';
+        document.title = (lang === 'zh') ? '魏必治 | 学术主页' : 'Bizhi Wei | Academic Homepage';
+        btnEn.classList.toggle('active', lang !== 'zh');
+        btnZh.classList.toggle('active', lang === 'zh');
+        try { localStorage.setItem('bw-lang', lang); } catch (e) {}
+      }
+
+      var saved = 'en';
+      try { saved = localStorage.getItem('bw-lang') || 'en'; } catch (e) {}
+      applyLang(saved);
+      btnEn.addEventListener('click', function () { applyLang('en'); });
+      btnZh.addEventListener('click', function () { applyLang('zh'); });
+
+      // 滚动显现
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+      } else {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+      }
+    })();
+  </script>
 </body>
 </html>

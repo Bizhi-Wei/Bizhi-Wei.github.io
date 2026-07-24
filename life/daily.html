@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>日常碎片 · 必治的日常小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="--ac: var(--sky); --ac-line: rgba(126,200,255,.4);">
+  <span class="fs fs-2" aria-hidden="true"></span>
+  <span class="fs fs-3" aria-hidden="true"></span>
+
+  <div class="wrap">
+    <div class="topbar">
+      <a class="logo" href="index.html"><span class="lamp">🕯️</span>深夜书桌</a>
+      <a class="back-main" href="index.html">↩️ 返回小站首页</a>
+    </div>
+
+    <header class="page-head reveal">
+      <a class="crumb" href="index.html">首页 / 分类</a>
+      <h1>🧩 <span class="hl">日常碎片</span></h1>
+      <p class="sub">暂时还没有正式文章，所以这里先放一些未来可能会写的方向。等以后有内容了，再把这些卡片改成文章入口。</p>
+    </header>
+
+    <main>
+      <div class="ideas" style="--ac-line: rgba(126,200,255,.4);">
+        <div class="idea reveal">
+          <span class="someday">未来也许会写</span>
+          <span class="icon">💪</span>
+          <h3>健身和饮食</h3>
+          <p>训练状态、减脂焦虑、蛋白粉、食堂饭、偶尔吃多后的自我和解。</p>
+        </div>
+        <div class="idea reveal">
+          <span class="someday">未来也许会写</span>
+          <span class="icon">📚</span>
+          <h3>医学生日常</h3>
+          <p>上课、晚自习、解剖、组胚、考试周，以及"今天到底学了什么"的灵魂追问。</p>
+        </div>
+        <div class="idea reveal">
+          <span class="someday">未来也许会写</span>
+          <span class="icon">🌍</span>
+          <h3>语言学习</h3>
+          <p>英语、日语、背单词、看文献，还有那些明明很努力但进步很慢的时刻。</p>
+        </div>
+        <div class="idea reveal">
+          <span class="someday">未来也许会写</span>
+          <span class="icon">🏙️</span>
+          <h3>城市和路上</h3>
+          <p>西安、邵阳、回家的路、去图书馆的路、一个人走路时冒出来的想法。</p>
+        </div>
+        <div class="idea reveal">
+          <span class="someday">未来也许会写</span>
+          <span class="icon">☀️</span>
+          <h3>普通的一天</h3>
+          <p>没有大事发生，但也不是毫无意义。普通生活本身也值得被记录。</p>
+        </div>
+        <div class="idea reveal">
+          <span class="someday">未来也许会写</span>
+          <span class="icon">🌱</span>
+          <h3>自我修复</h3>
+          <p>焦虑、疲惫、睡一觉、重新开始。慢慢学会不把一天的失败当成人生失败。</p>
+        </div>
+      </div>
+
+      <footer class="footer">© 2026 魏必治 · 必治的日常小站 · 慢慢来，比较快</footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+</body>
+</html>
