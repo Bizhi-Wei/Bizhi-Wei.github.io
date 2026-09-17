@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>适应症混杂：EVAR「低死亡率」背后的打假 - 必治的日常小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="微创腹主动脉手术死亡率低，不是因为支架有多神，而是能躺上手术台的本来就是幸运儿。一篇关于适应症混杂与选择偏倚的临床打假笔记。">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.9;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #00ff88;
+      text-decoration: none;
+      margin-bottom: 30px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+      transform: translateX(-5px);
+    }
+
+    .article-header {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+    }
+
+    .date {
+      font-size: 13px;
+      color: #00ff88;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.4;
+      background: linear-gradient(135deg, #00ff88, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 16px;
+    }
+
+    .content {
+      padding: 30px 0;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #00ff88;
+      margin: 40px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+    }
+
+    h3 {
+      font-size: 18px;
+      color: #00aaff;
+      margin: 25px 0 15px 0;
+    }
+
+    p {
+      color: #b0b0b0;
+      margin-bottom: 15px;
+    }
+
+    strong {
+      color: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(15, 15, 15, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 255, 136, 0.15);
+    }
+
+    th {
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+      color: #b0b0b0;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul, ol {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+
+    li {
+      color: #b0b0b0;
+      margin-bottom: 10px;
+    }
+
+    li strong {
+      color: #00ff88;
+    }
+
+    blockquote {
+      background: rgba(0, 255, 136, 0.05);
+      border-left: 4px solid #00ff88;
+      padding: 20px 25px;
+      margin: 20px 0;
+      border-radius: 0 12px 12px 0;
+    }
+
+    blockquote p {
+      color: #fff;
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+
+    blockquote p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-box {
+      background: rgba(0, 170, 255, 0.05);
+      border: 1px solid rgba(0, 170, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .highlight-box h4 {
+      color: #00aaff;
+      margin-bottom: 10px;
+    }
+
+    .warn-box {
+      background: rgba(255, 100, 100, 0.05);
+      border: 1px solid rgba(255, 100, 100, 0.25);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .warn-box h4 {
+      color: #ff6b6b;
+      margin-bottom: 10px;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .flow-step {
+      background: rgba(15, 15, 15, 0.9);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .flow-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0, 255, 136, 0.15);
+      color: #00ff88;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .flow-step p {
+      margin: 0;
+      color: #b0b0b0;
+    }
+
+    .flow-step p strong {
+      color: #00ff88;
+    }
+
+    code {
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(0, 255, 136, 0.2);
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: #00ff88;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 26px;
+      }
+
+      body {
+        padding: 20px 15px;
+      }
+
+      .flow-step {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">← 返回生活博客</a>
+
+    <article>
+      <header class="article-header">
+        <div class="date">2026.9.17 · 学术打假笔记</div>
+        <h1>适应症混杂：EVAR「低死亡率」背后的打假</h1>
+        <p class="subtitle">不是支架有多神，而是能躺上手术台的本来就是幸运儿</p>
+      </header>
+
+      <div class="content">
+        <h2>一个让我越来越不舒服的现象</h2>
+        <p>
+          如果你单纯去赞同一个<strong>众所周知的观点</strong>，却不肯往下挖一层——去追问它所在的<strong>内源性底层规律</strong>——那这件事本身就没什么意思。
+        </p>
+        <p>
+          比如：我们都知道，微创腹主动脉瘤修复（<strong>EVAR</strong>，腔内修复）死亡率很低。十年前就是这样，现在还是这样。你再去堆一篇文献、再做一个 meta，说「EVAR 围术期死亡率低于开放手术」，然后收工——这简直就是<strong>烂透了</strong>。
+        </p>
+        <p>
+          不是因为结论错，而是因为你把一个已经被反复确认的表象，又确认了一遍。真正值得打假的，从来不是这个数字本身，而是：<strong>这个数字为什么这么漂亮？</strong>
+        </p>
+
+        <blockquote>
+          <p>没有一篇真实世界研究能做到「相对平衡」。</p>
+          <p>所以真实世界里的「疗效」，往往一半是治疗，一半是筛选。</p>
+        </blockquote>
+
+        <h2>真实世界里，手术是怎么被选出来的</h2>
+        <p>
+          把临床现场摊开看，事情其实很粗暴。
+        </p>
+        <p>
+          真正造成短期死亡率差异的，很大程度上不是术式优劣，而是<strong>主刀医生的选择偏倚</strong>——更准确地说，是<strong>适应症混杂</strong>（indication confounding）。
+        </p>
+
+        <div class="warn-box">
+          <h4>残酷但真实的分流逻辑</h4>
+          <ul>
+            <li>快死的人、休克的人、大出血的人——根本<strong>撑不到做 CTA</strong> 去测量支架尺寸</li>
+            <li>他们被直接推进<strong>急诊开腹手术间</strong></li>
+            <li>能安安稳稳躺上 CTA 床、量瘤颈、挑支架的患者，本来就已经经过了一轮<strong>生理状态筛选</strong></li>
+          </ul>
+        </div>
+
+        <p>
+          所以，并不是支架有多么神奇。而是这些患者本身就是<strong>幸运儿</strong>——他们的病情、血流动力学、时间窗，恰好适合放支架。
+        </p>
+        <p>
+          你把「被筛过的低危人群」和「被塞进急诊的高危人群」放在一起比死亡率，EVAR 当然赢。可这场比较从一开始就不公平。
+        </p>
+
+        <h2>一层层拆开这条因果链</h2>
+        <p>用流程图把这条「选择链」画清楚：</p>
+
+        <div class="flow">
+          <div class="flow-step">
+            <span class="flow-num">1</span>
+            <p><strong>患者状态分层</strong>：破裂/休克/大出血 vs 血流动力学稳定、择期或亚急诊</p>
+          </div>
+          <div class="flow-step">
+            <span class="flow-num">2</span>
+            <p><strong>能否完成术前影像</strong>：危重者来不及做 CTA → 直接开腹；稳定者可完成 CTA 评估</p>
+          </div>
+          <div class="flow-step">
+            <span class="flow-num">3</span>
+            <p><strong>形态学适配筛选</strong>：瘤颈长度、成角、入路条件是否允许支架锚定与输送</p>
+          </div>
+          <div class="flow-step">
+            <span class="flow-num">4</span>
+            <p><strong>最终术式分配</strong>：EVAR 组 = 稳定 + 形态学合适；开放组 = 危重 / 形态学不合适 / 其他</p>
+          </div>
+          <div class="flow-step">
+            <span class="flow-num">5</span>
+            <p><strong>观察到的死亡率差</strong>：术式效应 + 选择偏倚 + 适应症混杂，三者被搅在一起</p>
+          </div>
+        </div>
+
+        <p>
+          看清楚了吗？第 5 步那个漂亮的 OR / HR，很大程度上是第 1–4 步<strong>筛出来的</strong>，不是支架「修」出来的。
+        </p>
+
+        <h2>医生挑不挑你做 EVAR，看的到底是什么</h2>
+        <p>
+          这里是我觉得最可惜的地方。
+        </p>
+        <p>
+          急诊挑不挑病人做 EVAR，看的根本<strong>不是瘤子有多大</strong>。真正卡住决策的，是一堆关键<strong>形态学参数</strong>：
+        </p>
+
+        <div class="highlight-box">
+          <h4>真正决定「能不能放支架」的关键参数</h4>
+          <ul>
+            <li><strong>瘤颈长度</strong>（proximal neck length）——锚定区够不够长</li>
+            <li><strong>瘤颈成角</strong>（neck angulation）——太陡则释放困难、内漏风险高</li>
+            <li><strong>瘤颈直径与锥度</strong>——影响密封与移位</li>
+            <li><strong>入路条件</strong>：髂股动脉钙化、狭窄、迂曲——支架送不进就是送不进</li>
+            <li><strong>瘤体形态</strong>：是否有附壁血栓、是否有破裂先兆</li>
+          </ul>
+        </div>
+
+        <p>
+          这些参数不是「补充材料」，它们是<strong>适应症本身</strong>。
+        </p>
+        <p>
+          但真可惜——可惜现有研究<strong>都没好好报告</strong>。
+        </p>
+        <p>
+          很多所谓「真实世界研究」或 RCT 的方法学部分，对瘤颈、成角、入路钙化要么一笔带过，要么干脆不写。于是读者只能看到「EVAR vs 开放」的死亡率对比，却看不到：进入 EVAR 组的人，本来就被形态学筛过一遍。
+        </p>
+
+        <h2>这对读文献意味着什么</h2>
+        <p>
+          以后再看到「EVAR 显著降低围术期死亡率」这类结论，至少要多问三句：
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>你要追问的</th>
+              <th>为什么重要</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EVAR 组是怎么进来的？</td>
+              <td>是连续入组，还是经过 CTA / 形态学筛选后的「适合者」？</td>
+            </tr>
+            <tr>
+              <td>破裂 / 休克患者如何分配？</td>
+              <td>若大量直接进开放组，死亡率差几乎必然偏向 EVAR</td>
+            </tr>
+            <tr>
+              <td>瘤颈与入路参数报告了吗？</td>
+              <td>没有形态学细节，就无法判断两组可比性</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          换句话说：你不能只读结果表里的死亡率，你得去读<strong>方法学里那几行不起眼的形态学描述</strong>。那几行，往往比森林图更有信息量。
+        </p>
+
+        <h2>为什么这种「打假」有价值</h2>
+        <p>
+          我并不是说 EVAR 无效。EVAR 在合适人群中确实有明确优势，创伤小、恢复快、围术期风险低——这些都是真的。
+        </p>
+        <p>
+          我反对的是把<strong>筛选红利</strong>记成<strong>术式功劳</strong>。
+        </p>
+        <p>
+          如果我们对真实世界的临床决策有一点感受，就会发现：真正决定短期结局的，常常不是「用了什么技术」，而是「谁被允许进入这项技术」。适应症混杂不是统计学洁癖，它是临床现实本身。
+        </p>
+
+        <blockquote>
+          <p>如果你能在这类研究里「打假」成功，价值是无可厚非的。</p>
+          <p>因为那意味着你没有停在结论表面，而是顺着因果链，摸到了真正的底层结构。</p>
+        </blockquote>
+
+        <h2>写给自己的提醒</h2>
+        <p>
+          做过 meta、写过 SCI，有时会有一种错觉：把效应量算准、把异质性处理干净，就算把问题搞清楚了。
+        </p>
+        <p>
+          但这篇笔记提醒我的是另一件事——
+        </p>
+        <p>
+          <strong>数字干净，不等于因果干净。</strong>
+        </p>
+        <p>
+          如果研究设计里藏着一层适应症混杂，你就算用最漂亮的模型去校正，也可能只是在给一个被筛选过的比较，打上更精致的补丁。
+        </p>
+        <p>
+          所以以后读临床文献，我会强迫自己多停一步：不是问「结论对不对」，而是问——
+        </p>
+
+        <div class="highlight-box">
+          <h4>核心一问</h4>
+          <p style="color:#fff; margin:0;">
+            <strong>这两组人，在被分配到手术台之前，是不是就已经不一样了？</strong>
+          </p>
+        </div>
+
+        <p>
+          只要这个问题答不清楚，再低的死亡率、再显著的 P 值，都要先打一个问号。
+        </p>
+        <p>
+          这大概就是我对「真实世界研究」最真实的一点感受：它很脏，很不完美，但正因如此，才值得认真去拆。
+        </p>
+      </div>
+
+      <footer class="footer">
+        <p>© 2026 必治的日常小站 · <a href="index.html">返回首页</a> · <a href="research-notes.html">学术笔记</a></p>
+      </footer>
+    </article>
+  </div>
+</body>
+</html>
