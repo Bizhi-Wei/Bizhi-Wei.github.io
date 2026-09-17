@@ -4,113 +4,140 @@
   <meta charset="UTF-8">
   <title>About | Bizhi Wei</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="blog.css">
 </head>
-
 <body>
-
-  <div class="navbar">
-    <div class="nav-container">
-      <div class="nav-logo">Bizhi's Research Notes</div>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="posts.html">Posts</a>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <a class="nav-brand" href="index.html">Bizhi Wei</a>
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="index.html#publications">Papers</a>
+      <a href="projects.html">Projects</a>
+      <a href="posts.html">Posts</a>
+      <a href="life/index.html">Life</a>
     </div>
-  </div>
+  </nav>
 
-  <header class="page-hero">
-    <div class="hero-inner">
-      <div class="hero-tag">About This Blog</div>
-      <h1 class="page-title">A personal space for research, medicine, and growth.</h1>
-      <p class="page-subtitle">
-        This page is not designed as a formal CV. It is a more relaxed record of how I learn,
-        struggle, reflect, and grow as an undergraduate medical student.
-      </p>
+  <header class="container page-hero">
+    <p class="hero-tag">About</p>
+    <h1>Research, medicine, and growth — without the polish.</h1>
+    <p class="page-subtitle">
+      This is not a formal CV. It is a clearer record of how I learn methods,
+      read literature, fail, revise, and keep going as an undergraduate medical student.
+    </p>
+    <div class="quick-strip">
+      <a class="action" href="index.html#publications">Papers</a>
+      <a class="action gold" href="projects.html">Projects</a>
+      <a class="action ghost" href="life/why-i-built-this-blog.html">Why I write (中文)</a>
     </div>
   </header>
 
-  <main class="main">
-
-    <section>
-      <h2 class="section-title">Who I Am</h2>
+  <main class="container">
+    <section class="reveal">
+      <p class="sec-label">01</p>
+      <h2>Who I am</h2>
       <div class="card">
         <p>
-          I am Bizhi Wei, an undergraduate medical student with interests in vascular surgery,
-          surgical critical care, evidence-based medicine, clinical database research, and
-          translational medicine.
+          I am <strong>Bizhi Wei</strong>, an undergraduate medical student at Pu Ai Medical School,
+          Shaoyang University. My interests include vascular surgery, surgical critical care,
+          evidence-based medicine, clinical database research, and translational methods.
         </p>
         <p>
-          My current academic exploration includes systematic reviews and meta-analyses,
-          MIMIC-IV database studies, medical device innovation, molecular docking, and molecular
-          dynamics simulation.
+          I have worked on systematic reviews and meta-analyses, a MIMIC-IV postoperative AKI project,
+          a femoral-artery compression device concept, and molecular docking / dynamics workflows.
         </p>
+        <div class="action-row">
+          <a class="action" href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener">ORCID</a>
+          <a class="action gold" href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
+          <a class="action ghost" href="mailto:15619056250wbz@gmail.com">Email</a>
+        </div>
       </div>
     </section>
 
-    <section>
-      <h2 class="section-title">Why I Built This Site</h2>
+    <section class="reveal">
+      <p class="sec-label">02</p>
+      <h2>Why this site exists</h2>
       <div class="card">
         <p>
-          At the beginning, research can feel distant, difficult, and even intimidating.
-          But as I gradually worked through papers, data, revisions, and failed attempts,
-          I realized that research is also a process of self-training.
+          At the beginning, research feels distant and intimidating. Papers, data, revisions,
+          and failed attempts slowly turned into a kind of self-training.
         </p>
         <p>
-          I built this site to record that process honestly. Some posts may be technical.
-          Some may simply be reflections after a long day of reading, writing, or debugging.
+          I keep this site to record that process honestly — technical when needed,
+          reflective when that is more accurate.
         </p>
       </div>
-
       <div class="quote-box">
-        Research is not only about producing results. It is also about learning how to ask better questions.
+        Research is not only about producing results. It is also about learning how to ask better questions —
+        especially whether two groups were already different before treatment was chosen.
       </div>
     </section>
 
-    <section>
-      <h2 class="section-title">Current Interests</h2>
-      <div class="grid">
+    <section class="reveal">
+      <p class="sec-label">03</p>
+      <h2>Current interests</h2>
+      <div class="grid-2">
         <div class="card">
-          <h3>Clinical Research</h3>
-          <p>
-            I am interested in clinically meaningful questions, especially those related to
-            surgery, postoperative complications, emergency conditions, and prognosis.
-          </p>
+          <h3>Clinical research</h3>
+          <p>Questions that matter at the bedside: surgery, emergency allocation, postoperative complications, prognosis.</p>
+          <div class="action-row">
+            <a class="action ghost" href="projects.html#evar">EVAR project →</a>
+          </div>
         </div>
-
         <div class="card">
-          <h3>Evidence-Based Medicine</h3>
-          <p>
-            Systematic reviews and meta-analyses helped me understand how clinical evidence
-            is collected, evaluated, synthesized, and interpreted.
-          </p>
+          <h3>Evidence-based medicine</h3>
+          <p>How evidence is collected, appraised, pooled, and — importantly — how selection bias can rewrite the conclusion.</p>
+          <div class="action-row">
+            <a class="action ghost" href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">Latest paper →</a>
+          </div>
         </div>
-
         <div class="card">
-          <h3>Medical Data Science</h3>
-          <p>
-            Database studies, especially using MIMIC-IV, allow clinical problems to be explored
-            through structured data and prediction modeling.
-          </p>
+          <h3>Medical data science</h3>
+          <p>MIMIC-IV and structured clinical data for prediction models that respect time and leakage risks.</p>
+          <div class="action-row">
+            <a class="action ghost" href="life/mimic-aki-research.html">MIMIC notes →</a>
+          </div>
         </div>
-
         <div class="card">
-          <h3>Translational Exploration</h3>
-          <p>
-            Molecular docking and molecular dynamics give me a way to connect disease mechanisms,
-            molecular targets, and candidate compounds.
-          </p>
+          <h3>Translational exploration</h3>
+          <p>Docking and molecular dynamics as a way to connect disease mechanisms, targets, and candidate compounds.</p>
+          <div class="action-row">
+            <a class="action ghost" href="projects.html#docking">Docking project →</a>
+          </div>
         </div>
       </div>
     </section>
-
   </main>
 
-  <div class="footer">
-    © 2026 Bizhi Wei · Research Journey Blog
-  </div>
-
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© 2026 Bizhi Wei · About</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="posts.html">Posts</a>
+        <a href="life/index.html">Life</a>
+        <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    })();
+  </script>
 </body>
 </html>
