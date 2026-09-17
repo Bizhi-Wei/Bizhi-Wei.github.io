@@ -4,351 +4,125 @@
   <meta charset="UTF-8">
   <title>Posts | Bizhi Wei</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="blog.css">
 </head>
-
 <body>
-
-  <div class="navbar">
-    <div class="nav-container">
-      <div class="nav-logo">Bizhi's Research Notes</div>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="posts.html">Posts</a>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <a class="nav-brand" href="index.html">Bizhi Wei</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="index.html#publications">Papers</a>
+      <a href="projects.html">Projects</a>
+      <a href="posts.html" class="active">Posts</a>
+      <a href="life/index.html">Life</a>
     </div>
-  </div>
+  </nav>
 
-  <header class="page-hero">
-    <div class="hero-inner">
-      <div class="hero-tag">Blog Posts</div>
-      <h1 class="page-title">Research notes, reflections, and learning records.</h1>
-      <p class="page-subtitle">
-        This is where I plan to write about my research experience in a more relaxed and honest way:
-        not only results, but also process, confusion, revision, and growth.
-      </p>
+  <header class="container page-hero">
+    <p class="hero-tag">Research Notes</p>
+    <h1>Notes, process, and things I am still figuring out.</h1>
+    <p class="page-subtitle">
+      Academic notes on this site; longer Chinese writing lives on the life blog.
+    </p>
+    <div class="quick-strip">
+      <a class="action" href="life/research-notes.html">Life-blog notes (中文)</a>
+      <a class="action gold" href="life/evar-indication-confounding.html">EVAR selection-bias note</a>
+      <a class="action ghost" href="index.html#notes">Homepage notes</a>
     </div>
   </header>
 
-  <main class="main">
+  <main class="container">
+    <section class="reveal">
+      <p class="sec-label">01</p>
+      <h2>Featured notes</h2>
+      <div class="stack">
+        <a class="note" href="spl-appendectomy-meta-note.html">
+          <p class="note-meta">Meta-analysis · 2026.4.7</p>
+          <h3>Pediatric single-port laparoscopic appendectomy vs conventional laparoscopy</h3>
+          <p>24 studies, 3,789 pediatric patients, stratified by simple / complex appendicitis.</p>
+        </a>
 
-    <section>
-      <h2 class="section-title">Featured Notes</h2>
-      <p class="section-desc">
-        These are placeholder posts for now. Later, each card can link to a separate article page.
-      </p>
+        <a class="note" href="pediatric-meningioma-note.html">
+          <p class="note-meta">Medical learning note · 2026.3.18</p>
+          <h3>From pediatric fever to pediatric meningioma</h3>
+          <p>NF2, MRI sequences, and preoperative risk assessment — a student learning note.</p>
+        </a>
 
-      <div class="grid">
-        <div class="card">
-  <div class="meta">Research Diary · 2026.6.12</div>
-  <h2>
-    <a href="md-efficiency-20260612.html">期末周前夜：工具、朋友和效率的突然跃迁</a>
-  </h2>
-  <p>
-    一篇关于 100 ns 分子动力学试运行、AI 编程工具、朋友帮助和期末周前自我调整的科研日记。
-  </p>
-  <span class="badge">Molecular Dynamics</span>
-  <span class="badge">AI Coding</span>
-  <span class="badge">Research Diary</span>
-</div>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <title>从儿童发热想到小儿脑膜瘤 | Bizhi Wei</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="blog.css">
+        <a class="note" href="md-efficiency-20260612.html">
+          <p class="note-meta">Research diary · 2026.6.12</p>
+          <h3>100 ns MD trial run, tools, and a sudden efficiency jump</h3>
+          <p>Molecular dynamics setup, AI coding tools, and resetting before finals week.</p>
+        </a>
+      </div>
+    </section>
 
-  <style>
-    .article {
-      max-width: 860px;
-      margin: 0 auto;
-    }
+    <section class="reveal">
+      <p class="sec-label">02</p>
+      <h2>From the life blog</h2>
+      <p class="section-desc">Chinese notes that are more reflective or methodology-focused.</p>
+      <div class="stack">
+        <a class="note" href="life/evar-indication-confounding.html">
+          <p class="note-meta">学术打假笔记 · 2026.9.17</p>
+          <h3>适应症混杂：EVAR「低死亡率」背后的打假</h3>
+          <p>不是支架有多神，而是能躺上手术台的本来就是幸运儿。</p>
+        </a>
+        <a class="note" href="life/mimic-aki-research.html">
+          <p class="note-meta">学术笔记 · 2026.7.4</p>
+          <h3>MIMIC 数据库首次接触与术后 AKI 研究规划</h3>
+          <p>从申请、伦理培训到队列定义与动态预测时间点设计。</p>
+        </a>
+        <a class="note" href="life/data-processing-ml.html">
+          <p class="note-meta">学术笔记 · 2026.7.6</p>
+          <h3>数据处理与机器学习：深入理解</h3>
+          <p>划分、缺失值、标准化与数据泄漏。</p>
+        </a>
+        <a class="note" href="life/supercritical-co2-paper.html">
+          <p class="note-meta">论文学习 · 2026.7.7</p>
+          <h3>超临界 CO₂ 系统中药物溶解度预测</h3>
+          <p>集成学习与论文精读笔记。</p>
+        </a>
+        <a class="note" href="life/father-and-medicine.html">
+          <p class="note-meta">家庭 · 成长 · 2026.5.8</p>
+          <h3>父亲的高度，和我慢慢走向医学的路</h3>
+          <p>从医初心与家庭托举。</p>
+        </a>
+      </div>
+      <div class="quick-strip" style="margin-top:18px">
+        <a class="action" href="life/index.html">Life blog home</a>
+        <a class="action gold" href="life/research-notes.html">All academic notes</a>
+      </div>
+    </section>
+  </main>
 
-    .article-card {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 22px;
-      padding: 34px 30px;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.18);
-    }
-
-    .article-card p {
-      color: #e5e7eb;
-      font-size: 17px;
-      margin-bottom: 22px;
-      line-height: 2;
-    }
-
-    .article-card h2 {
-      color: #ffffff;
-      margin: 34px 0 16px;
-      font-size: 25px;
-    }
-
-    .notice {
-      background: rgba(147,197,253,0.10);
-      border-left: 4px solid #93c5fd;
-      padding: 18px 20px;
-      border-radius: 14px;
-      color: #dbeafe;
-      margin-bottom: 28px;
-      line-height: 1.9;
-    }
-
-    .quote {
-      background: rgba(15, 23, 42, 0.80);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 18px;
-      padding: 24px;
-      margin: 30px 0;
-      color: #bfdbfe;
-      font-size: 18px;
-      text-align: center;
-    }
-
-    .references {
-      margin-top: 40px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .references h2 {
-      font-size: 22px;
-      margin-bottom: 14px;
-    }
-
-    .references li {
-      color: #cbd5e1;
-      margin-bottom: 10px;
-      font-size: 15px;
-    }
-
-    .back {
-      text-align: center;
-      margin-top: 34px;
-    }
-
-    @media (max-width: 700px) {
-      .article-card {
-        padding: 26px 20px;
-      }
-
-      .article-card p {
-        font-size: 16px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="navbar">
-    <div class="nav-container">
-      <div class="nav-logo">Bizhi's Research Notes</div>
-      <div class="nav-links">
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© 2026 Bizhi Wei · Posts</span>
+      <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
-        <a href="posts.html">Posts</a>
+        <a href="life/index.html">Life</a>
+        <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
-  </div>
-
-  <header class="page-hero">
-    <div class="hero-inner">
-      <div class="hero-tag">Medical Learning Note · 2026.3.18</div>
-      <h1 class="page-title">从儿童发热想到小儿脑膜瘤</h1>
-      <p class="page-subtitle">
-        一篇医学生学习札记：从常见症状、红旗表现、NF2、MRI 序列到术前风险评估。
-      </p>
-    </div>
-  </header>
-
-  <main class="main">
-    <div class="article">
-      <div class="article-card">
-
-        <div class="notice">
-          说明：本文为个人医学学习笔记，不构成诊疗建议。儿童若出现持续高热、剧烈头痛、喷射性呕吐、抽搐、意识改变、颈项强直、肢体无力或视力异常等表现，应及时就医。
-        </div>
-
-        <p>最近有一点感触：对于儿童来说，即使是发热这样看起来很常见的小病，也不应该被轻易忽视。</p>
-
-        <p>当然，发热本身并不等于严重疾病。很多儿童发热只是普通感染，经过观察、退热和对症处理就能恢复。但真正值得警惕的是那些伴随出现的“红旗症状”：反复或喷射性呕吐、剧烈头痛、视力改变、抽搐、意识状态异常、肢体无力、走路不稳、颈项强直等。儿童表达能力有限，病情变化又可能很快，所以很多时候，家长和医生都需要更敏感一点。</p>
-
-        <p>这次我查阅资料时，注意到了“小儿脑膜瘤”这个疾病。</p>
-
-        <p>一开始，我对脑膜瘤的理解还停留在很简单的层面：脑膜上长了一个“瘤子”，属于肿瘤。但继续往下看，才发现它背后的遗传学、影像学和手术评估都很复杂。</p>
-
-        <p>与成人脑膜瘤相比，小儿脑膜瘤有一些特殊之处。成人脑膜瘤更常见，部分研究也会讨论激素、性别等因素的影响；但儿童脑膜瘤相对少见，出现时更需要考虑遗传性肿瘤综合征的可能，尤其是神经纤维瘤病 2 型，也就是 NF2。NF2 与 22 号染色体上的 NF2 基因异常有关，患者可以更早出现脑膜瘤、听神经瘤等中枢神经系统肿瘤。除此之外，既往头颅放射治疗史也可能增加日后发生脑膜瘤的风险。</p>
-
-        <h2>症状：不是只看“肿瘤”，而是看压迫了哪里</h2>
-
-        <p>从临床表现来看，脑膜瘤的症状并不完全取决于“是不是肿瘤”，而更取决于它长在哪里、压迫了什么结构、是否引起颅内压升高。</p>
-
-        <p>第一类表现是颅内压增高。比如头痛、呕吐、视乳头水肿或视物模糊。尤其是喷射性呕吐，背后可能提示颅内压力升高，需要引起重视。</p>
-
-        <p>第二类表现是局部压迫症状。如果肿瘤压迫运动区，可能出现走路不稳、一侧肢体无力；如果压迫额叶，可能出现性格、情绪或行为改变；如果影响视神经或视路，则可能出现视力下降、视野缺损等表现。</p>
-
-        <p>第三类表现是癫痫。肿瘤压迫或刺激周围脑组织，可能导致神经元异常放电，从而出现癫痫发作。</p>
-
-        <h2>影像：MRI 不只是“看见肿瘤”</h2>
-
-        <p>影像学判断也很重要。以前我只知道 MRI 能“看肿瘤”，但现在逐渐明白，不同序列对应的意义并不一样。</p>
-
-        <p>T1 加权像更偏向看解剖结构，尤其是在增强扫描后，可以帮助判断肿瘤边界、强化程度、与硬脑膜和周围血管的关系。比如肿瘤是否推移血管、包绕血管，或者与重要结构关系密切。</p>
-
-        <p>T2 加权像和 FLAIR 序列则更有助于观察病理性信号，例如肿瘤周围水肿、脑组织受压情况、肿瘤质地线索等。若肿瘤周围出现明显高信号水肿，可能提示肿瘤对周围脑组织的影响更明显，也可能增加手术难度。</p>
-
-        <h2>儿童患者：术前评估需要更谨慎</h2>
-
-        <p>对于儿童患者，风险评估还要更加谨慎。</p>
-
-        <p>第一，儿童的失血耐受能力更低。成人手术中可以承受的一部分失血量，对儿童来说可能已经是很大的生理负担。因此术前判断肿瘤血供是否丰富、是否有粗大供血动脉、是否存在血管包绕，对手术规划非常重要。</p>
-
-        <p>第二，儿童颅骨仍处于发育阶段，质地和可塑性与成人不同。某些肿瘤长期生长后，可能对颅骨造成影响，甚至表现为局部隆起或骨质改变。</p>
-
-        <p>第三，肿瘤质地也会影响手术方式。直觉上可能会觉得“硬肿瘤一整块剥离更容易”，但脑膜瘤的手术并不总是简单地把肿瘤“剥出来”。很多情况下，术中需要分块切除、吸除、减压，再逐步处理肿瘤与脑组织、血管和神经之间的关系。影像上，T2 信号偏低有时提示肿瘤可能更硬，T2 信号偏高则可能提示质地较软或含水量较高，但这并不是绝对判断，还需要结合增强扫描、血供情况、钙化、周围水肿和术者经验综合分析。</p>
-
-        <p>如果 T2 或 FLAIR 上出现明显大片高信号，尤其是肿瘤周围水肿显著，就需要进一步思考肿瘤与脑组织之间的界面是否清楚。若蛛网膜界面受破坏，肿瘤和脑组织之间可能不再有理想的分离平面，手术难度也会随之增加。软脑膜侵犯、脑组织受侵、血管包绕等因素，都会让“切除一个肿瘤”变成一个需要精细评估的复杂过程。</p>
-
-        <div class="quote">
-          影像学并不只是告诉我们“有没有肿瘤”，更重要的是告诉我们：风险在哪里。
-        </div>
-
-        <p>所以，影像学并不只是告诉我们“有没有肿瘤”，更重要的是告诉我们：这个肿瘤在哪里、压迫了什么、血供如何、边界是否清楚、周围有没有水肿、能不能安全切除、手术风险在哪里。</p>
-
-        <p>这也是我这次学习后的一个体会：医学并不是简单地背概念，而是不断把症状、病因、影像、解剖和治疗联系起来。</p>
-
-        <p>一个儿童发热，看似普通；一个脑膜瘤，看似只是“长了个瘤”；一张 MRI，看似只是黑白影像。但当这些信息真正连在一起时，背后其实是医生对风险的判断、对细节的敏感，以及对患儿安全的负责。</p>
-
-        <p>这篇笔记并不是诊疗建议，只是我作为医学生的一次学习整理。以后再回头看，也许会发现今天的理解还很粗浅。但至少此刻，我开始意识到：临床学习最重要的，不只是记住一个病名，而是学会在一个看似普通的症状背后，保持足够谨慎和敬畏。</p>
-
-        <div class="references">
-          <h2>参考来源</h2>
-          <ol>
-            <li>NCBI Bookshelf. Neurofibromatosis Type 2.</li>
-            <li>Children's Hospital of Philadelphia. Neurofibromatosis Type 2.</li>
-            <li>Coy S, et al. CNS manifestations of neurofibromatosis type 2.</li>
-            <li>Mayo Clinic. Meningitis symptoms and causes; Headaches in children.</li>
-            <li>Radiopaedia. Meningioma imaging features.</li>
-          </ol>
-        </div>
-
-        <div class="back">
-          <a href="posts.html">← 返回 Posts</a>
-        </div>
-
-      </div>
-    </div>
-  </main>
-
-  <div class="footer">
-    © 2026 Bizhi Wei · Research Journey Blog
-  </div>
-
-</body>
-</html>
-        <div class="card">
-          <div class="meta">Research Diary · 2026</div>
-          <h2>How I Started My First Meta-analysis</h2>
-          <p>
-            A reflection on how I moved from not knowing where to begin to gradually understanding
-            literature search, screening, extraction, and manuscript writing.
-          </p>
-          <span class="badge">Meta-analysis</span>
-          <span class="badge">Beginner</span>
-          <span class="badge">Reflection</span>
-        </div>
-
-        <div class="card">
-          <div class="meta">Methodology Note · 2026</div>
-          <h2>What Selection Bias Taught Me in Surgical Research</h2>
-          <p>
-            Surgical evidence is often complicated by patient selection, disease severity,
-            emergency status, and real-world clinical decision-making.
-          </p>
-          <span class="badge">Surgery</span>
-          <span class="badge">Bias</span>
-          <span class="badge">Clinical Thinking</span>
-        </div>
-
-        <div class="card">
-          <div class="meta">Learning Record · 2026</div>
-          <h2>My First Steps with MIMIC-IV</h2>
-          <p>
-            Notes on learning database structure, cohort definition, variable extraction,
-            and the difficulty of turning a clinical question into analyzable data.
-          </p>
-          <span class="badge">MIMIC-IV</span>
-          <span class="badge">Database</span>
-          <span class="badge">AKI</span>
-        </div>
-
-        <div class="card">
-          <div class="meta">Translational Medicine · 2026</div>
-          <h2>From Clinical Question to Molecular Docking</h2>
-          <p>
-            A personal note on why I became interested in combining clinical disease questions
-            with molecular targets, docking, and molecular dynamics.
-          </p>
-          <span class="badge">Docking</span>
-          <span class="badge">MD</span>
-          <span class="badge">AAA</span>
-        </div>
-
-        <div class="card">
-          <div class="meta">Personal Reflection · 2026</div>
-          <h2>What I Learned from Academic Setbacks</h2>
-          <p>
-            Research is not always smooth. Revisions, rejection, uncertainty, and cost problems
-            are also part of academic training.
-          </p>
-          <span class="badge">Failure</span>
-          <span class="badge">Growth</span>
-          <span class="badge">Honesty</span>
-        </div>
-
-        <div class="card">
-          <div class="meta">Medical Student Life · 2026</div>
-          <h2>Balancing Coursework, Research, English, and Japanese</h2>
-          <p>
-            A record of how I try to balance medical school courses, research projects,
-            language learning, and long-term study plans.
-          </p>
-          <span class="badge">Medical Student</span>
-          <span class="badge">Study Plan</span>
-          <span class="badge">Overseas Study</span>
-        </div>
-
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title">Future Categories</h2>
-      <div class="card">
-        <p>
-          In the future, I may organize posts into these categories:
-        </p>
-        <p>
-          <span class="badge">Research Diary</span>
-          <span class="badge">Paper Reading</span>
-          <span class="badge">Methodology</span>
-          <span class="badge">Medical Student Life</span>
-          <span class="badge">Language Learning</span>
-          <span class="badge">Overseas Study</span>
-        </p>
-      </div>
-    </section>
-
-  </main>
-
-  <div class="footer">
-    © 2026 Bizhi Wei · Research Journey Blog
-  </div>
-
+  </footer>
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    })();
+  </script>
 </body>
 </html>
