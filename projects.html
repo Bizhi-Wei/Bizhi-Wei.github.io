@@ -4,193 +4,178 @@
   <meta charset="UTF-8">
   <title>Projects | Bizhi Wei</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="blog.css">
 </head>
-
 <body>
-
-  <div class="navbar">
-    <div class="nav-container">
-      <div class="nav-logo">Bizhi's Research Notes</div>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="posts.html">Posts</a>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <a class="nav-brand" href="index.html">Bizhi Wei</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="index.html#publications">Papers</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="posts.html">Posts</a>
+      <a href="life/index.html">Life</a>
     </div>
-  </div>
+  </nav>
 
-  <header class="page-hero">
-    <div class="hero-inner">
-      <div class="hero-tag">Research Projects</div>
-      <h1 class="page-title">Projects I am learning from.</h1>
-      <p class="page-subtitle">
-        These are not only research outputs, but also records of how I gradually learned
-        methodology, clinical thinking, and academic writing.
-      </p>
+  <header class="container page-hero">
+    <p class="hero-tag">Research Projects</p>
+    <h1>Projects I am learning from.</h1>
+    <p class="page-subtitle">
+      Described conservatively and honestly. Some are published, some are under review,
+      and some are still in preparation.
+    </p>
+    <div class="quick-strip">
+      <a class="action" href="index.html#publications">Papers</a>
+      <a class="action gold" href="posts.html">Notes</a>
+      <a class="action ghost" href="https://github.com/Bizhi-Wei?tab=repositories" target="_blank" rel="noopener">GitHub</a>
     </div>
   </header>
 
-  <main class="main">
-
-    <section>
-      <h2 class="section-title">Selected Projects</h2>
-      <p class="section-desc">
-        I try to describe each project conservatively and honestly. Some are completed,
-        some are under review, and some are still in preparation.
-      </p>
-
-      <div class="card">
-        <div class="meta">Published · Annals of Vascular Surgery · 2026</div>
-        <h2>Hemodynamic selection bias in observational comparisons of EVAR versus open repair for ruptured infrarenal abdominal aortic aneurysm: a systematic review and meta-analysis</h2>
-        <p>
-          Wei B, Yuan C, Li M. Annals of Vascular Surgery. 2026.
-          doi:10.1016/j.avsg.2026.08.042 (Journal Pre-proof).
-        </p>
-        <p>
-          Nine studies were included qualitatively; six studies (1,035 patients) entered the primary
-          30-day mortality meta-analysis. EVAR was associated with lower 30-day mortality
-          (OR 0.59, 95% CI 0.44–0.80), but no study met relatively balanced treatment-allocation criteria.
-        </p>
-        <p>
-          <a href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">DOI</a>
-          ·
-          <a href="https://www.sciencedirect.com/science/article/abs/pii/S0890509626006394" target="_blank" rel="noopener">ScienceDirect</a>
-        </p>
-        <span class="badge">Published</span>
-        <span class="badge">Annals of Vascular Surgery</span>
-        <span class="badge">rAAA</span>
-        <span class="badge">Meta-analysis</span>
+  <main class="container">
+    <section id="published" class="reveal">
+      <p class="sec-label">01</p>
+      <h2>Published</h2>
+      <div class="stack">
+        <div class="card" id="evar">
+          <p class="meta">Annals of Vascular Surgery · 2026</p>
+          <h2 style="font-size:20px">
+            <a href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">
+              Hemodynamic selection bias in observational comparisons of EVAR versus open repair for ruptured infrarenal abdominal aortic aneurysm: a systematic review and meta-analysis
+            </a>
+          </h2>
+          <p>Wei B, Yuan C, Li M. Journal Pre-proof. Six studies (1,035 patients) in the primary 30-day mortality analysis; EVAR associated with lower mortality, but treatment allocation was strongly selected.</p>
+          <div class="action-row">
+            <a class="action" href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">DOI</a>
+            <a class="action gold" href="https://www.sciencedirect.com/science/article/abs/pii/S0890509626006394" target="_blank" rel="noopener">ScienceDirect</a>
+            <a class="action ghost" href="life/evar-indication-confounding.html">Research note</a>
+            <a class="action ghost" href="index.html#proj-evar">Homepage</a>
+          </div>
+          <div class="badge-row">
+            <span class="badge">Vascular Surgery</span>
+            <span class="badge">Meta-analysis</span>
+            <span class="badge">Selection Bias</span>
+            <span class="badge">AVSG 2026</span>
+          </div>
+        </div>
       </div>
-
-      <div class="card">
-        <div class="meta">Systematic Review and Meta-analysis · Published</div>
-        <h2>EVAR versus Open Repair for Ruptured Infrarenal Abdominal Aortic Aneurysm</h2>
-        <p>
-          This project focuses on the comparison between endovascular repair and open surgical repair
-          in ruptured infrarenal abdominal aortic aneurysm, with particular attention to hemodynamic
-          selection bias.
-        </p>
-        <p>
-          What I learned: clinical heterogeneity, selection bias, evidence interpretation, and the difficulty
-          of making conclusions from observational surgical studies.
-        </p>
-        <span class="badge">Vascular Surgery</span>
-        <span class="badge">Meta-analysis</span>
-        <span class="badge">Selection Bias</span>
-        <span class="badge">AVSG 2026</span>
-      </div>
-
-      <div class="card">
-        <div class="meta">MIMIC-IV Database Study</div>
-        <h2>Dynamic Prediction of Postoperative Acute Kidney Injury in Surgical ICU Patients</h2>
-        <p>
-          This planned project aims to use the MIMIC-IV database to explore postoperative acute kidney injury
-          in surgical ICU patients and identify potentially modifiable risk factors.
-        </p>
-        <p>
-          What I want to learn: database extraction, variable definition, model building, dynamic prediction,
-          and clinical interpretation.
-        </p>
-        <span class="badge">Surgical ICU</span>
-        <span class="badge">AKI</span>
-        <span class="badge">Prediction Model</span>
-      </div>
-
-      <div class="card">
-        <div class="meta">Medical Device Innovation</div>
-        <h2>Femoral Artery Compression Device after Interventional Procedures</h2>
-        <p>
-          This project explores a mechanical compression device for post-procedural femoral artery hemostasis,
-          focusing on anti-displacement design and passive mechanical feedback.
-        </p>
-        <p>
-          What I learned: clinical needs can become device ideas, and even a small practical problem may contain
-          research and innovation value.
-        </p>
-        <span class="badge">Medical Device</span>
-        <span class="badge">Intervention</span>
-        <span class="badge">Hemostasis</span>
-      </div>
-
-      <div class="card">
-        <div class="meta">Manuscript under review · September 2026</div>
-        <h2>Structure-based Virtual Screening Methodology Study</h2>
-        <p>
-          A single-author computational methodology manuscript currently under review at the
-          Journal of Molecular Graphics and Modelling (JMGM).
-        </p>
-        <p>
-          Full title, abstract, and detailed findings will be shared after an editorial decision,
-          to protect the work while review is ongoing.
-        </p>
-        <span class="badge">Under Review</span>
-        <span class="badge">JMGM</span>
-        <span class="badge">Computational Methods</span>
-      </div>
-
-      <div class="card">
-        <div class="meta">Computational Molecular Research</div>
-        <h2>Molecular Docking and Molecular Dynamics in Abdominal Aortic Aneurysm</h2>
-        <p>
-          This project explores inflammation-related targets and candidate small molecules in abdominal aortic
-          aneurysm using molecular docking and molecular dynamics simulation.
-        </p>
-        <p>
-          What I learned: computational results need biological interpretation, and mechanistic exploration should
-          not be separated from clinical disease understanding.
-        </p>
-        <span class="badge">Molecular Docking</span>
-        <span class="badge">Molecular Dynamics</span>
-        <span class="badge">AAA</span>
-      </div>
-
     </section>
 
-    <section>
-      <h2 class="section-title">Project Timeline</h2>
+    <section id="active" class="reveal">
+      <p class="sec-label">02</p>
+      <h2>Active &amp; Planned</h2>
+      <div class="stack">
+        <div class="card" id="aki">
+          <p class="meta">MIMIC-IV database study</p>
+          <h2 style="font-size:20px">Dynamic prediction of postoperative acute kidney injury in surgical ICU patients</h2>
+          <p>A planned database study using MIMIC-IV to develop time-updated prediction models for postoperative AKI.</p>
+          <div class="action-row">
+            <a class="action" href="life/mimic-aki-research.html">Research notes</a>
+            <a class="action gold" href="life/data-processing-ml.html">Methods notes</a>
+            <a class="action ghost" href="index.html#proj-aki">Homepage</a>
+          </div>
+          <div class="badge-row">
+            <span class="badge">Surgical ICU</span>
+            <span class="badge">AKI</span>
+            <span class="badge">Prediction Model</span>
+          </div>
+        </div>
 
+        <div class="card" id="device">
+          <p class="meta">Medical device innovation</p>
+          <h2 style="font-size:20px">Femoral artery compression device after interventional procedures</h2>
+          <p>A mechanical compression concept for post-procedural femoral artery hemostasis, focusing on anti-displacement design and passive feedback.</p>
+          <div class="action-row">
+            <a class="action ghost" href="index.html#proj-device">Homepage</a>
+          </div>
+          <div class="badge-row">
+            <span class="badge">Medical Device</span>
+            <span class="badge">Hemostasis</span>
+          </div>
+        </div>
+
+        <div class="card" id="docking">
+          <p class="meta">Computational molecular research · JMGM under review</p>
+          <h2 style="font-size:20px">Molecular docking and molecular dynamics in abdominal aortic aneurysm</h2>
+          <p>Exploration of inflammation-related targets and candidate small molecules. A methodology manuscript is currently under review; detailed findings are withheld until editorial decision.</p>
+          <div class="action-row">
+            <a class="action" href="https://github.com/Bizhi-Wei/Computational-screening-of-potential-MMP-9-and-NLRP3-inhibitors-for-abdominal-aortic-aneurysm" target="_blank" rel="noopener">GitHub repo</a>
+            <a class="action gold" href="md-efficiency-20260612.html">MD diary note</a>
+            <a class="action ghost" href="index.html#pub-jmgm">Under-review entry</a>
+          </div>
+          <div class="badge-row">
+            <span class="badge">Molecular Docking</span>
+            <span class="badge">Molecular Dynamics</span>
+            <span class="badge">AAA</span>
+          </div>
+        </div>
+
+        <div class="card" id="mimic">
+          <p class="meta">Related methods</p>
+          <h2 style="font-size:20px">Data processing &amp; machine learning notes</h2>
+          <p>Supporting notes on cohort definition, missing data, leakage prevention, and model training for clinical database work.</p>
+          <div class="action-row">
+            <a class="action" href="life/data-processing-ml.html">Open methods notes</a>
+            <a class="action gold" href="life/mimic-aki-research.html">MIMIC planning notes</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="timeline" class="reveal">
+      <p class="sec-label">03</p>
+      <h2>Timeline</h2>
       <div class="timeline">
         <div class="timeline-item">
-          <h3>Early Evidence-Based Medicine Training</h3>
-          <p>
-            I started by learning literature search, data extraction, risk-of-bias assessment,
-            and manuscript organization through meta-analysis projects.
-          </p>
+          <h3>Evidence-based medicine training</h3>
+          <p>Literature search, data extraction, risk-of-bias assessment, and manuscript organization through meta-analysis work. <a href="spl-appendectomy-meta-note.html">See appendectomy note →</a></p>
         </div>
-
         <div class="timeline-item">
-          <h3>Moving Toward Vascular Surgery</h3>
-          <p>
-            The RAAA project helped me become more interested in vascular surgery and the complex
-            decision-making behind emergency surgical diseases.
-          </p>
+          <h3>Vascular surgery focus</h3>
+          <p>The rAAA project deepened interest in emergency surgical decision-making and selection bias. <a href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">Read the paper →</a></p>
         </div>
-
         <div class="timeline-item">
-          <h3>Exploring Clinical Databases</h3>
-          <p>
-            MIMIC-IV gives me a chance to ask clinically meaningful questions using large-scale
-            critical care data.
-          </p>
+          <h3>Clinical databases</h3>
+          <p>MIMIC-IV opened a path to clinically meaningful questions with structured critical-care data. <a href="life/mimic-aki-research.html">See planning notes →</a></p>
         </div>
-
         <div class="timeline-item">
-          <h3>Trying Translational Methods</h3>
-          <p>
-            Molecular docking and molecular dynamics are new areas for me, but they may help me
-            connect clinical questions with possible molecular mechanisms.
-          </p>
+          <h3>Translational methods</h3>
+          <p>Docking and molecular dynamics connect clinical questions to possible molecular mechanisms. <a href="md-efficiency-20260612.html">See MD diary →</a></p>
         </div>
       </div>
     </section>
-
   </main>
 
-  <div class="footer">
-    © 2026 Bizhi Wei · Research Journey Blog
-  </div>
-
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© 2026 Bizhi Wei · Projects</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="posts.html">Posts</a>
+        <a href="life/index.html">Life</a>
+        <a href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener">ORCID</a>
+        <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    })();
+  </script>
 </body>
 </html>
