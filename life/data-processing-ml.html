@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -668,5 +668,10 @@
       </footer>
     </article>
   </div>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <script src="../three.min.js"></script>
+  <script src="../site-3d.js"></script>
+  <script>(function(){try{if(window.Site3D){var t='desk';var d=0.45;var s=document.body.getAttribute('data-life-theme');if(s)t=s;Site3D.initAmbientBackground({canvas:document.getElementById('bg-canvas'),theme:t,density:d,accent:t==='paper'?Site3D.buildAboutPulse():Site3D.buildLifeLamp()});}}catch(e){console.error(e);}})();</script>
 </body>
 </html>
+
