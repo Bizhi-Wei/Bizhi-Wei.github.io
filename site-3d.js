@@ -7,26 +7,26 @@
     paper: {
       primary: 0x0d6b64,
       secondary: 0xc08a2d,
-      particleOpacity: 0.38,
-      goldOpacity: 0.28,
-      gridA: 0.08,
-      gridB: 0.05,
-      lineOpacity: 0.08,
-      arcPrimary: 0.07,
-      arcSecondary: 0.06,
-      shellOpacity: 0.035
+      particleOpacity: 0.16,
+      goldOpacity: 0.12,
+      gridA: 0.03,
+      gridB: 0.022,
+      lineOpacity: 0.035,
+      arcPrimary: 0.03,
+      arcSecondary: 0.025,
+      shellOpacity: 0.015
     },
     desk: {
       primary: 0xffc46b,
       secondary: 0x7ee8b2,
-      particleOpacity: 0.42,
-      goldOpacity: 0.32,
-      gridA: 0.09,
-      gridB: 0.07,
-      lineOpacity: 0.1,
-      arcPrimary: 0.09,
-      arcSecondary: 0.07,
-      shellOpacity: 0.04
+      particleOpacity: 0.16,
+      goldOpacity: 0.12,
+      gridA: 0.035,
+      gridB: 0.025,
+      lineOpacity: 0.04,
+      arcPrimary: 0.035,
+      arcSecondary: 0.028,
+      shellOpacity: 0.018
     }
   };
 
@@ -80,7 +80,7 @@
     gridB.rotation.z = Math.PI * 0.08;
     root.add(gridB);
 
-    var count = Math.floor(1400 * density);
+    var count = Math.floor(700 * density);
     var positions = new Float32Array(count * 3);
     var seeds = [];
     for (var i = 0; i < count; i++) {
@@ -165,9 +165,9 @@
       mesh.rotation.set(rot[0], rot[1], rot[2]);
       return mesh;
     }
-    var arc1 = arcTube(5.2, 0.22, theme.primary, theme.arcPrimary, [0.4, 0.2, 0.3]);
-    var arc2 = arcTube(3.6, 0.16, theme.secondary, theme.arcSecondary, [-0.3, 0.8, 0.1]);
-    var arc3 = arcTube(6.4, 0.12, theme.primary, theme.arcPrimary * 0.7, [1.1, -0.4, 0.2]);
+    var arc1 = arcTube(4.2, 0.12, theme.primary, theme.arcPrimary, [0.4, 0.2, 0.3]);
+    var arc2 = arcTube(3.1, 0.1, theme.secondary, theme.arcSecondary, [-0.3, 0.8, 0.1]);
+    var arc3 = arcTube(5.0, 0.08, theme.primary, theme.arcPrimary * 0.7, [1.1, -0.4, 0.2]);
     root.add(arc1); root.add(arc2); root.add(arc3);
 
     var shell = new THREE.Mesh(
@@ -310,38 +310,30 @@
 
   function buildLifeLamp() {
     var g = new THREE.Group();
-    g.userData.spin = 0.035;
+    g.userData.spin = 0.02;
     var amber = 0xffc46b;
     var mint = 0x7ee8b2;
     var cone = new THREE.Mesh(
-      new THREE.ConeGeometry(0.7, 1.1, 16, 1, true),
+      new THREE.ConeGeometry(0.45, 0.7, 12, 1, true),
       new THREE.MeshBasicMaterial({
-        color: amber, wireframe: true, transparent: true, opacity: 0.12,
+        color: amber, wireframe: true, transparent: true, opacity: 0.05,
         side: THREE.DoubleSide, depthWrite: false
       })
     );
-    cone.position.set(4.2, 1.4, -1.8);
+    cone.position.set(5.5, 1.8, -3.2);
     cone.rotation.x = Math.PI;
     g.add(cone);
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 2; i++) {
       var ring = new THREE.Mesh(
-        new THREE.TorusGeometry(0.5 + i * 0.28, 0.025, 6, 40),
+        new THREE.TorusGeometry(0.35 + i * 0.2, 0.015, 6, 32),
         new THREE.MeshBasicMaterial({
-          color: i % 2 ? mint : amber,
-          wireframe: true, transparent: true, opacity: 0.12 - i * 0.02
+          color: i ? mint : amber,
+          wireframe: true, transparent: true, opacity: 0.045
         })
       );
       ring.rotation.x = Math.PI / 2.2;
-      ring.position.set(4.2, 0.2 - i * 0.08, -1.8);
+      ring.position.set(5.5, 0.5, -3.2);
       g.add(ring);
-    }
-    for (var j = 0; j < 8; j++) {
-      var chip = new THREE.Mesh(
-        new THREE.BoxGeometry(0.08, 0.08, 0.08),
-        new THREE.MeshBasicMaterial({ color: j % 2 ? mint : amber, transparent: true, opacity: 0.25 })
-      );
-      chip.position.set(3.2 + Math.random() * 2.2, 0.2 + Math.random() * 1.6, -2.4 + Math.random() * 1.4);
-      g.add(chip);
     }
     return g;
   }
