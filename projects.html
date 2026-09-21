@@ -8,8 +8,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="blog.css">
+  <style>
+    .accent-note {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 14px; padding: 8px 12px;
+      border-radius: 999px; border: 1px solid var(--line);
+      background: rgba(255,255,255,.75);
+      font-family: var(--mono); font-size: 12px; color: var(--dim);
+    }
+    .accent-note i {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--teal);
+    }
+  </style>
 </head>
 <body>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
   <nav class="site-nav">
     <div class="container">
       <a class="nav-brand" href="index.html">Bizhi Wei</a>
@@ -18,6 +31,7 @@
       <a href="index.html#publications">Papers</a>
       <a href="projects.html" class="active">Projects</a>
       <a href="posts.html">Posts</a>
+      <a href="index.html#map">3D Map</a>
       <a href="life/index.html">Life</a>
     </div>
   </nav>
@@ -27,13 +41,15 @@
     <h1>Projects I am learning from.</h1>
     <p class="page-subtitle">
       Described conservatively and honestly. Some are published, some are under review,
-      and some are still in preparation.
+      and some are still in preparation. The page shares the same scientific 3D field as the homepage.
     </p>
     <div class="quick-strip">
-      <a class="action" href="index.html#publications">Papers</a>
-      <a class="action gold" href="posts.html">Notes</a>
+      <a class="action" href="index.html#instrument">3D Instrument</a>
+      <a class="action gold" href="index.html#map">Research Map</a>
+      <a class="action ghost" href="posts.html">Notes</a>
       <a class="action ghost" href="https://github.com/Bizhi-Wei?tab=repositories" target="_blank" rel="noopener">GitHub</a>
     </div>
+    <div class="accent-note"><i></i> background accent · project cluster nodes</div>
   </header>
 
   <main class="container">
@@ -53,6 +69,7 @@
             <a class="action" href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">DOI</a>
             <a class="action gold" href="https://www.sciencedirect.com/science/article/abs/pii/S0890509626006394" target="_blank" rel="noopener">ScienceDirect</a>
             <a class="action ghost" href="life/evar-indication-confounding.html">Research note</a>
+            <a class="action ghost" href="index.html#map">3D map</a>
             <a class="action ghost" href="index.html#proj-evar">Homepage</a>
           </div>
           <div class="badge-row">
@@ -76,6 +93,7 @@
           <div class="action-row">
             <a class="action" href="life/mimic-aki-research.html">Research notes</a>
             <a class="action gold" href="life/data-processing-ml.html">Methods notes</a>
+            <a class="action ghost" href="index.html#map">3D map</a>
             <a class="action ghost" href="index.html#proj-aki">Homepage</a>
           </div>
           <div class="badge-row">
@@ -90,6 +108,7 @@
           <h2 style="font-size:20px">Femoral artery compression device after interventional procedures</h2>
           <p>A mechanical compression concept for post-procedural femoral artery hemostasis, focusing on anti-displacement design and passive feedback.</p>
           <div class="action-row">
+            <a class="action ghost" href="index.html#map">3D map</a>
             <a class="action ghost" href="index.html#proj-device">Homepage</a>
           </div>
           <div class="badge-row">
@@ -105,6 +124,7 @@
           <div class="action-row">
             <a class="action" href="https://github.com/Bizhi-Wei/Computational-screening-of-potential-MMP-9-and-NLRP3-inhibitors-for-abdominal-aortic-aneurysm" target="_blank" rel="noopener">GitHub repo</a>
             <a class="action gold" href="md-efficiency-20260612.html">MD diary note</a>
+            <a class="action ghost" href="index.html#map">3D map</a>
             <a class="action ghost" href="index.html#pub-jmgm">Under-review entry</a>
           </div>
           <div class="badge-row">
@@ -157,24 +177,37 @@
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="posts.html">Posts</a>
+        <a href="index.html#map">3D Map</a>
         <a href="life/index.html">Life</a>
         <a href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener">ORCID</a>
         <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>
+
+  <script src="three.min.js"></script>
+  <script src="site-3d.js"></script>
   <script>
     (function () {
       if (!('IntersectionObserver' in window)) {
         document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-        return;
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
       }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.08 });
-      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+      try {
+        if (window.Site3D) {
+          Site3D.initAmbientBackground({
+            canvas: document.getElementById('bg-canvas'),
+            density: 0.85,
+            accent: Site3D.buildProjectCluster()
+          });
+        }
+      } catch (e) { console.error(e); }
     })();
   </script>
 </body>
