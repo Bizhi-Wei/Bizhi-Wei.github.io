@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <title>父亲的高度，和我慢慢走向医学的路</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
+  <style id="cream-3d">
     * {
       margin: 0;
       padding: 0;
@@ -150,9 +150,15 @@
       }
     }
   </style>
+<style id="cream-3d">
+#bg-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+body{position:relative;background:linear-gradient(180deg,rgba(247,243,234,.88),rgba(247,243,234,.94)),#f7f3ea}
+body>div, body>.topbar, body>header, body>main, body>footer, .topbar, .hero, main, .footer, article{position:relative;z-index:1}
+.topbar,article,.hero{background-color:rgba(255,250,242,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+</style>
 </head>
 
-<body>
+<body data-life-theme="paper">
 
   <div class="topbar">
     <div class="topbar-inner">
@@ -228,5 +234,11 @@
     © 2026 必治的日常小站 · 慢慢生活，慢慢记录
   </footer>
 
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <script src="../three.min.js"></script>
+  <script src="../site-3d.js"></script>
+  <script>(function(){try{if(window.Site3D){var t='desk';var d=0.45;var s=document.body.getAttribute('data-life-theme');if(s)t=s;Site3D.initAmbientBackground({canvas:document.getElementById('bg-canvas'),theme:t,density:d,accent:t==='paper'?Site3D.buildAboutPulse():Site3D.buildLifeLamp()});}}catch(e){console.error(e);}})();</script>
 </body>
 </html>
+
+
