@@ -5,158 +5,7 @@
   <title>父亲的高度，和我慢慢走向医学的路</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style id="cream-3d">
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
-      background: #f7f3ea;
-      color: #2f2f2f;
-      line-height: 2;
-    }
-
-    a {
-      color: #7c4a27;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .topbar {
-      background: #efe4d4;
-      border-bottom: 1px solid #e0cdb5;
-      padding: 16px 22px;
-    }
-
-    .topbar-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .site-name {
-      font-weight: 700;
-      color: #3b2a1d;
-    }
-
-    .nav a {
-      margin-left: 16px;
-      color: #6b4226;
-      font-size: 15px;
-    }
-
-    .hero {
-      padding: 72px 22px 44px;
-      background:
-        linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.94)),
-        url("../images/life-bg.jpg");
-      background-size: cover;
-      background-position: center;
-      border-bottom: 1px solid #eadcc8;
-    }
-
-    .hero-inner {
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .tag {
-      display: inline-block;
-      background: #fff0d9;
-      color: #8a5a2b;
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      margin-bottom: 18px;
-    }
-
-    h1 {
-      font-size: 38px;
-      line-height: 1.35;
-      color: #2d2118;
-      margin-bottom: 16px;
-    }
-
-    .meta {
-      color: #8a8178;
-      font-size: 15px;
-    }
-
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 54px 22px 80px;
-    }
-
-    article {
-      background: #fffaf2;
-      border: 1px solid #eadcc8;
-      border-radius: 24px;
-      padding: 38px 32px;
-      box-shadow: 0 10px 28px rgba(90, 65, 40, 0.08);
-    }
-
-    article p {
-      margin-bottom: 22px;
-      font-size: 17px;
-      color: #3f352c;
-    }
-
-    .quote {
-      margin: 30px 0;
-      padding: 24px;
-      background: #3b2a1d;
-      color: #fff7ec;
-      border-radius: 18px;
-      text-align: center;
-      font-size: 18px;
-      line-height: 1.9;
-    }
-
-    .back {
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 34px 20px 46px;
-      color: #8a8178;
-      background: #efe4d4;
-      font-size: 14px;
-    }
-
-    @media (max-width: 700px) {
-      h1 {
-        font-size: 30px;
-      }
-
-      article {
-        padding: 28px 22px;
-      }
-
-      .nav a {
-        margin-left: 8px;
-      }
-    }
-  </style>
-<style id="cream-3d">
-#bg-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
-body{position:relative;background:linear-gradient(180deg,rgba(247,243,234,.88),rgba(247,243,234,.94)),#f7f3ea}
-body>div, body>.topbar, body>header, body>main, body>footer, .topbar, .hero, main, .footer, article{position:relative;z-index:1}
-.topbar,article,.hero{background-color:rgba(255,250,242,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-</style>
-</head>
+  </head>
 
 <body data-life-theme="paper">
 
@@ -234,11 +83,9 @@ body>div, body>.topbar, body>header, body>main, body>footer, .topbar, .hero, mai
     © 2026 必治的日常小站 · 慢慢生活，慢慢记录
   </footer>
 
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <script src="../three.min.js"></script>
-  <script src="../site-3d.js"></script>
   <script>(function(){try{if(window.Site3D){var t='desk';var d=0.45;var s=document.body.getAttribute('data-life-theme');if(s)t=s;Site3D.initAmbientBackground({canvas:document.getElementById('bg-canvas'),theme:t,density:d,accent:t==='paper'?Site3D.buildAboutPulse():Site3D.buildLifeLamp()});}}catch(e){console.error(e);}})();</script>
 </body>
 </html>
+
 
 
