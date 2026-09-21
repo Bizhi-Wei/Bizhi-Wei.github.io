@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 漂浮装饰：仅 3 个轻量元素 -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
   <span class="fs fs-1" aria-hidden="true"></span>
   <span class="fs fs-2" aria-hidden="true"></span>
   <span class="fs fs-3" aria-hidden="true"></span>
@@ -19,10 +19,13 @@
   <div class="wrap">
     <div class="topbar">
       <a class="logo" href="index.html"><span class="lamp">🕯️</span>深夜书桌</a>
-      <a class="back-main" href="../index.html">↩️ 返回主站</a>
+      <div class="topbar-links">
+        <a href="../index.html">↩️ 学术主站</a>
+        <a href="../index.html#instrument">3D 仪器</a>
+        <a href="../index.html#map">研究地图</a>
+      </div>
     </div>
 
-    <!-- 像翻开日记的一页 -->
     <header class="hero">
       <p class="dateline"><span id="today">2026 · 西安</span> · 某个安静的晚上</p>
       <h1>必治的<span class="hl">日常小站</span><span class="caret" aria-hidden="true"></span></h1>
@@ -32,27 +35,27 @@
         （为什么焦虑排在第一位呢，因为我个人其实是个比较焦虑的人格），
         那些看起来很小、但慢慢改变我的瞬间。（我会认真好好记录的，确信.jpg）
       </p>
-      <div class="status"><span class="dot"></span>今晚状态：还在学，但心态还行</div>
+      <div class="status"><span class="dot"></span>今晚状态：还在学，但心态还行 · 桌面 3D 已点亮</div>
       <nav class="pills">
         <a href="diary.html">💭 心情记录</a>
         <a href="research-notes.html">🔬 学术笔记</a>
         <a href="daily.html">🧩 日常碎片</a>
         <a href="life-list.html">📋 生活清单</a>
+        <a href="../posts.html">📝 主站笔记</a>
+        <a href="../projects.html">📁 主站项目</a>
       </nav>
       <span class="vertical-note" aria-hidden="true">诚实地记录 · 慢慢地走</span>
     </header>
   </div>
 
-  <!-- 碎碎念滚动条：transform 动画，悬停可暂停 -->
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
-      <span>今天也在认真记录<em>✦</em>晨跑 3 公里 ✓<em>✦</em>背了 30 个单词<em>✦</em>MIMIC 数据清洗进行中<em>✦</em>日语 N2 巩固 · 进行中<em>✦</em>食堂的饭还行<em>✦</em>焦虑归焦虑，路还是要走<em>✦</em>晚安，明天继续<em>✦</em></span>
-      <span>今天也在认真记录<em>✦</em>晨跑 3 公里 ✓<em>✦</em>背了 30 个单词<em>✦</em>MIMIC 数据清洗进行中<em>✦</em>日语 N2 巩固 · 进行中<em>✦</em>食堂的饭还行<em>✦</em>焦虑归焦虑，路还是要走<em>✦</em>晚安，明天继续<em>✦</em></span>
+      <span>今天也在认真记录<em>✦</em>晨跑 3 公里 ✓<em>✦</em>背了 30 个单词<em>✦</em>MIMIC 数据清洗进行中<em>✦</em>日语 N2 巩固 · 进行中<em>✦</em>食堂的饭还行<em>✦</em>焦虑归焦虑，路还是要走<em>✦</em>桌面 3D 点云已接上<em>✦</em>晚安，明天继续<em>✦</em></span>
+      <span>今天也在认真记录<em>✦</em>晨跑 3 公里 ✓<em>✦</em>背了 30 个单词<em>✦</em>MIMIC 数据清洗进行中<em>✦</em>日语 N2 巩固 · 进行中<em>✦</em>食堂的饭还行<em>✦</em>焦虑归焦虑，路还是要走<em>✦</em>桌面 3D 点云已接上<em>✦</em>晚安，明天继续<em>✦</em></span>
     </div>
   </div>
 
   <main class="wrap">
-    <!-- 最近更新 -->
     <section class="block reveal">
       <div class="sec-head"><span class="star">✦</span><h2>最近更新</h2></div>
       <p class="sec-desc">新鲜出炉的几篇，点进去看看。</p>
@@ -80,7 +83,6 @@
       </div>
     </section>
 
-    <!-- 分类导航 -->
     <section class="block reveal">
       <div class="sec-head"><span class="star">✦</span><h2>分类导航</h2></div>
       <p class="sec-desc">内容都整理到各自的抽屉里了，想看哪一类，拉开就好。</p>
@@ -129,43 +131,52 @@
       </div>
     </section>
 
-    <!-- 引言 -->
     <div class="quote-wrap reveal">
       <p class="quote">不一定每天都要很厉害，但至少可以诚实地记录自己正在往前走。</p>
     </div>
 
-    <!-- 关于 -->
     <section class="block reveal">
       <div class="sec-head"><span class="star">✦</span><h2>关于这里</h2></div>
       <div class="about">
         <p>✦ 这个页面和我的科研主页不是同一种东西。</p>
         <p>✦ 科研主页用来记录项目、论文、方法和成长；而这里更像一个小房间，放一些生活的声音、疲惫的瞬间、重新振作的过程，以及我对自己的观察。</p>
+        <p>✦ 两边现在共享同一套克制的 3D 仪器气质：主站是纸面科研场，这里是深夜书桌的琥珀灯下。</p>
         <p>✦ 我不想把这里写得太完美。真实一点，松弛一点，慢慢来。</p>
         <p class="sig">—— 必治，写于深夜书桌前</p>
       </div>
     </section>
 
-    <footer class="footer">© 2026 魏必治 · 必治的日常小站 · 慢慢来，比较快</footer>
+    <footer class="footer">© 2026 魏必治 · 必治的日常小站 · 慢慢来，比较快 · <a href="../index.html">学术主站</a></footer>
   </main>
 
+  <script src="../three.min.js"></script>
+  <script src="../site-3d.js"></script>
   <script>
-    // 今天的日期（小小的"活"细节）
     try {
       document.getElementById('today').textContent =
         new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
     } catch (e) {}
-    // 滚动显现：IntersectionObserver，只在进入视口时触发一次
     (function () {
       if (!('IntersectionObserver' in window)) {
         document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-        return;
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
       }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+      try {
+        if (window.Site3D) {
+          Site3D.initAmbientBackground({
+            canvas: document.getElementById('bg-canvas'),
+            theme: 'desk',
+            density: 0.8,
+            accent: Site3D.buildLifeLamp()
+          });
+        }
+      } catch (err) { console.error(err); }
     })();
   </script>
 </body>
