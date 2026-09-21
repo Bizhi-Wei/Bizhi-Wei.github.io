@@ -30,27 +30,47 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--sans);
-  background: var(--bg);
+  background:
+    radial-gradient(900px 600px at 12% -8%, rgba(255, 196, 107, .10), transparent 58%),
+    radial-gradient(800px 560px at 94% 104%, rgba(126, 232, 178, .07), transparent 58%),
+    var(--bg);
   color: var(--text);
   line-height: 1.9;
   overflow-x: hidden;
+  position: relative;
 }
 
 ::selection { background: rgba(255, 196, 107, .32); }
 
 a { color: var(--mint); }
 
+/* ambient 3D canvas */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+.wrap, .ticker, .footer { position: relative; z-index: 1; }
+.cat, .entry, .about, .list-block, .idea, .mini {
+  background: rgba(27, 32, 44, .78);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
 /* ---------- 环境背景：暖光 + 冷光 + 点阵（静态图层，一次绘制） ---------- */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
   background:
-    radial-gradient(820px 560px at 10% -6%, rgba(255, 196, 107, .11), transparent 62%),
-    radial-gradient(760px 560px at 96% 104%, rgba(126, 232, 178, .08), transparent 62%),
-    radial-gradient(rgba(255, 255, 255, .032) 1px, transparent 1px);
-  background-size: auto, auto, 26px 26px;
+    radial-gradient(820px 560px at 10% -6%, rgba(255, 196, 107, .08), transparent 62%),
+    radial-gradient(760px 560px at 96% 104%, rgba(126, 232, 178, .06), transparent 62%);
 }
 
 /* ---------- 漂浮装饰（仅 3 个，transform 动画） ---------- */
@@ -80,6 +100,13 @@ body::before {
   transition: color .3s, border-color .3s, transform .3s;
 }
 .back-main:hover { color: var(--mint); border-color: rgba(126, 232, 178, .4); transform: translateY(-2px); }
+.topbar-links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.topbar-links a {
+  font-size: 13px; color: var(--dim); text-decoration: none;
+  border: 1px solid var(--line); padding: 6px 12px; border-radius: 999px;
+  transition: color .25s, border-color .25s;
+}
+.topbar-links a:hover { color: var(--amber); border-color: rgba(255, 196, 107, .4); }
 
 /* ---------- 首页 hero（日记翻开的一页） ---------- */
 .hero { padding: 44px 0 34px; position: relative; }
