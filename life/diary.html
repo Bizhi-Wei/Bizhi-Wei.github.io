@@ -4,83 +4,65 @@
   <meta charset="UTF-8">
   <title>心情记录 · 必治的日常小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body style="--ac: var(--coral); --ac-line: rgba(255,154,118,.4);">
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <span class="fs fs-1" aria-hidden="true"></span>
-  <span class="fs fs-3" aria-hidden="true"></span>
-
   <div class="wrap">
     <div class="topbar">
       <a class="logo" href="index.html"><span class="lamp">🕯️</span>深夜书桌</a>
       <div class="topbar-links">
-        <a href="index.html">↩️ 小站首页</a>
+        <a href="index.html">小站首页</a>
         <a href="../about.html">关于主站</a>
         <a href="../index.html#map">研究地图</a>
       </div>
     </div>
-
     <header class="page-head reveal">
       <a class="crumb" href="index.html">首页 / 分类</a>
       <h1>💭 <span class="hl">心情记录</span></h1>
-      <p class="sub">这里写短日记。不一定每篇都很完整，也不一定每篇都有结论——那些不够正式、但很真实的东西，都放在这里。</p>
+      <p class="sub">短日记。不一定完整，也不一定有结论——那些不够正式但很真实的东西。</p>
     </header>
-
     <main>
       <div class="entries">
         <a class="entry reveal" href="father-and-medicine.html">
           <span class="arr">→</span>
           <div class="meta"><span class="chip">2026.5.8</span><span class="chip">家庭与成长</span></div>
           <h3>父亲的高度，和我慢慢走向医学的路</h3>
-          <p>写给父亲，也写给自己。关于童年、亏欠、从医初心、家庭托举，以及我如何慢慢学着承担。</p>
+          <p>写给父亲，也写给自己。关于童年、亏欠、从医初心与家庭托举。</p>
         </a>
-
         <a class="entry reveal" href="why-i-built-this-blog.html">
           <span class="arr">→</span>
           <div class="meta"><span class="chip">置顶</span><span class="chip">写在开始</span></div>
           <h3>写在开始：为什么我想搭建这个博客</h3>
-          <p>科研主页要认真，简历主页要严谨，但生活博客可以不用那么用力——真的很累的好吧。我想把这里留给那些不够正式、但很真实的东西。</p>
+          <p>科研主页要认真，但生活博客可以不用那么用力。</p>
         </a>
-
         <a class="entry reveal" href="tariff-economy.html">
           <span class="arr">→</span>
           <div class="meta"><span class="chip">2025.4.18</span><span class="chip">经济与思考</span></div>
           <h3>美国关税：一场持续百年的经济博弈</h3>
-          <p>黄金为啥涨？关税到底能决定多少事情？美元为啥是霸权地位？从 1930 年关税乱战一路理到今天的美元地位。</p>
+          <p>从 1930 年关税乱战理到今天的美元地位。</p>
         </a>
       </div>
-
-      <footer class="footer">© 2026 魏必治 · 必治的日常小站 · 慢慢来，比较快</footer>
+      <footer class="footer">© 2026 魏必治 · <a href="index.html">小站首页</a></footer>
     </main>
   </div>
-
   <script src="../three.min.js"></script>
   <script src="../site-3d.js"></script>
   <script>
     (function () {
-      if (!('IntersectionObserver' in window)) {
-        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-      } else {
+      if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-          });
-        }, { threshold: 0.1 });
+          entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.08 });
         document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+      } else {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
       }
       try {
-        if (window.Site3D) {
-          Site3D.initAmbientBackground({
-            canvas: document.getElementById('bg-canvas'),
-            theme: 'desk',
-            density: 0.65,
-            accent: Site3D.buildLifeLamp()
-          });
-        }
+        if (window.Site3D) Site3D.initAmbientBackground({
+          canvas: document.getElementById('bg-canvas'), theme: 'desk', density: 0.35, accent: Site3D.buildLifeLamp()
+        });
       } catch (e) { console.error(e); }
     })();
   </script>
