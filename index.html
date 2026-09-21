@@ -576,6 +576,7 @@
   </footer>
 
   <script src="three.min.js"></script>
+  <script src="site-3d.js"></script>
   <script>
   (function () {
     /* ---------- bilingual ---------- */
@@ -1189,79 +1190,6 @@
       var loading = document.getElementById('map-loading');
       var chips = document.getElementById('map-chips');
       var status = document.getElementById('map-status');
-      var renderer = makeRenderer(canvas);
-      var scene = new THREE.Scene();
-      var camera = new THREE.PerspectiveCamera(42, 1, 0.1, 50);
-      camera.position.set(0, 0.4, 5.2);
-      camera.lookAt(0, 0, 0);
-
-      var root = new THREE.Group();
-      scene.add(root);
-
-      // faint shell
-      var shell = new THREE.Mesh(
-        new THREE.SphereGeometry(2.45, 36, 28),
-        new THREE.MeshBasicMaterial({ color: TEAL, wireframe: true, transparent: true, opacity: 0.05 })
-      );
-      root.add(shell);
-
-      var nodeMeshes = [];
-      var nodeById = {};
-
-      NODES.forEach(function (n, idx) {
-        var mat = new THREE.MeshBasicMaterial({ color: n.color });
-        var mesh = new THREE.Mesh(new THREE.SphereGeometry(0.12, 24, 18), mat);
-        mesh.position.set(n.pos[0], n.pos[1], n.pos[2]);
-        mesh.userData = n;
-        root.add(mesh);
-
-        // halo
-        var halo = new THREE.Mesh(
-          new THREE.SphereGeometry(0.2, 20, 16),
-          new THREE.MeshBasicMaterial({ color: n.color, transparent: true, opacity: 0.15 })
-        );
-        mesh.add(halo);
-
-        // label sprite via canvas texture
-        var c = document.createElement('canvas');
-        c.width = 256; c.height = 96;
-        var ctx = c.getContext('2d');
-        ctx.fillStyle = 'rgba(238,241,235,0)';
-        ctx.fillRect(0, 0, c.width, c.height);
-        ctx.font = '700 28px sans-serif';
-        ctx.fillStyle = '#20313a';
-        ctx.textAlign = 'center';
-        ctx.fillText(n.label, 128, 40);
-        ctx.font = '400 20px sans-serif';
-        ctx.fillStyle = '#5c6b73';
-        ctx.fillText(n.sub, 128, 70);
-        var tex = new THREE.CanvasTexture(c);
-        var sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
-        sprite.scale.set(1.55, 0.58, 1);
-        sprite.position.set(0, 0.34, 0);
-        mesh.add(sprite);
-
-        nodeMeshes.push(mesh);
-        nodeById[n.id] = mesh;
-
-        var chip = document.createElement('a');
-        chip.className = 'map-chip' + (n.color === GOLD ? ' gold' : (n.color === FAINT ? ' gray' : ''));
-        chip.href = n.href;
-        if (n.href.indexOf('http') === 0) {
-          chip.target = '_blank';
-          chip.rel = 'noopener';
-        }
-        chip.innerHTML = '<i></i>' + n.label;
-        chip.addEventListener('mouseenter', function () { setFocus(n.id); });
-        chip.addEventListener('mouseleave', function () { setFocus(null); });
-        chip.addEventListener('click', function (e) {
-          // allow native navigation; also focus
-          setFocus(n.id);
-        });
-        chips.appendChild(chip);
-      });
-
-      // links between related nodes
       var links = [
         ['avsg', 'evar-note'],
         ['avsg', 'jmgm'],
@@ -1270,121 +1198,80 @@
         ['mimic', 'device'],
         ['evar-note', 'docking']
       ];
-      var linkMat = new THREE.LineBasicMaterial({ color: 0x8b979d, transparent: true, opacity: 0.35 });
-      links.forEach(function (pair) {
-        var a = nodeById[pair[0]].position;
-        var b = nodeById[pair[1]].position;
-        var g = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3(a.x, a.y, a.z),
-          new THREE.Vector3(b.x, b.y, b.z)
-        ]);
-        root.add(new THREE.Line(g, linkMat));
+
+      // chips UI
+      NODES.forEach(function (n) {
+        var chip = document.createElement('a');
+        chip.className = 'map-chip' + (n.color === GOLD ? ' gold' : (n.color === FAINT ? ' gray' : ''));
+        chip.href = n.href;
+        if (n.href.indexOf('http') === 0) {
+          chip.target = '_blank';
+          chip.rel = 'noopener';
+        }
+        chip.innerHTML = '<i></i>' + n.label;
+        chip.addEventListener('mouseenter', function () {
+          if (window.__mapApi) window.__mapApi.setFocus(n.id);
+        });
+        chip.addEventListener('mouseleave', function () {
+          if (window.__mapApi) window.__mapApi.setFocus(null);
+        });
+        chips.appendChild(chip);
       });
 
-      function setFocus(id) {
-        nodeMeshes.forEach(function (m) {
-          var on = !id || m.userData.id === id;
-          var active = id && m.userData.id === id;
-          m.material.opacity = on ? 1 : 0.35;
-          m.material.transparent = !on || true;
-          m.scale.setScalar(active ? 1.55 : 1);
-        });
-        if (status) {
-          status.textContent = id
-            ? ('FOCUS · ' + (nodeById[id].userData.label || id) + ' · CLICK TO OPEN')
-            : 'NODES · ' + NODES.length + ' · DRAG TO ORBIT · CLICK TO OPEN';
+      function setStatus(id, progress) {
+        var p = Math.round((progress || 0) * 100);
+        if (id) {
+          var found = null;
+          for (var i = 0; i < NODES.length; i++) if (NODES[i].id === id) found = NODES[i];
+          status.textContent = 'FOCUS · ' + ((found && found.label) || id) + ' · SCROLL CAM ' + p + '% · CLICK TO OPEN';
+        } else {
+          status.textContent = 'NODES · ' + NODES.length + ' · SCROLL-FOLLOW CAMERA ' + p + '% · DRAG · CLICK';
         }
         var chipEls = chips.querySelectorAll('.map-chip');
-        for (var i = 0; i < chipEls.length; i++) {
-          chipEls[i].classList.toggle('is-active', !!id && chipEls[i].textContent.indexOf(nodeById[id].userData.label) >= 0);
+        var label = '';
+        if (id) {
+          for (var j = 0; j < NODES.length; j++) if (NODES[j].id === id) label = NODES[j].label;
         }
-      }
-
-      var raycaster = new THREE.Raycaster();
-      var ndc = new THREE.Vector2();
-      var dragging = false;
-      var prev = { x: 0, y: 0 };
-      var orbit = { x: 0.25, y: 0.4 };
-
-      function resize() {
-        var w = wrap.clientWidth;
-        var h = wrap.clientHeight;
-        renderer.setSize(w, h, false);
-        camera.aspect = w / Math.max(h, 1);
-        camera.updateProjectionMatrix();
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      canvas.addEventListener('pointerdown', function (e) {
-        dragging = true; prev.x = e.clientX; prev.y = e.clientY;
-        canvas.setPointerCapture(e.pointerId);
-      });
-      canvas.addEventListener('pointerup', function () { dragging = false; });
-      canvas.addEventListener('pointerleave', function () { dragging = false; });
-      canvas.addEventListener('pointermove', function (e) {
-        var rect = canvas.getBoundingClientRect();
-        ndc.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        ndc.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-        if (dragging) {
-          orbit.y += (e.clientX - prev.x) * 0.006;
-          orbit.x += (e.clientY - prev.y) * 0.004;
-          orbit.x = Math.max(-0.8, Math.min(0.8, orbit.x));
-          prev.x = e.clientX; prev.y = e.clientY;
-        } else {
-          raycaster.setFromCamera(ndc, camera);
-          var hits = raycaster.intersectObjects(nodeMeshes, false);
-          if (hits.length) setFocus(hits[0].object.userData.id);
-          else setFocus(null);
+        for (var k = 0; k < chipEls.length; k++) {
+          chipEls[k].classList.toggle('is-active', !!id && label && chipEls[k].textContent.indexOf(label) >= 0);
         }
-      });
-      canvas.addEventListener('click', function (e) {
-        var rect = canvas.getBoundingClientRect();
-        ndc.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        ndc.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-        raycaster.setFromCamera(ndc, camera);
-        var hits = raycaster.intersectObjects(nodeMeshes, false);
-        if (hits.length && hits[0].object.userData.href) {
-          var href = hits[0].object.userData.href;
-          if (href.indexOf('http') === 0) window.open(href, '_blank', 'noopener');
-          else window.location.hash = href.replace('#', '');
-          if (href.charAt(0) !== '#' && href.indexOf('http') !== 0) window.location.href = href;
-        }
-      });
-
-      var clock = new THREE.Clock();
-      var mapVisible = true;
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          mapVisible = entries[0].isIntersecting;
-        }, { threshold: 0.05 }).observe(wrap);
-      }
-
-      function tick() {
-        requestAnimationFrame(tick);
-        if (!mapVisible) return;
-        var dt = Math.min(clock.getDelta(), 0.05);
-        var t = clock.elapsedTime;
-        if (!reduceMotion && !dragging) orbit.y += dt * 0.08;
-        root.rotation.y = orbit.y;
-        root.rotation.x = orbit.x;
-        nodeMeshes.forEach(function (m, i) {
-          var pulse = 1 + Math.sin(t * 1.5 + i) * 0.04;
-          var base = m.scale.x > 1.2 ? 1.55 : 1;
-          // keep focus scale if large
-          if (m.scale.x > 1.2) m.scale.setScalar(1.55 * pulse);
-          else m.scale.setScalar(pulse);
-        });
-        renderer.render(scene, camera);
         if (loading) loading.classList.add('hide');
       }
-      tick();
-      setFocus(null);
+
+      if (!window.Site3D || typeof THREE === 'undefined') {
+        if (status) status.textContent = '3D map unavailable';
+        return;
+      }
+
+      var lastFocus = null;
+      window.__mapApi = Site3D.initResearchMap({
+        canvas: canvas,
+        wrap: wrap,
+        nodes: NODES,
+        links: links,
+        onFocus: function (id) {
+          lastFocus = id || null;
+          setStatus(lastFocus, window.__mapApi ? window.__mapApi.getProgress() : 0);
+        },
+        onFrame: function (progress) {
+          setStatus(lastFocus, progress);
+        }
+      });
+      setStatus(null, 0);
     }
 
     // boot after layout
     requestAnimationFrame(function () {
-      try { initBackground(); } catch (err) { console.error(err); }
+      try {
+        if (window.Site3D && Site3D.initAmbientBackground) {
+          Site3D.initAmbientBackground({ canvas: document.getElementById('bg-canvas'), density: 1 });
+        } else {
+          initBackground();
+        }
+      } catch (err) {
+        console.error(err);
+        try { initBackground(); } catch (e2) { console.error(e2); }
+      }
       try { initHero(); } catch (err) {
         console.error(err);
         var l = document.getElementById('hero-loading');
