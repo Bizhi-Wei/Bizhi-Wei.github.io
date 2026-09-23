@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -60,11 +60,10 @@
         document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
       }
       try {
-        if (window.Site3D) Site3D.initAmbientBackground({
-          canvas: document.getElementById('bg-canvas'), theme: 'desk', density: 0.35
-        });
+        if (window.Site3D) Site3D.initVitalBackground({ canvas: document.getElementById('bg-canvas') });
       } catch (e) { console.error(e); }
     })();
   </script>
 </body>
 </html>
+
