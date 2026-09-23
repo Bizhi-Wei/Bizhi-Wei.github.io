@@ -504,8 +504,253 @@
     };
   }
 
+  /** 生活博客活力背景：流动色带 + 呼吸光球 + 多层粒子 */
+  function initVitalBackground(opts) {
+    opts = opts || {};
+    var canvas = opts.canvas || document.getElementById('bg-canvas');
+    if (!canvas || typeof THREE === 'undefined') return null;
+
+    var reduce = prefersReduced();
+    var renderer = makeRenderer(canvas);
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(55, 1, 0.1, 80);
+    camera.position.set(0, 0, 9);
+
+    var root = new THREE.Group();
+    scene.add(root);
+
+    // 活力色盘：琥珀 / 薄荷 / 珊瑚 / 天空
+    var C = {
+      amber: 0xffc46b,
+      mint: 0x7ee8b2,
+      coral: 0xff8f78,
+      sky: 0x7ec8ff,
+      cream: 0xfff0c8
+    };
+
+    // 1) 多层漂浮粒子（快/中/慢）
+    function makeStream(count, color, size, opacity, speed, spread) {
+      var pos = new Float32Array(count * 3);
+      var meta = [];
+      for (var i = 0; i < count; i++) {
+        pos[i * 3] = (Math.random() - 0.5) * spread;
+        pos[i * 3 + 1] = (Math.random() - 0.5) * spread * 0.7;
+        pos[i * 3 + 2] = (Math.random() - 0.5) * spread * 0.6;
+        meta.push({
+          vx: (Math.random() - 0.5) * speed,
+          vy: speed * (0.35 + Math.random() * 0.8),
+          vz: (Math.random() - 0.5) * speed * 0.4,
+          ph: Math.random() * Math.PI * 2
+        });
+      }
+      var g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      var pts = new THREE.Points(g, new THREE.PointsMaterial({
+        color: color, size: size, transparent: true, opacity: opacity,
+        sizeAttenuation: true, depthWrite: false
+      }));
+      pts.userData.meta = meta;
+      pts.userData.spread = spread;
+      root.add(pts);
+      return pts;
+    }
+
+    var fast = makeStream(280, C.mint, 0.05, 0.55, 0.85, 14);
+    var mid = makeStream(360, C.amber, 0.04, 0.45, 0.45, 16);
+    var slow = makeStream(220, C.sky, 0.055, 0.35, 0.22, 18);
+    var dust = makeStream(120, C.coral, 0.07, 0.28, 0.55, 12);
+    var streams = [fast, mid, slow, dust];
+
+    // 2) 呼吸光球
+    var orbs = [];
+    var orbData = [
+      { c: C.amber, r: 0.55, p: [4.2, 1.6, -2.2], s: 0.9 },
+      { c: C.mint, r: 0.38, p: [-4.6, -1.2, -1.5], s: 1.2 },
+      { c: C.coral, r: 0.32, p: [3.4, -2.0, -3.0], s: 1.05 },
+      { c: C.sky, r: 0.28, p: [-3.2, 1.8, -2.8], s: 1.35 },
+      { c: C.cream, r: 0.22, p: [1.2, 2.2, -3.5], s: 1.5 }
+    ];
+    orbData.forEach(function (d) {
+      var m = new THREE.Mesh(
+        new THREE.SphereGeometry(d.r, 24, 18),
+        new THREE.MeshBasicMaterial({
+          color: d.c, transparent: true, opacity: 0.18, depthWrite: false
+        })
+      );
+      m.position.set(d.p[0], d.p[1], d.p[2]);
+      m.userData = { base: d.r, s: d.s, ph: Math.random() * Math.PI * 2, home: d.p.slice() };
+      // 外圈光环
+      var ring = new THREE.Mesh(
+        new THREE.TorusGeometry(d.r * 1.45, 0.018, 6, 40),
+        new THREE.MeshBasicMaterial({ color: d.c, transparent: true, opacity: 0.2, depthWrite: false })
+      );
+      ring.rotation.x = Math.PI / 2.4;
+      m.add(ring);
+      m.userData.ring = ring;
+      root.add(m);
+      orbs.push(m);
+    });
+
+    // 3) 流动丝带（螺旋曲线）
+    function ribbon(color, radius, y, tube, opacity, phase) {
+      var pts = [];
+      for (var i = 0; i <= 80; i++) {
+        var t = i / 80;
+        var a = t * Math.PI * 4 + phase;
+        pts.push(new THREE.Vector3(
+          Math.cos(a) * radius * (0.75 + 0.25 * Math.sin(t * Math.PI)),
+          y + Math.sin(t * Math.PI * 2 + phase) * 0.7,
+          Math.sin(a) * radius * 0.55
+        ));
+      }
+      var curve = new THREE.CatmullRomCurve3(pts);
+      var geo = new THREE.TubeGeometry(curve, 100, tube, 8, false);
+      var mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
+        color: color, wireframe: true, transparent: true, opacity: opacity, depthWrite: false
+      }));
+      mesh.userData.spin = 0.12 + phase * 0.02;
+      root.add(mesh);
+      return mesh;
+    }
+    var r1 = ribbon(C.amber, 5.2, 0.4, 0.07, 0.12, 0);
+    var r2 = ribbon(C.mint, 4.3, -0.5, 0.05, 0.1, 1.2);
+    var r3 = ribbon(C.sky, 6.0, 0.1, 0.04, 0.08, 2.1);
+
+    // 4) 上升小气泡
+    var bubbleCount = 70;
+    var bpos = new Float32Array(bubbleCount * 3);
+    var bmeta = [];
+    for (var b = 0; b < bubbleCount; b++) {
+      bpos[b * 3] = (Math.random() - 0.5) * 13;
+      bpos[b * 3 + 1] = -4 + Math.random() * 8;
+      bpos[b * 3 + 2] = (Math.random() - 0.5) * 8;
+      bmeta.push({ v: 0.25 + Math.random() * 0.55, ph: Math.random() * 6, x: bpos[b * 3] });
+    }
+    var bgeo = new THREE.BufferGeometry();
+    bgeo.setAttribute('position', new THREE.BufferAttribute(bpos, 3));
+    var bubbles = new THREE.Points(bgeo, new THREE.PointsMaterial({
+      color: C.cream, size: 0.07, transparent: true, opacity: 0.4, depthWrite: false
+    }));
+    root.add(bubbles);
+
+    // 5) 软波浪线
+    function waveLine(color, y, amp, opacity) {
+      var pts = [];
+      for (var i = 0; i <= 100; i++) {
+        var t = i / 100;
+        pts.push(new THREE.Vector3((t - 0.5) * 16, y, -3 + Math.sin(t * Math.PI * 3) * amp));
+      }
+      return new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(pts),
+        new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: opacity, depthWrite: false })
+      );
+    }
+    var w1 = waveLine(C.mint, -2.4, 0.55, 0.16);
+    var w2 = waveLine(C.amber, -1.6, 0.4, 0.12);
+    var w3 = waveLine(C.coral, -3.0, 0.35, 0.1);
+    root.add(w1); root.add(w2); root.add(w3);
+
+    var pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+    var scrollN = 0;
+
+    function resize() {
+      var w = global.innerWidth || document.documentElement.clientWidth;
+      var h = global.innerHeight || document.documentElement.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / Math.max(h, 1);
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    global.addEventListener('resize', resize);
+
+    global.addEventListener('pointermove', function (e) {
+      var w = global.innerWidth || 1, h = global.innerHeight || 1;
+      pointer.tx = (e.clientX / w) * 2 - 1;
+      pointer.ty = -((e.clientY / h) * 2 - 1);
+    }, { passive: true });
+
+    function onScroll() {
+      var max = Math.max(1, document.documentElement.scrollHeight - global.innerHeight);
+      scrollN = ((global.scrollY || global.pageYOffset || 0)) / max;
+    }
+    global.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    var clock = new THREE.Clock();
+    function tick() {
+      requestAnimationFrame(tick);
+      var dt = Math.min(clock.getDelta(), 0.05);
+      var t = clock.elapsedTime;
+      pointer.x += (pointer.tx - pointer.x) * 0.05;
+      pointer.y += (pointer.ty - pointer.y) * 0.05;
+
+      if (!reduce) {
+        // 粒子流动
+        streams.forEach(function (pts) {
+          var arr = pts.geometry.attributes.position.array;
+          var meta = pts.userData.meta;
+          var sp = pts.userData.spread;
+          for (var i = 0; i < meta.length; i++) {
+            arr[i * 3] += meta[i].vx * dt;
+            arr[i * 3 + 1] += meta[i].vy * dt;
+            arr[i * 3 + 2] += meta[i].vz * dt;
+            // 轻微摆动
+            arr[i * 3] += Math.sin(t * 1.2 + meta[i].ph) * 0.002;
+            if (arr[i * 3 + 1] > sp * 0.4) arr[i * 3 + 1] = -sp * 0.4;
+            if (arr[i * 3] > sp * 0.5) arr[i * 3] = -sp * 0.5;
+            if (arr[i * 3] < -sp * 0.5) arr[i * 3] = sp * 0.5;
+          }
+          pts.geometry.attributes.position.needsUpdate = true;
+          pts.rotation.y = Math.sin(t * 0.08) * 0.15;
+        });
+
+        // 光球呼吸
+        orbs.forEach(function (m) {
+          var pulse = 1 + Math.sin(t * m.userData.s + m.userData.ph) * 0.14;
+          m.scale.setScalar(pulse);
+          m.position.y = m.userData.home[1] + Math.sin(t * m.userData.s * 0.7 + m.userData.ph) * 0.25;
+          m.position.x = m.userData.home[0] + Math.cos(t * 0.35 + m.userData.ph) * 0.15;
+          if (m.userData.ring) m.userData.ring.rotation.z += dt * 0.6;
+          m.material.opacity = 0.14 + 0.08 * (0.5 + 0.5 * Math.sin(t * m.userData.s));
+        });
+
+        // 丝带旋转
+        r1.rotation.y += dt * 0.18;
+        r2.rotation.y -= dt * 0.14;
+        r3.rotation.x += dt * 0.08;
+
+        // 气泡上升
+        var ba = bubbles.geometry.attributes.position.array;
+        for (var j = 0; j < bmeta.length; j++) {
+          ba[j * 3 + 1] += bmeta[j].v * dt;
+          ba[j * 3] = bmeta[j].x + Math.sin(t * 0.8 + bmeta[j].ph) * 0.15;
+          if (ba[j * 3 + 1] > 4) ba[j * 3 + 1] = -4;
+        }
+        bubbles.geometry.attributes.position.needsUpdate = true;
+
+        // 波浪
+        w1.position.x = Math.sin(t * 0.2) * 0.4;
+        w2.position.x = Math.cos(t * 0.17) * 0.5;
+        w3.position.x = Math.sin(t * 0.13) * 0.3;
+        w1.position.y = -2.4 + Math.sin(t * 0.5) * 0.08;
+        w2.position.y = -1.6 + Math.cos(t * 0.4) * 0.06;
+      }
+
+      root.rotation.y = pointer.x * 0.12 + Math.sin(t * 0.05) * 0.04;
+      root.rotation.x = pointer.y * 0.06;
+      root.position.y = scrollN * 1.2;
+      camera.position.z = 9 - scrollN * 0.8;
+      camera.lookAt(0, scrollN * 0.2, 0);
+
+      renderer.render(scene, camera);
+    }
+    tick();
+    return { renderer: renderer, scene: scene, camera: camera, root: root };
+  }
+
   global.Site3D = {
     initAmbientBackground: initAmbientBackground,
+    initVitalBackground: initVitalBackground,
     initResearchMap: initResearchMap,
     buildProjectCluster: buildProjectCluster,
     buildNotesSheets: buildNotesSheets,
