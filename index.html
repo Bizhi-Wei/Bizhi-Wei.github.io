@@ -2,1288 +2,545 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Bizhi Wei | Academic Homepage</title>
+  <title>Bizhi Wei</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Academic homepage of Bizhi Wei — vascular surgery, evidence-based medicine, clinical databases, and computational research.">
+  <meta name="description" content="Bizhi Wei — medical student.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="blog.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    /* ===== full-page 3D background ===== */
-    #bg-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      display: block;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      background: #ffffff;
     }
-
     body {
-      position: relative;
-      background:
-        radial-gradient(1200px 700px at 80% 10%, rgba(13,107,100,.07), transparent 55%),
-        radial-gradient(900px 600px at 10% 70%, rgba(192,138,45,.06), transparent 50%),
-        linear-gradient(180deg, rgba(245,246,242,.88), rgba(245,246,242,.94) 40%, rgba(245,246,242,.9));
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #ffffff;
+      color: #1d1d1f;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* content floats above ambient 3D */
-    .lang-toggle,
-    .site-nav,
-    .masthead,
-    main.container,
-    footer.site-footer {
-      position: relative;
-      z-index: 2;
-    }
+    /* page fade */
+    html.is-leaving body { opacity: 0; transition: opacity .28s ease; }
+    html.is-entering body { opacity: 0; }
+    body { opacity: 1; transition: opacity .45s ease; }
 
-    .site-nav {
-      background: rgba(245, 246, 242, .82);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    main.container > section {
-      margin-bottom: 10px;
-      padding: 28px 22px 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(226, 229, 222, .75);
-      background: rgba(248, 249, 245, .72);
-      backdrop-filter: blur(7px);
-      -webkit-backdrop-filter: blur(7px);
-      box-shadow: 0 8px 28px rgba(32, 49, 58, .04);
-    }
-
-    main.container > section#instrument {
-      background: transparent;
-      border: 0;
-      box-shadow: none;
-      padding-left: 0;
-      padding-right: 0;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-
-    .masthead .eyebrow,
-    .masthead h1,
-    .masthead .subtitle {
-      text-shadow: 0 1px 0 rgba(245,246,242,.85);
-    }
-
-    .contact-card,
-    .card,
-    .note,
-    .proj,
-    .two-col a {
-      background-color: rgba(255,255,255,.78);
-    }
-
-    /* ===== 3D academic instrument layer ===== */
-    .lang-toggle { z-index: 120; }
-
-    .hero-3d-wrap {
-      position: relative;
-      margin-top: 8px;
-      min-height: min(78vh, 720px);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      overflow: hidden;
-      background:
-        radial-gradient(1200px 500px at 70% 40%, rgba(13,107,100,.10), transparent 60%),
-        radial-gradient(800px 400px at 20% 80%, rgba(192,138,45,.08), transparent 55%),
-        rgba(238, 241, 235, .55);
-      box-shadow: 0 16px 40px rgba(32, 49, 58, .08);
-      z-index: 2;
-    }
-
-    #hero-canvas {
-      position: absolute; inset: 0;
+    /* soft 3D stage */
+    #stage {
+      position: fixed; inset: 0;
       width: 100%; height: 100%;
-      display: block;
+      z-index: 0; pointer-events: none;
     }
 
-    .hero-overlay {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: minmax(280px, 1.05fr) minmax(220px, .95fr);
-      gap: 24px;
-      min-height: min(78vh, 720px);
-      padding: 42px 36px 36px;
-      pointer-events: none;
+    /* minimal chrome */
+    .chrome {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 40;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 28px;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity .5s ease, transform .5s ease;
     }
-
-    .hero-overlay > * { pointer-events: auto; }
-
-    .hero-copy {
-      max-width: 560px;
-      align-self: center;
-      padding: 28px 26px;
-      background: rgba(245, 246, 242, .82);
-      border: 1px solid rgba(226, 229, 222, .9);
-      border-radius: 16px;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      box-shadow: 0 10px 30px rgba(32, 49, 58, .06);
+    .chrome.on { opacity: 1; transform: none; }
+    .chrome .mark {
+      font-size: 13px; font-weight: 500; letter-spacing: .02em;
+      color: #1d1d1f; text-decoration: none;
     }
-
-    .hero-copy .eyebrow { margin-bottom: 10px; }
-    .hero-copy h1 { font-size: clamp(36px, 5vw, 54px); }
-    .hero-copy .subtitle { margin: 8px 0 12px; }
-    .hero-copy .summary { font-size: 15px; }
-
-    .hero-side {
-      align-self: end;
-      justify-self: end;
-      width: min(320px, 100%);
-      padding: 16px 16px 14px;
-      background: rgba(255,255,255,.78);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+    .chrome nav { display: flex; gap: 22px; }
+    .chrome nav a {
+      font-size: 12.5px; font-weight: 400;
+      color: #6e6e73; text-decoration: none;
+      transition: color .25s ease;
     }
+    .chrome nav a:hover { color: #1d1d1f; }
 
-    .hero-side h3 {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 8px;
+    .lang {
+      position: fixed; top: 18px; right: 22px; z-index: 50;
+      display: flex; gap: 2px;
+      opacity: 0; transition: opacity .5s ease;
     }
-
-    .hero-side p {
-      font-size: 13px;
-      color: var(--dim);
-      margin-bottom: 10px;
-      line-height: 1.55;
+    .lang.on { opacity: 1; }
+    .lang button {
+      border: 0; background: transparent; cursor: pointer;
+      font: 500 11px/1 'Inter', sans-serif;
+      color: #86868b; padding: 8px 10px; border-radius: 999px;
     }
+    .lang button.active { color: #1d1d1f; background: #f5f5f7; }
 
-    .instrument-hint {
+    /* sections */
+    main { position: relative; z-index: 2; }
+
+    .screen {
+      min-height: 100vh;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .instrument-hint span {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--teal);
-      background: var(--teal-soft);
-      border-radius: 999px;
-      padding: 3px 9px;
-    }
-
-    .constellation-wrap {
-      position: relative;
-      margin-top: 8px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      overflow: hidden;
-      background:
-        radial-gradient(900px 400px at 50% 50%, rgba(13,107,100,.08), transparent 65%),
-        rgba(238, 241, 235, .62);
-      min-height: 420px;
-    }
-
-    #map-canvas {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      display: block;
-    }
-
-    .map-ui {
-      position: relative;
-      z-index: 2;
-      padding: 18px 18px 16px;
-      pointer-events: none;
-    }
-
-    .map-ui-head {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 16px;
-      align-items: end;
-      justify-content: space-between;
-      margin-bottom: 14px;
-      pointer-events: auto;
-    }
-
-    .map-ui-head p {
-      max-width: 520px;
-      font-size: 13.5px;
-      color: var(--dim);
-    }
-
-    .map-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      pointer-events: auto;
-    }
-
-    .map-chip {
-      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--ink);
-      text-decoration: none;
-      background: rgba(255,255,255,.86);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 7px 12px;
-      transition: border-color .2s, color .2s, background .2s;
-      cursor: pointer;
+      justify-content: center;
+      padding: 80px 24px;
     }
 
-    .map-chip:hover,
-    .map-chip.is-active {
-      color: var(--teal);
-      border-color: var(--teal);
-      background: #fff;
-      text-decoration: none;
+    /* 1 — name only */
+    .name-only {
+      flex-direction: column;
+      gap: 28px;
+      text-align: center;
     }
-
-    .map-chip i {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--teal); display: inline-block;
+    .name-only h1 {
+      font-size: clamp(56px, 12vw, 132px);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      line-height: 1.05;
+      color: #1d1d1f;
     }
-
-    .map-chip.gold i { background: var(--gold); }
-    .map-chip.gray i { background: #8b979d; }
-
-    .map-status {
-      position: absolute;
-      left: 18px; right: 18px; bottom: 14px;
-      z-index: 3;
-      font-family: var(--mono);
-      font-size: 11.5px;
-      letter-spacing: 1px;
-      color: var(--faint);
-      pointer-events: none;
-    }
-
-    .hero-3d-wrap.is-dimmed #hero-canvas,
-    .constellation-wrap.is-dimmed #map-canvas { opacity: .35; transition: opacity .4s ease; }
-    #hero-canvas, #map-canvas { transition: opacity .4s ease; }
-
-    .loading-3d {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 3;
-      font-family: var(--mono);
+    .name-only .hint {
       font-size: 12px;
-      letter-spacing: 2px;
-      color: var(--teal);
-      background: rgba(238,241,235,.65);
-      transition: opacity .5s ease;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #86868b;
+      opacity: .85;
+      animation: soft 2.8s ease-in-out infinite;
     }
-    .loading-3d.hide { opacity: 0; pointer-events: none; }
+    @keyframes soft {
+      0%, 100% { opacity: .35; transform: translateY(0); }
+      50% { opacity: .9; transform: translateY(4px); }
+    }
 
-    .masthead { padding-bottom: 18px; }
+    /* 2 — portrait */
+    .portrait-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      text-align: center;
+    }
+    .portrait-frame {
+      width: min(420px, 78vw);
+      aspect-ratio: 4 / 5;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #f5f5f7;
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.08),
+        0 8px 24px rgba(0,0,0,.04);
+    }
+    .portrait-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .portrait-wrap .cap {
+      font-size: 14px;
+      color: #86868b;
+      letter-spacing: .04em;
+    }
 
-    @media (max-width: 820px) {
-      .hero-overlay {
-        grid-template-columns: 1fr;
-        padding: 22px 16px 16px;
-        min-height: auto;
-      }
-      .hero-3d-wrap { min-height: 640px; }
-      .hero-side { justify-self: stretch; width: 100%; }
-      .constellation-wrap { min-height: 480px; }
+    /* 3 — links */
+    .links-screen {
+      flex-direction: column;
+      gap: 48px;
+      width: min(720px, 92vw);
+    }
+    .links-screen .title {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 500;
+      letter-spacing: -.03em;
+      text-align: center;
+      color: #1d1d1f;
+    }
+    .link-list {
+      list-style: none;
+      width: 100%;
+    }
+    .link-list li {
+      border-top: 1px solid rgba(0,0,0,.06);
+    }
+    .link-list li:last-child { border-bottom: 1px solid rgba(0,0,0,.06); }
+    .link-list a {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      padding: 22px 6px;
+      text-decoration: none;
+      color: #1d1d1f;
+      transition: padding .35s cubic-bezier(.22,1,.36,1), opacity .25s;
+    }
+    .link-list a:hover { padding-left: 16px; }
+    .link-list .k {
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 500;
+      letter-spacing: -.02em;
+    }
+    .link-list .v {
+      font-size: 13px;
+      color: #86868b;
+      font-weight: 400;
+    }
+
+    .foot {
+      padding: 48px 24px 56px;
+      text-align: center;
+      font-size: 12px;
+      color: #86868b;
+      position: relative;
+      z-index: 2;
+    }
+    .foot a { color: #86868b; text-decoration: none; }
+    .foot a:hover { color: #1d1d1f; }
+
+    @media (max-width: 640px) {
+      .chrome nav { gap: 14px; }
+      .chrome nav a { font-size: 11.5px; }
+      .link-list .v { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      #hero-canvas, #map-canvas { transition: none; }
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+
+    /* page enter */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: rise .9s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .fade-up.d1 { animation-delay: .12s; }
+    .fade-up.d2 { animation-delay: .28s; }
+    .fade-up.d3 { animation-delay: .45s; }
+    @keyframes rise {
+      to { opacity: 1; transform: none; }
+    }
+  </style>
+  <meta name="view-transition" content="same-document">
+  <style>
+    @view-transition {
+      navigation: auto;
     }
   </style>
 </head>
 <body>
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <div class="lang-toggle" role="group" aria-label="Language">
-    <button id="lang-en" type="button">EN</button>
-    <button id="lang-zh" type="button">中文</button>
-  </div>
+  <canvas id="stage" aria-hidden="true"></canvas>
 
-  <header class="container masthead">
-    <div>
-      <p class="eyebrow" data-en="Academic Homepage" data-zh="学术主页">Academic Homepage</p>
-      <h1 data-en="Bizhi Wei" data-zh="魏必治">Bizhi Wei</h1>
-      <p class="subtitle" data-en="Undergraduate Medical Student · Shaoyang University" data-zh="医学本科生 · 邵阳学院">Undergraduate Medical Student · Shaoyang University</p>
-      <div class="mast-links">
-        <a href="#instrument" data-en="3D Instrument" data-zh="3D 仪器">3D Instrument</a>
-        <a href="#publications" data-en="Papers" data-zh="论文">Papers</a>
-        <a href="#map" data-en="Research Map" data-zh="研究地图">Research Map</a>
-        <a href="projects.html">Projects</a>
-        <a href="posts.html">Notes</a>
-        <a href="about.html">About</a>
-        <a href="life/index.html" data-en="Life Blog" data-zh="生活博客">Life Blog</a>
-        <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener">ORCID</a>
-      </div>
-    </div>
+  <header class="chrome" id="chrome">
+    <a class="mark" href="index.html">Bizhi Wei</a>
+    <nav>
+      <a href="#portrait" data-i18n="nav-photo">Portrait</a>
+      <a href="#links" data-i18n="nav-links">Links</a>
+      <a href="projects.html" data-i18n="nav-work">Work</a>
+      <a href="life/index.html" data-i18n="nav-life">Life</a>
+    </nav>
   </header>
 
-  <nav class="site-nav">
-    <div class="container">
-      <a class="nav-brand" href="index.html">Bizhi Wei</a>
-      <a href="#instrument" data-en="3D" data-zh="3D">3D</a>
-      <a href="#about" data-en="About" data-zh="关于">About</a>
-      <a href="#interests" data-en="Interests" data-zh="方向">Interests</a>
-      <a href="#publications" data-en="Papers" data-zh="论文">Papers</a>
-      <a href="#map" data-en="Map" data-zh="地图">Map</a>
-      <a href="#projects" data-en="Projects" data-zh="项目">Projects</a>
-      <a href="#notes" data-en="Notes" data-zh="笔记">Notes</a>
-      <a href="#contact" data-en="Contact" data-zh="联系">Contact</a>
-    </div>
-  </nav>
+  <div class="lang" id="lang">
+    <button type="button" id="btn-en">EN</button>
+    <button type="button" id="btn-zh">中</button>
+  </div>
 
-  <main class="container">
-    <!-- 3D instrument hero -->
-    <section id="instrument" class="reveal" style="padding-top:28px">
-      <div class="hero-3d-wrap" id="hero-wrap">
-        <canvas id="hero-canvas"></canvas>
-        <div class="loading-3d" id="hero-loading" data-en="LOADING INSTRUMENT…" data-zh="仪器加载中…">LOADING INSTRUMENT…</div>
-        <div class="hero-overlay">
-          <div class="hero-copy">
-            <p class="eyebrow" data-en="3D Research Instrument" data-zh="3D 研究仪器">3D Research Instrument</p>
-            <h1 data-en="Bizhi Wei" data-zh="魏必治">Bizhi Wei</h1>
-            <p class="subtitle" data-en="Vascular questions · evidence · data · computation" data-zh="血管问题 · 证据 · 数据 · 计算">Vascular questions · evidence · data · computation</p>
-            <p class="summary"
-               data-en="A wireframe aortic aneurysm with an endovascular stent lattice — not a decoration, but a quiet reminder: outcomes are shaped by who is selected into a treatment, not only by the device itself."
-               data-zh="线框腹主动脉瘤与腔内支架点阵——不是装饰，而是一句安静的提醒：结局由“谁被选进某种治疗”塑造，而不只由器械本身。">
-              A wireframe aortic aneurysm with an endovascular stent lattice — not a decoration, but a quiet reminder: outcomes are shaped by who is selected into a treatment, not only by the device itself.
-            </p>
-            <div class="mast-links" style="margin-top:18px">
-              <a href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">AVSG Paper</a>
-              <a href="#map" data-en="Research Map" data-zh="研究地图">Research Map</a>
-              <a href="life/evar-indication-confounding.html" data-en="Selection-bias note" data-zh="选择偏倚笔记">Selection-bias note</a>
-            </div>
-          </div>
-          <aside class="hero-side">
-            <h3 data-en="Instrument readout" data-zh="仪器读数">Instrument readout</h3>
-            <p data-en="Drag to orbit · scroll the page to continue · particles mark flow / evidence."
-               data-zh="拖拽旋转 · 继续滚动页面 · 粒子表示血流/证据。">
-              Drag to orbit · scroll the page to continue · particles mark flow / evidence.
-            </p>
-            <div class="instrument-hint">
-              <span data-en="wireframe AAA" data-zh="线框动脉瘤">wireframe AAA</span>
-              <span data-en="EVAR lattice" data-zh="EVAR 支架">EVAR lattice</span>
-              <span data-en="particle flow" data-zh="粒子流">particle flow</span>
-            </div>
-          </aside>
-        </div>
-      </div>
+  <main>
+    <section class="screen name-only" id="top">
+      <h1 class="fade-up">Bizhi Wei</h1>
+      <p class="hint fade-up d1" data-i18n="scroll">scroll</p>
     </section>
 
-    <section id="about" class="reveal">
-      <p class="sec-label">01</p>
-      <h2 data-en="About" data-zh="关于">About</h2>
-      <p class="about-p"
-         data-en="I am an undergraduate medical student interested in vascular surgery, surgical critical care, evidence-based medicine, clinical database research, and translational methods. I care about whether a clinical comparison is fair before I care about whether the p-value is small."
-         data-zh="我是一名医学本科生，关注血管外科、外科重症、循证医学、临床数据库与转化方法。比起 P 值是否显著，我更在意临床比较是否公平。">
-        I am an undergraduate medical student interested in vascular surgery, surgical critical care, evidence-based medicine, clinical database research, and translational methods. I care about whether a clinical comparison is fair before I care about whether the p-value is small.
-      </p>
-      <div class="quick-strip">
-        <a class="action" href="about.html">About page</a>
-        <a class="action gold" href="life/index.html">Life blog (中文)</a>
-        <a class="action ghost" href="https://github.com/Bizhi-Wei?tab=repositories" target="_blank" rel="noopener">GitHub repos</a>
+    <section class="screen portrait-wrap" id="portrait">
+      <div class="portrait-frame fade-up">
+        <img src="images/profile.jpg" alt="Portrait of Bizhi Wei" width="420" height="525">
       </div>
+      <p class="cap fade-up d1" data-i18n="cap">Pu Ai Medical School · Shaoyang University</p>
     </section>
 
-    <section id="interests" class="reveal">
-      <p class="sec-label">02</p>
-      <h2 data-en="Research Interests" data-zh="研究方向">Research Interests</h2>
-      <ul class="two-col">
-        <li><a href="#pub-avsg"><span data-en="Vascular surgery &amp; endovascular treatment" data-zh="血管外科与腔内治疗">Vascular surgery &amp; endovascular treatment</span><span class="hint" data-en="→ paper" data-zh="→ 论文">→ paper</span></a></li>
-        <li><a href="#proj-aki"><span data-en="Surgical ICU &amp; postoperative complications" data-zh="外科 ICU 与术后并发症">Surgical ICU &amp; postoperative complications</span><span class="hint" data-en="→ project" data-zh="→ 项目">→ project</span></a></li>
-        <li><a href="spl-appendectomy-meta-note.html"><span data-en="Systematic review &amp; meta-analysis" data-zh="系统综述与 Meta 分析">Systematic review &amp; meta-analysis</span><span class="hint" data-en="→ note" data-zh="→ 笔记">→ note</span></a></li>
-        <li><a href="projects.html#mimic"><span data-en="MIMIC-IV database research" data-zh="MIMIC-IV 数据库研究">MIMIC-IV database research</span><span class="hint" data-en="→ projects" data-zh="→ 项目页">→ projects</span></a></li>
-        <li><a href="projects.html#aki"><span data-en="Clinical prediction modeling" data-zh="临床预测模型">Clinical prediction modeling</span><span class="hint" data-en="→ projects" data-zh="→ 项目页">→ projects</span></a></li>
-        <li><a href="#proj-docking"><span data-en="Molecular docking &amp; dynamics" data-zh="分子对接与分子动力学">Molecular docking &amp; dynamics</span><span class="hint" data-en="→ project" data-zh="→ 项目">→ project</span></a></li>
+    <section class="screen links-screen" id="links">
+      <h2 class="title fade-up" data-i18n="explore">Explore</h2>
+      <ul class="link-list fade-up d1">
+        <li>
+          <a href="index.html#papers" data-smooth>
+            <span class="k" data-i18n="papers">Papers</span>
+            <span class="v" data-i18n="papers-d">Publications &amp; submissions</span>
+          </a>
+        </li>
+        <li>
+          <a href="projects.html" class="page-link">
+            <span class="k" data-i18n="projects">Projects</span>
+            <span class="v" data-i18n="projects-d">Research in progress</span>
+          </a>
+        </li>
+        <li>
+          <a href="posts.html" class="page-link">
+            <span class="k" data-i18n="notes">Notes</span>
+            <span class="v" data-i18n="notes-d">Reading &amp; method notes</span>
+          </a>
+        </li>
+        <li>
+          <a href="about.html" class="page-link">
+            <span class="k" data-i18n="about">About</span>
+            <span class="v" data-i18n="about-d">A short introduction</span>
+          </a>
+        </li>
+        <li>
+          <a href="life/index.html" class="page-link">
+            <span class="k" data-i18n="life">Life</span>
+            <span class="v" data-i18n="life-d">日常小站（中文）</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener">
+            <span class="k">ORCID</span>
+            <span class="v">0009-0008-9481-3024</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">
+            <span class="k">GitHub</span>
+            <span class="v">github.com/Bizhi-Wei</span>
+          </a>
+        </li>
       </ul>
     </section>
 
-    <section id="publications" class="reveal">
-      <p class="sec-label">03</p>
-      <h2 data-en="Publications &amp; Submissions" data-zh="论文与投稿">Publications &amp; Submissions</h2>
-
-      <article class="proj" id="pub-avsg">
-        <div class="proj-num">P1</div>
-        <div>
-          <p class="proj-meta" data-en="Published · Annals of Vascular Surgery · 2026" data-zh="已发表 · Annals of Vascular Surgery · 2026">Published · Annals of Vascular Surgery · 2026</p>
-          <h3><a href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener"
-            data-en="Hemodynamic selection bias in observational comparisons of EVAR versus open repair for ruptured infrarenal abdominal aortic aneurysm: a systematic review and meta-analysis"
-            data-zh="Hemodynamic selection bias in observational comparisons of EVAR versus open repair for ruptured infrarenal abdominal aortic aneurysm: a systematic review and meta-analysis">Hemodynamic selection bias in observational comparisons of EVAR versus open repair for ruptured infrarenal abdominal aortic aneurysm: a systematic review and meta-analysis</a></h3>
-          <p data-en="Wei B, Yuan C, Li M. Annals of Vascular Surgery. 2026. Journal Pre-proof."
-             data-zh="Wei B, Yuan C, Li M. Annals of Vascular Surgery. 2026. Journal Pre-proof。">Wei B, Yuan C, Li M. Annals of Vascular Surgery. 2026. Journal Pre-proof.</p>
-          <div class="action-row">
-            <a class="action" href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">DOI</a>
-            <a class="action gold" href="https://www.sciencedirect.com/science/article/abs/pii/S0890509626006394" target="_blank" rel="noopener">ScienceDirect</a>
-            <a class="action ghost" href="#map" data-en="See on 3D map" data-zh="查看 3D 地图">See on 3D map</a>
-            <a class="action ghost" href="life/evar-indication-confounding.html" data-en="Research note" data-zh="研究笔记">Research note</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="proj" id="pub-jmgm">
-        <div class="proj-num">UR</div>
-        <div>
-          <p class="proj-meta" data-en="Under review · September 2026" data-zh="在审 · 2026年9月">Under review · September 2026</p>
-          <h3 data-en="Structure-based Virtual Screening Methodology Study" data-zh="基于结构的虚拟筛选方法学研究">Structure-based Virtual Screening Methodology Study</h3>
-          <p data-en="Single-author computational methodology manuscript under review at JMGM. Full title and findings will be posted after editorial decision."
-             data-zh="独立作者计算方法学稿件，在 JMGM 审稿中。完整标题与结果将在编辑决定后更新。">Single-author computational methodology manuscript under review at JMGM. Full title and findings will be posted after editorial decision.</p>
-          <div class="action-row">
-            <a class="action ghost" href="#map" data-en="See on 3D map" data-zh="查看 3D 地图">See on 3D map</a>
-            <a class="action ghost" href="#proj-docking" data-en="Related project" data-zh="相关项目">Related project</a>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <!-- 3D research map -->
-    <section id="map" class="reveal">
-      <p class="sec-label">03.5</p>
-      <h2 data-en="3D Research Map" data-zh="3D 研究地图">3D Research Map</h2>
-      <div class="constellation-wrap" id="map-wrap">
-        <canvas id="map-canvas"></canvas>
-        <div class="loading-3d" id="map-loading" data-en="LOADING MAP…" data-zh="地图加载中…">LOADING MAP…</div>
-        <div class="map-ui">
-          <div class="map-ui-head">
-            <div>
-              <p data-en="Each node is a paper or project. Drag to orbit, click a node or chip to open the real page."
-                 data-zh="每个节点对应一篇论文或一个项目。拖拽旋转，点击节点或下方标签可跳转。">
-                Each node is a paper or project. Drag to orbit, click a node or chip to open the real page.
-              </p>
-            </div>
-            <div class="map-chips" id="map-chips"></div>
-          </div>
-        </div>
-        <div class="map-status" id="map-status">NODES · 6 · DRAG TO ORBIT</div>
-      </div>
-    </section>
-
-    <section id="projects" class="reveal">
-      <p class="sec-label">04</p>
-      <h2 data-en="Selected Projects" data-zh="代表项目">Selected Projects</h2>
-
-      <article class="proj" id="proj-evar">
-        <div class="proj-num">01</div>
-        <div>
-          <p class="proj-meta" data-en="Systematic review · Published (AVSG)" data-zh="系统综述 · 已发表（AVSG）">Systematic review · Published (AVSG)</p>
-          <h3 data-en="Hemodynamic selection bias in EVAR vs open repair for ruptured AAA" data-zh="破裂腹主动脉瘤 EVAR 与开放修复中的血流动力学选择偏倚">Hemodynamic selection bias in EVAR vs open repair for ruptured AAA</h3>
-          <div class="action-row">
-            <a class="action" href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">DOI</a>
-            <a class="action gold" href="life/evar-indication-confounding.html" data-en="Note" data-zh="笔记">Note</a>
-            <a class="action ghost" href="#map" data-en="3D map" data-zh="3D 地图">3D map</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="proj" id="proj-aki">
-        <div class="proj-num">02</div>
-        <div>
-          <p class="proj-meta" data-en="MIMIC-IV database study" data-zh="MIMIC-IV 数据库研究">MIMIC-IV database study</p>
-          <h3 data-en="Dynamic prediction of postoperative AKI in surgical ICU patients" data-zh="外科 ICU 患者术后急性肾损伤的动态预测">Dynamic prediction of postoperative AKI in surgical ICU patients</h3>
-          <div class="action-row">
-            <a class="action" href="projects.html#aki">Project page</a>
-            <a class="action gold" href="life/mimic-aki-research.html">Research notes</a>
-            <a class="action ghost" href="#map">3D map</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="proj" id="proj-device">
-        <div class="proj-num">03</div>
-        <div>
-          <p class="proj-meta" data-en="Medical device innovation" data-zh="医疗器械创新">Medical device innovation</p>
-          <h3 data-en="Femoral artery compression device after interventional procedures" data-zh="介入术后股动脉压迫装置">Femoral artery compression device after interventional procedures</h3>
-          <div class="action-row">
-            <a class="action" href="projects.html#device">Project page</a>
-            <a class="action ghost" href="#map">3D map</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="proj" id="proj-docking">
-        <div class="proj-num">04</div>
-        <div>
-          <p class="proj-meta" data-en="Computational molecular research" data-zh="计算分子研究">Computational molecular research</p>
-          <h3 data-en="Molecular docking and molecular dynamics in abdominal aortic aneurysm" data-zh="腹主动脉瘤中的分子对接与分子动力学">Molecular docking and molecular dynamics in abdominal aortic aneurysm</h3>
-          <div class="action-row">
-            <a class="action" href="projects.html#docking">Project page</a>
-            <a class="action gold" href="https://github.com/Bizhi-Wei/Computational-screening-of-potential-MMP-9-and-NLRP3-inhibitors-for-abdominal-aortic-aneurysm" target="_blank" rel="noopener">GitHub repo</a>
-            <a class="action ghost" href="#map">3D map</a>
-            <a class="action ghost" href="md-efficiency-20260612.html">MD note</a>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <section id="notes" class="reveal">
-      <p class="sec-label">05</p>
-      <h2 data-en="Research Notes" data-zh="科研笔记">Research Notes</h2>
-      <a class="note" href="spl-appendectomy-meta-note.html">
-        <p class="note-meta">Meta-analysis note · 2026.4.7</p>
-        <h3 data-en="Pediatric single-port vs conventional laparoscopic appendectomy" data-zh="儿童单孔 vs 传统腹腔镜阑尾切除术">Pediatric single-port vs conventional laparoscopic appendectomy</h3>
-      </a>
-      <a class="note" href="pediatric-meningioma-note.html">
-        <p class="note-meta">Medical learning note · 2026.3.18</p>
-        <h3 data-en="From pediatric fever to pediatric meningioma" data-zh="从儿童发热想到小儿脑膜瘤">From pediatric fever to pediatric meningioma</h3>
-      </a>
-      <a class="note" href="md-efficiency-20260612.html">
-        <p class="note-meta">Research diary · 2026.6.12</p>
-        <h3 data-en="100 ns MD trial run and efficiency jump" data-zh="100 ns MD 试运行与效率跃迁">100 ns MD trial run and efficiency jump</h3>
-      </a>
-      <div class="quick-strip" style="margin-top:16px">
-        <a class="action" href="posts.html">All notes</a>
-        <a class="action gold" href="life/evar-indication-confounding.html">EVAR note</a>
-        <a class="action ghost" href="life/research-notes.html">Life-blog notes</a>
-      </div>
-    </section>
-
-    <section id="contact" class="reveal">
-      <p class="sec-label">06</p>
-      <h2 data-en="Contact &amp; Profiles" data-zh="联系与主页">Contact &amp; Profiles</h2>
-      <div class="contact-grid">
-        <a class="contact-card" href="mailto:15619056250wbz@gmail.com"><span class="k">Email</span><span class="v">15619056250wbz@gmail.com</span><span class="d" data-en="Preferred for collaboration" data-zh="合作与联系优先">Preferred for collaboration</span></a>
-        <a class="contact-card" href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener"><span class="k">ORCID</span><span class="v">0009-0008-9481-3024</span><span class="d">Scholarly identity</span></a>
-        <a class="contact-card" href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener"><span class="k">GitHub</span><span class="v">github.com/Bizhi-Wei</span><span class="d">Code &amp; pipelines</span></a>
-        <a class="contact-card" href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener"><span class="k">Latest paper</span><span class="v">AVSG 2026</span><span class="d">doi:10.1016/j.avsg.2026.08.042</span></a>
-        <a class="contact-card" href="projects.html"><span class="k" data-en="Projects" data-zh="项目">Projects</span><span class="v" data-en="Full project index" data-zh="完整项目索引">Full project index</span><span class="d">EVAR · MIMIC · device · docking</span></a>
-        <a class="contact-card" href="life/index.html"><span class="k" data-en="Life blog" data-zh="生活博客">Life blog</span><span class="v" data-en="Chinese daily / notes" data-zh="中文日常与笔记">Chinese daily / notes</span><span class="d">Slower writing</span></a>
+    <!-- slim papers anchor — content lives below fold of links, still calm -->
+    <section class="screen" id="papers" style="min-height:auto;padding-top:20px;padding-bottom:80px">
+      <div class="links-screen" style="gap:28px">
+        <h2 class="title" data-i18n="papers">Papers</h2>
+        <ul class="link-list">
+          <li>
+            <a href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">
+              <span class="k" style="font-size:18px">AVSG 2026</span>
+              <span class="v">doi:10.1016/j.avsg.2026.08.042</span>
+            </a>
+          </li>
+          <li>
+            <a href="projects.html#docking">
+              <span class="k" style="font-size:18px">JMGM 2026</span>
+              <span class="v" data-i18n="ur">under review</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <span data-en="© 2026 Bizhi Wei · Academic Homepage" data-zh="© 2026 魏必治 · 学术主页">© 2026 Bizhi Wei · Academic Homepage</span>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="projects.html">Projects</a>
-        <a href="posts.html">Posts</a>
-        <a href="life/index.html">Life</a>
-        <a href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener">ORCID</a>
-        <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
+  <footer class="foot">
+    <span>© 2026 Bizhi Wei</span>
   </footer>
 
   <script src="three.min.js"></script>
-  <script src="site-3d.js"></script>
   <script>
-  (function () {
-    /* ---------- bilingual ---------- */
-    var btnEn = document.getElementById('lang-en');
-    var btnZh = document.getElementById('lang-zh');
-    function applyLang(lang) {
-      var els = document.querySelectorAll('[data-en]');
-      for (var i = 0; i < els.length; i++) {
-        els[i].textContent = (lang === 'zh') ? els[i].getAttribute('data-zh') : els[i].getAttribute('data-en');
-      }
-      document.documentElement.lang = (lang === 'zh') ? 'zh-CN' : 'en';
-      document.title = (lang === 'zh') ? '魏必治 | 学术主页' : 'Bizhi Wei | Academic Homepage';
-      btnEn.classList.toggle('active', lang !== 'zh');
-      btnZh.classList.toggle('active', lang === 'zh');
-      try { localStorage.setItem('bw-lang', lang); } catch (e) {}
-    }
-    var saved = 'en';
-    try { saved = localStorage.getItem('bw-lang') || 'en'; } catch (e) {}
-    applyLang(saved);
-    btnEn.addEventListener('click', function () { applyLang('en'); });
-    btnZh.addEventListener('click', function () { applyLang('zh'); });
-
-    /* reveal */
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.08 });
-      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-    } else {
-      document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-    }
-
-    if (typeof THREE === 'undefined') {
-      var h1 = document.getElementById('hero-loading');
-      var h2 = document.getElementById('map-loading');
-      if (h1) h1.textContent = 'three.js failed to load';
-      if (h2) h2.textContent = 'three.js failed to load';
-      return;
-    }
-
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var TEAL = 0x0d6b64;
-    var GOLD = 0xc08a2d;
-    var INK = 0x20313a;
-    var FAINT = 0x8b979d;
-    var PAPER = 0xeef1eb;
-
-    /* ================= FULL-PAGE AMBIENT 3D BACKGROUND ================= */
-    function initBackground() {
-      var canvas = document.getElementById('bg-canvas');
-      if (!canvas) return;
-      var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-      renderer.setClearColor(0x000000, 0);
-
-      var scene = new THREE.Scene();
-      var camera = new THREE.PerspectiveCamera(50, 1, 0.1, 120);
-      camera.position.set(0, 0, 10);
-
-      var root = new THREE.Group();
-      scene.add(root);
-
-      // soft lattice planes (scientific desk mesh)
-      function makeGrid(size, div, y, opacity, color) {
-        var g = new THREE.GridHelper(size, div, color, color);
-        g.position.y = y;
-        g.material.transparent = true;
-        g.material.opacity = opacity;
-        g.material.depthWrite = false;
-        return g;
-      }
-      var gridA = makeGrid(28, 18, -4.2, 0.08, 0x0d6b64);
-      var gridB = makeGrid(22, 14, 4.5, 0.05, 0xc08a2d);
-      gridB.rotation.z = Math.PI * 0.08;
-      root.add(gridA);
-      root.add(gridB);
-
-      // particle field
-      var count = 1400;
-      var positions = new Float32Array(count * 3);
-      var seeds = [];
-      for (var i = 0; i < count; i++) {
-        var r = 6 + Math.random() * 10;
-        var theta = Math.random() * Math.PI * 2;
-        var phi = Math.acos(2 * Math.random() - 1);
-        positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-        positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.55;
-        positions[i * 3 + 2] = r * Math.cos(phi);
-        seeds.push({
-          s: 0.15 + Math.random() * 0.45,
-          p: Math.random() * Math.PI * 2,
-          ox: positions[i * 3],
-          oy: positions[i * 3 + 1],
-          oz: positions[i * 3 + 2]
-        });
-      }
-      var pGeo = new THREE.BufferGeometry();
-      pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      var particles = new THREE.Points(
-        pGeo,
-        new THREE.PointsMaterial({
-          color: TEAL, size: 0.035, transparent: true, opacity: 0.38,
-          sizeAttenuation: true, depthWrite: false
-        })
-      );
-      root.add(particles);
-
-      // sparse gold evidence points
-      var goldCount = 180;
-      var gPos = new Float32Array(goldCount * 3);
-      for (var j = 0; j < goldCount; j++) {
-        gPos[j * 3] = (Math.random() - 0.5) * 18;
-        gPos[j * 3 + 1] = (Math.random() - 0.5) * 10;
-        gPos[j * 3 + 2] = (Math.random() - 0.5) * 12;
-      }
-      var gGeo = new THREE.BufferGeometry();
-      gGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
-      root.add(new THREE.Points(
-        gGeo,
-        new THREE.PointsMaterial({
-          color: GOLD, size: 0.055, transparent: true, opacity: 0.28,
-          sizeAttenuation: true, depthWrite: false
-        })
-      ));
-
-      // faint connection lines between nearby particles
-      var linePositions = [];
-      var maxLinks = 220;
-      var linked = 0;
-      for (var a = 0; a < count && linked < maxLinks; a += 17) {
-        for (var b = a + 20; b < Math.min(a + 80, count); b += 23) {
-          var dx = positions[a * 3] - positions[b * 3];
-          var dy = positions[a * 3 + 1] - positions[b * 3 + 1];
-          var dz = positions[a * 3 + 2] - positions[b * 3 + 2];
-          var d = Math.sqrt(dx * dx + dy * dy + dz * dz);
-          if (d < 2.4) {
-            linePositions.push(
-              positions[a * 3], positions[a * 3 + 1], positions[a * 3 + 2],
-              positions[b * 3], positions[b * 3 + 1], positions[b * 3 + 2]
-            );
-            linked++;
-            if (linked >= maxLinks) break;
-          }
+    (function () {
+      var I18N = {
+        en: {
+          scroll: 'scroll',
+          cap: 'Pu Ai Medical School · Shaoyang University',
+          explore: 'Explore',
+          papers: 'Papers',
+          'papers-d': 'Publications & submissions',
+          projects: 'Projects',
+          'projects-d': 'Research in progress',
+          notes: 'Notes',
+          'notes-d': 'Reading & method notes',
+          about: 'About',
+          'about-d': 'A short introduction',
+          life: 'Life',
+          'life-d': 'Daily notes (Chinese)',
+          ur: 'under review',
+          'nav-photo': 'Portrait',
+          'nav-links': 'Links',
+          'nav-work': 'Work',
+          'nav-life': 'Life'
+        },
+        zh: {
+          scroll: '向下滚动',
+          cap: '邵阳学院 · 普爱医学院',
+          explore: '继续了解',
+          papers: '论文',
+          'papers-d': '发表与在审',
+          projects: '项目',
+          'projects-d': '研究进展',
+          notes: '笔记',
+          'notes-d': '阅读与方法',
+          about: '关于',
+          'about-d': '简短介绍',
+          life: '生活',
+          'life-d': '日常小站',
+          ur: '在审',
+          'nav-photo': '肖像',
+          'nav-links': '入口',
+          'nav-work': '作品',
+          'nav-life': '生活'
         }
+      };
+
+      var lang = 'en';
+      try { lang = localStorage.getItem('bw-lang') || 'en'; } catch (e) {}
+
+      function applyLang(l) {
+        lang = l;
+        var dict = I18N[l] || I18N.en;
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var k = el.getAttribute('data-i18n');
+          if (dict[k]) el.textContent = dict[k];
+        });
+        document.getElementById('btn-en').classList.toggle('active', l !== 'zh');
+        document.getElementById('btn-zh').classList.toggle('active', l === 'zh');
+        document.title = (l === 'zh') ? '魏必治' : 'Bizhi Wei';
+        try { localStorage.setItem('bw-lang', l); } catch (e) {}
       }
-      if (linePositions.length) {
-        var lGeo = new THREE.BufferGeometry();
-        lGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-        root.add(new THREE.LineSegments(
-          lGeo,
-          new THREE.LineBasicMaterial({ color: TEAL, transparent: true, opacity: 0.08, depthWrite: false })
-        ));
-      }
+      document.getElementById('btn-en').addEventListener('click', function () { applyLang('en'); });
+      document.getElementById('btn-zh').addEventListener('click', function () { applyLang('zh'); });
+      applyLang(lang);
 
-      // 3 faint vessel-like arcs as background DNA
-      function arcTube(radius, tube, color, opacity, rot) {
-        var geo = new THREE.TorusGeometry(radius, tube, 8, 64, Math.PI * 1.25);
-        var mesh = new THREE.Mesh(
-          geo,
-          new THREE.MeshBasicMaterial({
-            color: color, wireframe: true, transparent: true,
-            opacity: opacity, depthWrite: false
-          })
-        );
-        mesh.rotation.set(rot[0], rot[1], rot[2]);
-        return mesh;
-      }
-      var arc1 = arcTube(5.2, 0.22, TEAL, 0.07, [0.4, 0.2, 0.3]);
-      var arc2 = arcTube(3.6, 0.16, GOLD, 0.06, [-0.3, 0.8, 0.1]);
-      var arc3 = arcTube(6.4, 0.12, TEAL, 0.05, [1.1, -0.4, 0.2]);
-      root.add(arc1); root.add(arc2); root.add(arc3);
-
-      // distant soft sphere shell
-      var shell = new THREE.Mesh(
-        new THREE.IcosahedronGeometry(9, 1),
-        new THREE.MeshBasicMaterial({ color: TEAL, wireframe: true, transparent: true, opacity: 0.035 })
-      );
-      root.add(shell);
-
-      var pointer = { x: 0, y: 0, tx: 0, ty: 0 };
-      var scrollN = 0;
-
-      function resize() {
-        var w = window.innerWidth || document.documentElement.clientWidth;
-        var h = window.innerHeight || document.documentElement.clientHeight;
-        renderer.setSize(w, h, false);
-        camera.aspect = w / Math.max(h, 1);
-        camera.updateProjectionMatrix();
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      window.addEventListener('pointermove', function (e) {
-        var w = window.innerWidth || 1;
-        var h = window.innerHeight || 1;
-        pointer.tx = (e.clientX / w) * 2 - 1;
-        pointer.ty = -((e.clientY / h) * 2 - 1);
-      }, { passive: true });
-
+      // chrome appears after slight scroll
+      var chrome = document.getElementById('chrome');
+      var langBox = document.getElementById('lang');
       function onScroll() {
-        var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-        scrollN = (window.scrollY || window.pageYOffset || 0) / max;
+        var y = window.scrollY || 0;
+        chrome.classList.toggle('on', y > 40);
+        langBox.classList.toggle('on', true);
       }
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+      // show lang always after first paint
+      setTimeout(function () { langBox.classList.add('on'); }, 800);
 
-      var clock = new THREE.Clock();
-      function tick() {
-        requestAnimationFrame(tick);
-        var dt = Math.min(clock.getDelta(), 0.05);
-        var t = clock.elapsedTime;
-
-        pointer.x += (pointer.tx - pointer.x) * 0.04;
-        pointer.y += (pointer.ty - pointer.y) * 0.04;
-
-        if (!reduceMotion) {
-          root.rotation.y += dt * 0.035;
-          root.rotation.x = Math.sin(t * 0.08) * 0.05 + pointer.y * 0.08;
-          arc1.rotation.z += dt * 0.04;
-          arc2.rotation.y -= dt * 0.03;
-          arc3.rotation.x += dt * 0.02;
-          shell.rotation.y -= dt * 0.015;
-
-          var arr = particles.geometry.attributes.position.array;
-          for (var i = 0; i < seeds.length; i++) {
-            var s = seeds[i];
-            var wob = Math.sin(t * s.s + s.p) * 0.12;
-            arr[i * 3] = s.ox + wob;
-            arr[i * 3 + 1] = s.oy + Math.cos(t * s.s * 0.8 + s.p) * 0.1;
-            arr[i * 3 + 2] = s.oz + Math.sin(t * s.s * 0.5 + s.p) * 0.08;
-          }
-          particles.geometry.attributes.position.needsUpdate = true;
-        }
-
-        // scroll parallax: scene drifts gently downward as user reads
-        root.position.y = scrollN * 1.8;
-        root.position.x = pointer.x * 0.35;
-        camera.position.z = 10 - scrollN * 1.2;
-        camera.lookAt(0, scrollN * 0.4, 0);
-
-        renderer.render(scene, camera);
-      }
-      tick();
-    }
-
-    function makeRenderer(canvas) {
-      var r = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-      r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      r.setClearColor(PAPER, 0);
-      return r;
-    }
-
-    /* ================= HERO: wireframe AAA + stent + flow ================= */
-    function buildVesselGroup() {
-      var group = new THREE.Group();
-
-      // path: infrarenal aorta into aneurysm sac then bifurcation-ish exit
-      var pts = [];
-      var i;
-      for (i = 0; i <= 12; i++) {
-        var t = i / 12;
-        var y = 2.4 - t * 4.8;
-        var x = Math.sin(t * Math.PI) * 0.15;
-        var z = Math.cos(t * Math.PI * 0.35) * 0.08;
-        pts.push(new THREE.Vector3(x, y, z));
-      }
-      var curve = new THREE.CatmullRomCurve3(pts);
-
-      // adaptive radius: neck -> aneurysm bulge -> taper
-      function radiusAt(t) {
-        // t 0..1 along vessel
-        var neck = 0.38;
-        var bulgeCenter = 0.55;
-        var bulgeWidth = 0.22;
-        var bulge = 0.95;
-        var g = Math.exp(-Math.pow((t - bulgeCenter) / bulgeWidth, 2));
-        var taper = 1 - 0.25 * Math.max(0, t - 0.75) * 4;
-        return (neck + (bulge - neck) * g) * taper;
-      }
-
-      // custom tube via lathe of rings
-      var tubularSegments = 80;
-      var radialSegments = 28;
-      var vertices = [];
-      var indices = [];
-      var frames = curve.computeFrenetFrames(tubularSegments, false);
-      for (i = 0; i <= tubularSegments; i++) {
-        var tt = i / tubularSegments;
-        var P = curve.getPointAt(tt);
-        var N = frames.normals[i];
-        var B = frames.binormals[i];
-        var r = radiusAt(tt);
-        for (var j = 0; j <= radialSegments; j++) {
-          var v = (j / radialSegments) * Math.PI * 2;
-          var cx = Math.cos(v);
-          var cy = Math.sin(v);
-          vertices.push(
-            P.x + r * (cx * N.x + cy * B.x),
-            P.y + r * (cx * N.y + cy * B.y),
-            P.z + r * (cx * N.z + cy * B.z)
-          );
-        }
-      }
-      for (i = 0; i < tubularSegments; i++) {
-        for (var k = 0; k < radialSegments; k++) {
-          var a = i * (radialSegments + 1) + k;
-          var b = a + radialSegments + 1;
-          indices.push(a, b, a + 1);
-          indices.push(b, b + 1, a + 1);
-        }
-      }
-      var geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-      geo.setIndex(indices);
-      geo.computeVertexNormals();
-
-      var wire = new THREE.WireframeGeometry(geo);
-      var vesselLine = new THREE.LineSegments(
-        wire,
-        new THREE.LineBasicMaterial({ color: TEAL, transparent: true, opacity: 0.42 })
-      );
-      group.add(vesselLine);
-
-      // soft inner shell (very transparent) for depth
-      var shell = new THREE.Mesh(
-        geo,
-        new THREE.MeshBasicMaterial({
-          color: TEAL, transparent: true, opacity: 0.05,
-          side: THREE.DoubleSide, depthWrite: false
-        })
-      );
-      group.add(shell);
-
-      // centerline
-      var linePts = [];
-      for (i = 0; i <= 60; i++) linePts.push(curve.getPointAt(i / 60));
-      var centerGeo = new THREE.BufferGeometry().setFromPoints(linePts);
-      var centerLine = new THREE.Line(
-        centerGeo,
-        new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.75 })
-      );
-      group.add(centerLine);
-
-      // EVAR stent rings in aneurysm zone (t ~ 0.40–0.72)
-      var stentMat = new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.85 });
-      for (i = 0; i < 9; i++) {
-        var st = 0.38 + i * 0.045;
-        var P = curve.getPointAt(st);
-        var N = frames.normals[Math.floor(st * tubularSegments)];
-        var B = frames.binormals[Math.floor(st * tubularSegments)];
-        var rr = radiusAt(st) * 0.62;
-        var ringPts = [];
-        for (var a = 0; a <= 48; a++) {
-          var ang = (a / 48) * Math.PI * 2;
-          var cx = Math.cos(ang) * rr;
-          var cy = Math.sin(ang) * rr;
-          ringPts.push(new THREE.Vector3(
-            P.x + cx * N.x + cy * B.x,
-            P.y + cx * N.y + cy * B.y,
-            P.z + cx * N.z + cy * B.z
-          ));
-        }
-        var ringGeo = new THREE.BufferGeometry().setFromPoints(ringPts);
-        group.add(new THREE.Line(ringGeo, stentMat));
-      }
-
-      // longitudinal stent struts
-      for (i = 0; i < 6; i++) {
-        var ang = (i / 6) * Math.PI * 2;
-        var strutPts = [];
-        for (var s = 0; s <= 24; s++) {
-          var st2 = 0.36 + (s / 24) * 0.38;
-          var P2 = curve.getPointAt(st2);
-          var fi = Math.floor(st2 * tubularSegments);
-          var N2 = frames.normals[fi];
-          var B2 = frames.binormals[fi];
-          var r2 = radiusAt(st2) * 0.62;
-          strutPts.push(new THREE.Vector3(
-            P2.x + Math.cos(ang) * r2 * N2.x + Math.sin(ang) * r2 * B2.x,
-            P2.y + Math.cos(ang) * r2 * N2.y + Math.sin(ang) * r2 * B2.y,
-            P2.z + Math.cos(ang) * r2 * N2.z + Math.sin(ang) * r2 * B2.z
-          ));
-        }
-        group.add(new THREE.Line(
-          new THREE.BufferGeometry().setFromPoints(strutPts),
-          new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.35 })
-        ));
-      }
-
-      // flow particles along curve
-      var particleCount = 900;
-      var pPos = new Float32Array(particleCount * 3);
-      var pMeta = [];
-      for (i = 0; i < particleCount; i++) {
-        pMeta.push({
-          t: Math.random(),
-          speed: 0.03 + Math.random() * 0.05,
-          ang: Math.random() * Math.PI * 2,
-          rr: 0.15 + Math.random() * 0.35
+      // smooth in-page
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var id = a.getAttribute('href');
+          if (!id || id === '#') return;
+          var t = document.querySelector(id);
+          if (!t) return;
+          e.preventDefault();
+          t.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
-        pPos[i * 3] = 0; pPos[i * 3 + 1] = 0; pPos[i * 3 + 2] = 0;
+      });
+
+      // smooth page transitions for same-site links
+      document.querySelectorAll('a.page-link, a.mark').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var href = a.getAttribute('href');
+          if (!href || a.target === '_blank') return;
+          if (href.indexOf('#') === 0) return;
+          e.preventDefault();
+          if (document.startViewTransition) {
+            document.startViewTransition(function () {
+              window.location.href = href;
+            });
+          } else {
+            document.documentElement.classList.add('is-leaving');
+            setTimeout(function () { window.location.href = href; }, 260);
+          }
+        });
+      });
+
+      // enter fade for non-home pages that load this shell later
+      document.documentElement.classList.add('is-entering');
+      requestAnimationFrame(function () {
+        document.documentElement.classList.remove('is-entering');
+      });
+
+      /* ---- minimal 3D: soft floating spheres on white ---- */
+      if (typeof THREE === 'undefined') return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var canvas = document.getElementById('stage');
+      var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setClearColor(0x000000, 0);
+
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(35, 1, 0.1, 50);
+      camera.position.set(0, 0, 8);
+
+      var group = new THREE.Group();
+      scene.add(group);
+
+      // soft white/gray glass spheres
+      var blobs = [];
+      var defs = [
+        { c: 0xf0f0f2, r: 1.35, p: [2.6, 1.2, -1.5], o: 0.55, s: 0.25 },
+        { c: 0xe8e8ec, r: 0.7, p: [-2.4, -0.6, -0.8], o: 0.4, s: 0.4 },
+        { c: 0xf5f5f7, r: 0.45, p: [-1.2, 1.6, -1.2], o: 0.5, s: 0.55 },
+        { c: 0xeaeaea, r: 0.9, p: [1.8, -1.6, -1.8], o: 0.35, s: 0.3 },
+        { c: 0xf2f2f4, r: 0.28, p: [0.2, 0.4, 0.5], o: 0.45, s: 0.7 }
+      ];
+      defs.forEach(function (d) {
+        var m = new THREE.Mesh(
+          new THREE.SphereGeometry(d.r, 48, 32),
+          new THREE.MeshPhysicalMaterial({
+            color: d.c,
+            roughness: 0.35,
+            metalness: 0.0,
+            transparent: true,
+            opacity: d.o,
+            transmission: 0.35,
+            thickness: 0.6
+          })
+        );
+        // fallback if MeshPhysicalMaterial transmission unsupported
+        if (m.material.transmission === undefined) {
+          m.material = new THREE.MeshStandardMaterial({
+            color: d.c, roughness: 0.45, metalness: 0.05,
+            transparent: true, opacity: d.o
+          });
+        }
+        m.position.set(d.p[0], d.p[1], d.p[2]);
+        m.userData = { home: d.p.slice(), s: d.s, ph: Math.random() * Math.PI * 2, r: d.r };
+        group.add(m);
+        blobs.push(m);
+      });
+
+      // very light ambient field
+      var pts = [];
+      for (var i = 0; i < 80; i++) {
+        pts.push((Math.random() - 0.5) * 14, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8);
       }
-      var pGeo = new THREE.BufferGeometry();
-      pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-      var particles = new THREE.Points(
-        pGeo,
-        new THREE.PointsMaterial({
-          color: TEAL, size: 0.035, transparent: true, opacity: 0.75,
-          sizeAttenuation: true, depthWrite: false
-        })
-      );
+      var pg = new THREE.BufferGeometry();
+      pg.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+      var particles = new THREE.Points(pg, new THREE.PointsMaterial({
+        color: 0xc8c8cc, size: 0.025, transparent: true, opacity: 0.35
+      }));
       group.add(particles);
 
-      // sparse data points near the sac (evidence cloud)
-      var dataCount = 160;
-      var dPos = new Float32Array(dataCount * 3);
-      for (i = 0; i < dataCount; i++) {
-        var td = 0.35 + Math.random() * 0.45;
-        var Pd = curve.getPointAt(td);
-        var Ndd = frames.normals[Math.floor(td * tubularSegments)];
-        var Bdd = frames.binormals[Math.floor(td * tubularSegments)];
-        var rad = radiusAt(td) * (1.05 + Math.random() * 0.85);
-        var aa = Math.random() * Math.PI * 2;
-        dPos[i * 3] = Pd.x + Math.cos(aa) * rad * Ndd.x + Math.sin(aa) * rad * Bdd.x + (Math.random() - 0.5) * 0.15;
-        dPos[i * 3 + 1] = Pd.y + (Math.random() - 0.5) * 0.2;
-        dPos[i * 3 + 2] = Pd.z + Math.cos(aa) * rad * Ndd.z + Math.sin(aa) * rad * Bdd.z + (Math.random() - 0.5) * 0.15;
-      }
-      var dGeo = new THREE.BufferGeometry();
-      dGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3));
-      group.add(new THREE.Points(
-        dGeo,
-        new THREE.PointsMaterial({ color: GOLD, size: 0.045, transparent: true, opacity: 0.55, depthWrite: false })
-      ));
-
-      // orientation frame ticks
-      var axes = new THREE.AxesHelper(0.55);
-      axes.position.set(1.8, -2.2, 0);
-      group.add(axes);
-
-      group.userData.curve = curve;
-      group.userData.frames = frames;
-      group.userData.radiusAt = radiusAt;
-      group.userData.particles = particles;
-      group.userData.pMeta = pMeta;
-      group.userData.tubularSegments = tubularSegments;
-      return group;
-    }
-
-    function initHero() {
-      var canvas = document.getElementById('hero-canvas');
-      var wrap = document.getElementById('hero-wrap');
-      var loading = document.getElementById('hero-loading');
-      var renderer = makeRenderer(canvas);
-      var scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(PAPER, 0.045);
-
-      var camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
-      camera.position.set(4.0, 1.6, 4.8);
-      camera.lookAt(0, -0.35, 0);
-
-      var vessel = buildVesselGroup();
-      vessel.position.y = 0.15;
-      scene.add(vessel);
-
-      // soft ground grid
-      var grid = new THREE.GridHelper(10, 20, 0xc5cfc8, 0xd9e0d8);
-      grid.position.y = -2.8;
-      scene.add(grid);
-
       var pointer = { x: 0, y: 0, tx: 0, ty: 0 };
-      var dragging = false;
-      var prev = { x: 0, y: 0 };
-      var orbit = { y: 0.35, x: 0.15 };
-
       function resize() {
-        var w = wrap.clientWidth;
-        var h = wrap.clientHeight;
+        var w = window.innerWidth, h = window.innerHeight;
         renderer.setSize(w, h, false);
         camera.aspect = w / Math.max(h, 1);
         camera.updateProjectionMatrix();
       }
       resize();
       window.addEventListener('resize', resize);
-
-      canvas.addEventListener('pointerdown', function (e) {
-        dragging = true; prev.x = e.clientX; prev.y = e.clientY;
-        canvas.setPointerCapture(e.pointerId);
-      });
-      canvas.addEventListener('pointerup', function () { dragging = false; });
-      canvas.addEventListener('pointerleave', function () { dragging = false; });
-      canvas.addEventListener('pointermove', function (e) {
-        var rect = wrap.getBoundingClientRect();
-        pointer.tx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        pointer.ty = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-        if (dragging) {
-          orbit.y += (e.clientX - prev.x) * 0.005;
-          orbit.x += (e.clientY - prev.y) * 0.004;
-          orbit.x = Math.max(-0.6, Math.min(0.7, orbit.x));
-          prev.x = e.clientX; prev.y = e.clientY;
-        }
-      });
+      window.addEventListener('pointermove', function (e) {
+        pointer.tx = (e.clientX / window.innerWidth) * 2 - 1;
+        pointer.ty = -((e.clientY / window.innerHeight) * 2 - 1);
+      }, { passive: true });
 
       var clock = new THREE.Clock();
-      var heroVisible = true;
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          heroVisible = entries[0].isIntersecting;
-        }, { threshold: 0.05 }).observe(wrap);
-      }
-
       function tick() {
         requestAnimationFrame(tick);
-        if (!heroVisible) return;
         var dt = Math.min(clock.getDelta(), 0.05);
         var t = clock.elapsedTime;
+        pointer.x += (pointer.tx - pointer.x) * 0.04;
+        pointer.y += (pointer.ty - pointer.y) * 0.04;
 
-        if (!reduceMotion && !dragging) orbit.y += dt * 0.12;
-        pointer.x += (pointer.tx - pointer.x) * 0.05;
-        pointer.y += (pointer.ty - pointer.y) * 0.05;
-
-        vessel.rotation.y = orbit.y + pointer.x * 0.25;
-        vessel.rotation.x = orbit.x + pointer.y * 0.08;
-
-        // particles
-        var meta = vessel.userData.pMeta;
-        var pos = vessel.userData.particles.geometry.attributes.position.array;
-        var curve = vessel.userData.curve;
-        var frames = vessel.userData.frames;
-        var radiusAt = vessel.userData.radiusAt;
-        var segs = vessel.userData.tubularSegments;
-        for (var i = 0; i < meta.length; i++) {
-          if (!reduceMotion) meta[i].t += meta[i].speed * dt;
-          if (meta[i].t > 1) meta[i].t -= 1;
-          var tt = meta[i].t;
-          var P = curve.getPointAt(tt);
-          var fi = Math.floor(tt * segs);
-          if (fi > segs) fi = segs;
-          var N = frames.normals[fi];
-          var B = frames.binormals[fi];
-          var rr = radiusAt(tt) * meta[i].rr * (0.7 + 0.3 * Math.sin(t + i));
-          var ang = meta[i].ang + t * 0.3;
-          pos[i * 3] = P.x + Math.cos(ang) * rr * N.x + Math.sin(ang) * rr * B.x;
-          pos[i * 3 + 1] = P.y + Math.cos(ang) * rr * N.y + Math.sin(ang) * rr * B.y;
-          pos[i * 3 + 2] = P.z + Math.cos(ang) * rr * N.z + Math.sin(ang) * rr * B.z;
+        if (!reduce) {
+          blobs.forEach(function (m) {
+            var u = m.userData;
+            m.position.x = u.home[0] + Math.sin(t * u.s + u.ph) * 0.18 + pointer.x * 0.25;
+            m.position.y = u.home[1] + Math.cos(t * u.s * 0.8 + u.ph) * 0.15 + pointer.y * 0.15;
+            m.rotation.y += dt * 0.08;
+          });
+          particles.rotation.y += dt * 0.02;
         }
-        vessel.userData.particles.geometry.attributes.position.needsUpdate = true;
 
+        group.rotation.y = pointer.x * 0.08;
+        group.rotation.x = pointer.y * 0.04;
         renderer.render(scene, camera);
-        if (loading) loading.classList.add('hide');
       }
       tick();
-    }
-
-    /* ================= MAP: clickable research constellation ================= */
-    var NODES = [
-      {
-        id: 'avsg',
-        label: 'AVSG 2026',
-        sub: 'rAAA EVAR selection bias',
-        color: TEAL,
-        href: 'https://doi.org/10.1016/j.avsg.2026.08.042',
-        pos: [0.15, 0.95, 0.15]
-      },
-      {
-        id: 'evar-note',
-        label: 'EVAR note',
-        sub: 'indication confounding',
-        color: GOLD,
-        href: 'life/evar-indication-confounding.html',
-        pos: [1.85, 0.35, 0.35]
-      },
-      {
-        id: 'jmgm',
-        label: 'JMGM UR',
-        sub: 'virtual screening methods',
-        color: TEAL,
-        href: '#pub-jmgm',
-        pos: [-1.85, 0.45, 0.35]
-      },
-      {
-        id: 'docking',
-        label: 'Docking / MD',
-        sub: 'AAA molecular project',
-        color: GOLD,
-        href: 'projects.html#docking',
-        pos: [-1.35, -0.95, -0.25]
-      },
-      {
-        id: 'mimic',
-        label: 'MIMIC AKI',
-        sub: 'postoperative prediction',
-        color: TEAL,
-        href: 'life/mimic-aki-research.html',
-        pos: [1.4, -0.85, -0.2]
-      },
-      {
-        id: 'device',
-        label: 'Device',
-        sub: 'femoral compression',
-        color: FAINT,
-        href: 'projects.html#device',
-        pos: [0.25, -1.45, 0.55]
-      }
-    ];
-
-    function initMap() {
-      var canvas = document.getElementById('map-canvas');
-      var wrap = document.getElementById('map-wrap');
-      var loading = document.getElementById('map-loading');
-      var chips = document.getElementById('map-chips');
-      var status = document.getElementById('map-status');
-      var links = [
-        ['avsg', 'evar-note'],
-        ['avsg', 'jmgm'],
-        ['jmgm', 'docking'],
-        ['docking', 'mimic'],
-        ['mimic', 'device'],
-        ['evar-note', 'docking']
-      ];
-
-      // chips UI
-      NODES.forEach(function (n) {
-        var chip = document.createElement('a');
-        chip.className = 'map-chip' + (n.color === GOLD ? ' gold' : (n.color === FAINT ? ' gray' : ''));
-        chip.href = n.href;
-        if (n.href.indexOf('http') === 0) {
-          chip.target = '_blank';
-          chip.rel = 'noopener';
-        }
-        chip.innerHTML = '<i></i>' + n.label;
-        chip.addEventListener('mouseenter', function () {
-          if (window.__mapApi) window.__mapApi.setFocus(n.id);
-        });
-        chip.addEventListener('mouseleave', function () {
-          if (window.__mapApi) window.__mapApi.setFocus(null);
-        });
-        chips.appendChild(chip);
-      });
-
-      function setStatus(id, progress) {
-        var p = Math.round((progress || 0) * 100);
-        if (id) {
-          var found = null;
-          for (var i = 0; i < NODES.length; i++) if (NODES[i].id === id) found = NODES[i];
-          status.textContent = 'FOCUS · ' + ((found && found.label) || id) + ' · SCROLL CAM ' + p + '% · CLICK TO OPEN';
-        } else {
-          status.textContent = 'NODES · ' + NODES.length + ' · SCROLL-FOLLOW CAMERA ' + p + '% · DRAG · CLICK';
-        }
-        var chipEls = chips.querySelectorAll('.map-chip');
-        var label = '';
-        if (id) {
-          for (var j = 0; j < NODES.length; j++) if (NODES[j].id === id) label = NODES[j].label;
-        }
-        for (var k = 0; k < chipEls.length; k++) {
-          chipEls[k].classList.toggle('is-active', !!id && label && chipEls[k].textContent.indexOf(label) >= 0);
-        }
-        if (loading) loading.classList.add('hide');
-      }
-
-      if (!window.Site3D || typeof THREE === 'undefined') {
-        if (status) status.textContent = '3D map unavailable';
-        return;
-      }
-
-      var lastFocus = null;
-      window.__mapApi = Site3D.initResearchMap({
-        canvas: canvas,
-        wrap: wrap,
-        nodes: NODES,
-        links: links,
-        onFocus: function (id) {
-          lastFocus = id || null;
-          setStatus(lastFocus, window.__mapApi ? window.__mapApi.getProgress() : 0);
-        },
-        onFrame: function (progress) {
-          setStatus(lastFocus, progress);
-        }
-      });
-      setStatus(null, 0);
-    }
-
-    // boot after layout
-    requestAnimationFrame(function () {
-      try {
-        if (window.Site3D && Site3D.initAmbientBackground) {
-          Site3D.initAmbientBackground({ canvas: document.getElementById('bg-canvas'), density: 1 });
-        } else {
-          initBackground();
-        }
-      } catch (err) {
-        console.error(err);
-        try { initBackground(); } catch (e2) { console.error(e2); }
-      }
-      try { initHero(); } catch (err) {
-        console.error(err);
-        var l = document.getElementById('hero-loading');
-        if (l) l.textContent = '3D hero error';
-      }
-      try { initMap(); } catch (err) {
-        console.error(err);
-        var l2 = document.getElementById('map-loading');
-        if (l2) l2.textContent = '3D map error';
-      }
-    });
-  })();
+    })();
   </script>
 </body>
 </html>
