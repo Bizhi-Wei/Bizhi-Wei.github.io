@@ -1,179 +1,108 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>About | Bizhi Wei</title>
+  <title>About · Bizhi Wei</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="blog.css">
-  <style>
-    .accent-note {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 14px; padding: 8px 12px;
-      border-radius: 999px; border: 1px solid var(--line);
-      background: rgba(255,255,255,.75);
-      font-family: var(--mono); font-size: 12px; color: var(--dim);
-    }
-    .accent-note i {
-      width: 8px; height: 8px; border-radius: 50%; background: var(--teal);
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="apple.css">
 </head>
 <body>
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <nav class="site-nav">
-    <div class="container">
-      <a class="nav-brand" href="index.html">Bizhi Wei</a>
+  <header class="chrome on">
+    <a class="mark" href="index.html">Bizhi Wei</a>
+    <nav>
       <a href="index.html">Home</a>
-      <a href="about.html" class="active">About</a>
-      <a href="index.html#publications">Papers</a>
       <a href="projects.html">Projects</a>
-      <a href="posts.html">Posts</a>
-      <a href="index.html#map">3D Map</a>
+      <a href="posts.html">Notes</a>
+      <a href="about.html" class="here">About</a>
       <a href="life/index.html">Life</a>
-    </div>
-  </nav>
-
-  <header class="container page-hero">
-    <p class="hero-tag">About</p>
-    <h1>Research, medicine, and growth — without the polish.</h1>
-    <p class="page-subtitle">
-      This is not a formal CV. It is a clearer record of how I learn methods,
-      read literature, fail, revise, and keep going as an undergraduate medical student.
-      The page sits on the same quiet 3D instrument field as the rest of the site.
-    </p>
-    <div class="quick-strip">
-      <a class="action" href="index.html#publications">Papers</a>
-      <a class="action gold" href="projects.html">Projects</a>
-      <a class="action ghost" href="index.html#instrument">3D Instrument</a>
-      <a class="action ghost" href="life/why-i-built-this-blog.html">Why I write (中文)</a>
-    </div>
-    <div class="accent-note"><i></i> background accent · pulse rings</div>
+    </nav>
   </header>
+  <div class="lang" id="lang">
+    <button type="button" id="btn-en">EN</button>
+    <button type="button" id="btn-zh">中</button>
+  </div>
 
-  <main class="container">
-    <section class="reveal">
-      <p class="sec-label">01</p>
-      <h2>Who I am</h2>
-      <div class="card">
-        <p>
-          I am <strong>Bizhi Wei</strong>, an undergraduate medical student at Pu Ai Medical School,
-          Shaoyang University. My interests include vascular surgery, surgical critical care,
-          evidence-based medicine, clinical database research, and translational methods.
-        </p>
-        <p>
-          I have worked on systematic reviews and meta-analyses, a MIMIC-IV postoperative AKI project,
-          a femoral-artery compression device concept, and molecular docking / dynamics workflows.
-        </p>
-        <div class="action-row">
-          <a class="action" href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener">ORCID</a>
-          <a class="action gold" href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
-          <a class="action ghost" href="mailto:15619056250wbz@gmail.com">Email</a>
-          <a class="action ghost" href="index.html#map">3D Map</a>
-        </div>
-      </div>
+  <main>
+    <section class="screen head">
+      <h1 class="fade-up" data-i18n="title">About</h1>
+      <p class="hint fade-up d1" data-i18n="sub">A short introduction.</p>
     </section>
 
-    <section class="reveal">
-      <p class="sec-label">02</p>
-      <h2>Why this site exists</h2>
-      <div class="card">
-        <p>
-          At the beginning, research feels distant and intimidating. Papers, data, revisions,
-          and failed attempts slowly turned into a kind of self-training.
-        </p>
-        <p>
-          I keep this site to record that process honestly — technical when needed,
-          reflective when that is more accurate. The 3D layer is not decoration; it is a reminder
-          that methods and selection shape what we think we see.
-        </p>
+    <section class="screen links-screen" style="min-height:auto;padding-top:0;padding-bottom:80px;align-items:center">
+      <div class="prose fade-up d1">
+        <p data-i18n="a1">I am Bizhi Wei, an undergraduate medical student at Pu Ai Medical School, Shaoyang University.</p>
+        <p data-i18n="a2">I care about vascular surgery questions, evidence synthesis, clinical databases, and whether a comparison is fair before I care about whether the p-value is small.</p>
+        <p data-i18n="a3">This site is a quiet academic profile. Longer personal writing lives on the life blog.</p>
       </div>
-      <div class="quote-box">
-        Research is not only about producing results. It is also about learning how to ask better questions —
-        especially whether two groups were already different before treatment was chosen.
-      </div>
-    </section>
-
-    <section class="reveal">
-      <p class="sec-label">03</p>
-      <h2>Current interests</h2>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Clinical research</h3>
-          <p>Questions that matter at the bedside: surgery, emergency allocation, postoperative complications, prognosis.</p>
-          <div class="action-row">
-            <a class="action ghost" href="projects.html#evar">EVAR project →</a>
-            <a class="action ghost" href="index.html#pub-avsg">Paper →</a>
-          </div>
-        </div>
-        <div class="card">
-          <h3>Evidence-based medicine</h3>
-          <p>How evidence is collected, appraised, pooled, and — importantly — how selection bias can rewrite the conclusion.</p>
-          <div class="action-row">
-            <a class="action ghost" href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">Latest paper →</a>
-          </div>
-        </div>
-        <div class="card">
-          <h3>Medical data science</h3>
-          <p>MIMIC-IV and structured clinical data for prediction models that respect time and leakage risks.</p>
-          <div class="action-row">
-            <a class="action ghost" href="life/mimic-aki-research.html">MIMIC notes →</a>
-          </div>
-        </div>
-        <div class="card">
-          <h3>Translational exploration</h3>
-          <p>Docking and molecular dynamics as a way to connect disease mechanisms, targets, and candidate compounds.</p>
-          <div class="action-row">
-            <a class="action ghost" href="projects.html#docking">Docking project →</a>
-            <a class="action ghost" href="index.html#map">Map node →</a>
-          </div>
-        </div>
-      </div>
+      <ul class="link-list fade-up d2">
+        <li>
+          <a href="mailto:15619056250wbz@gmail.com">
+            <span class="k">Email</span>
+            <span class="v">15619056250wbz@gmail.com</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0009-0008-9481-3024" target="_blank" rel="noopener">
+            <span class="k">ORCID</span>
+            <span class="v">0009-0008-9481-3024</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">
+            <span class="k">GitHub</span>
+            <span class="v">github.com/Bizhi-Wei</span>
+          </a>
+        </li>
+        <li>
+          <a href="life/index.html">
+            <span class="k" data-i18n="life">Life blog</span>
+            <span class="v" data-i18n="lifed">日常小站（中文）</span>
+          </a>
+        </li>
+      </ul>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <span>© 2026 Bizhi Wei · About</span>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="projects.html">Projects</a>
-        <a href="posts.html">Posts</a>
-        <a href="index.html#map">3D Map</a>
-        <a href="life/index.html">Life</a>
-        <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="three.min.js"></script>
-  <script src="site-3d.js"></script>
+  <footer class="foot"><span>© 2026 Bizhi Wei</span></footer>
+  <script src="nav.js"></script>
   <script>
     (function () {
-      if (!('IntersectionObserver' in window)) {
-        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-      } else {
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-          });
-        }, { threshold: 0.08 });
-        document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-      }
-      try {
-        if (window.Site3D) {
-          Site3D.initAmbientBackground({
-            canvas: document.getElementById('bg-canvas'),
-            density: 0.7,
-            accent: Site3D.buildAboutPulse()
-          });
+      var I18N = {
+        en: {
+          title: 'About', sub: 'A short introduction.',
+          a1: 'I am Bizhi Wei, an undergraduate medical student at Pu Ai Medical School, Shaoyang University.',
+          a2: 'I care about vascular surgery questions, evidence synthesis, clinical databases, and whether a comparison is fair before I care about whether the p-value is small.',
+          a3: 'This site is a quiet academic profile. Longer personal writing lives on the life blog.',
+          life: 'Life blog', lifed: 'Daily notes (Chinese)'
+        },
+        zh: {
+          title: '关于', sub: '简短介绍。',
+          a1: '我是魏必治，邵阳学院普爱医学院临床医学本科生。',
+          a2: '我关注血管外科问题、证据合成与临床数据库；比起 P 值是否显著，我更在意临床比较是否公平。',
+          a3: '这里是安静的学术档案。更长的生活化书写在生活博客。',
+          life: '生活博客', lifed: '日常小站'
         }
-      } catch (e) { console.error(e); }
+      };
+      var lang = 'en';
+      try { lang = localStorage.getItem('bw-lang') || 'en'; } catch (e) {}
+      function applyLang(l) {
+        var d = I18N[l] || I18N.en;
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var k = el.getAttribute('data-i18n');
+          if (d[k]) el.textContent = d[k];
+        });
+        document.getElementById('btn-en').classList.toggle('active', l !== 'zh');
+        document.getElementById('btn-zh').classList.toggle('active', l === 'zh');
+        document.title = (l === 'zh') ? '关于 · 魏必治' : 'About · Bizhi Wei';
+        try { localStorage.setItem('bw-lang', l); } catch (e) {}
+      }
+      document.getElementById('btn-en').onclick = function () { applyLang('en'); };
+      document.getElementById('btn-zh').onclick = function () { applyLang('zh'); };
+      applyLang(lang);
     })();
   </script>
-<script src="nav.js"></script>
 </body>
 </html>
-
