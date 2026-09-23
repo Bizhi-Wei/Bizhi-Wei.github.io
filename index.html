@@ -118,14 +118,14 @@
       width: 100%;
     }
     .portrait-frame {
-      width: min(560px, 88vw);
+      width: min(860px, 94vw);
       aspect-ratio: 4 / 3;
-      border-radius: 28px;
+      border-radius: 32px;
       overflow: hidden;
       background: #f5f5f7;
       box-shadow:
-        0 30px 80px rgba(0,0,0,.08),
-        0 8px 24px rgba(0,0,0,.04);
+        0 36px 100px rgba(0,0,0,.09),
+        0 10px 28px rgba(0,0,0,.05);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -267,12 +267,6 @@
       <h2 class="title fade-up" data-i18n="explore">Explore</h2>
       <ul class="link-list fade-up d1">
         <li>
-          <a href="index.html#papers" data-smooth>
-            <span class="k" data-i18n="papers">Papers</span>
-            <span class="v" data-i18n="papers-d">Publications &amp; submissions</span>
-          </a>
-        </li>
-        <li>
           <a href="projects.html" class="page-link">
             <span class="k" data-i18n="projects">Projects</span>
             <span class="v" data-i18n="projects-d">Research in progress</span>
@@ -310,27 +304,6 @@
         </li>
       </ul>
     </section>
-
-    <!-- slim papers anchor — content lives below fold of links, still calm -->
-    <section class="screen" id="papers" style="min-height:auto;padding-top:20px;padding-bottom:80px;justify-content:center">
-      <div class="links-screen" style="gap:28px">
-        <h2 class="title" data-i18n="papers">Papers</h2>
-        <ul class="link-list">
-          <li>
-            <a href="https://doi.org/10.1016/j.avsg.2026.08.042" target="_blank" rel="noopener">
-              <span class="k" style="font-size:18px">AVSG 2026</span>
-              <span class="v">doi:10.1016/j.avsg.2026.08.042</span>
-            </a>
-          </li>
-          <li>
-            <a href="projects.html#docking">
-              <span class="k" style="font-size:18px">JMGM 2026</span>
-              <span class="v" data-i18n="ur">under review</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </section>
   </main>
 
   <footer class="foot">
@@ -345,8 +318,6 @@
           scroll: 'scroll',
           cap: 'Pu Ai Medical School · Shaoyang University',
           explore: 'Explore',
-          papers: 'Papers',
-          'papers-d': 'Publications & submissions',
           projects: 'Projects',
           'projects-d': 'Research in progress',
           notes: 'Notes',
@@ -365,8 +336,6 @@
           scroll: '向下滚动',
           cap: '邵阳学院 · 普爱医学院',
           explore: '继续了解',
-          papers: '论文',
-          'papers-d': '发表与在审',
           projects: '项目',
           'projects-d': '研究进展',
           notes: '笔记',
