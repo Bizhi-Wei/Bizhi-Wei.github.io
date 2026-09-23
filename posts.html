@@ -1,161 +1,105 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Posts | Bizhi Wei</title>
+  <title>Notes · Bizhi Wei</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="blog.css">
-  <style>
-    .accent-note {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 14px; padding: 8px 12px;
-      border-radius: 999px; border: 1px solid var(--line);
-      background: rgba(255,255,255,.75);
-      font-family: var(--mono); font-size: 12px; color: var(--dim);
-    }
-    .accent-note i {
-      width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="apple.css">
 </head>
 <body>
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <nav class="site-nav">
-    <div class="container">
-      <a class="nav-brand" href="index.html">Bizhi Wei</a>
+  <header class="chrome on">
+    <a class="mark" href="index.html">Bizhi Wei</a>
+    <nav>
       <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="index.html#publications">Papers</a>
       <a href="projects.html">Projects</a>
-      <a href="posts.html" class="active">Posts</a>
-      <a href="index.html#map">3D Map</a>
+      <a href="posts.html" class="here">Notes</a>
+      <a href="about.html">About</a>
       <a href="life/index.html">Life</a>
-    </div>
-  </nav>
-
-  <header class="container page-hero">
-    <p class="hero-tag">Research Notes</p>
-    <h1>Notes, process, and things I am still figuring out.</h1>
-    <p class="page-subtitle">
-      Academic notes on this site; longer Chinese writing lives on the life blog.
-      Same restrained 3D field as the homepage — quiet, scientific, not flashy.
-    </p>
-    <div class="quick-strip">
-      <a class="action" href="life/research-notes.html">Life-blog notes (中文)</a>
-      <a class="action gold" href="life/evar-indication-confounding.html">EVAR selection-bias note</a>
-      <a class="action ghost" href="index.html#notes">Homepage notes</a>
-      <a class="action ghost" href="index.html#map">3D Map</a>
-    </div>
-    <div class="accent-note"><i></i> background accent · drifting note sheets</div>
+    </nav>
   </header>
+  <div class="lang" id="lang">
+    <button type="button" id="btn-en">EN</button>
+    <button type="button" id="btn-zh">中</button>
+  </div>
 
-  <main class="container">
-    <section class="reveal">
-      <p class="sec-label">01</p>
-      <h2>Featured notes</h2>
-      <div class="stack">
-        <a class="note" href="spl-appendectomy-meta-note.html">
-          <p class="note-meta">Meta-analysis · 2026.4.7</p>
-          <h3>Pediatric single-port laparoscopic appendectomy vs conventional laparoscopy</h3>
-          <p>24 studies, 3,789 pediatric patients, stratified by simple / complex appendicitis.</p>
-        </a>
-
-        <a class="note" href="pediatric-meningioma-note.html">
-          <p class="note-meta">Medical learning note · 2026.3.18</p>
-          <h3>From pediatric fever to pediatric meningioma</h3>
-          <p>NF2, MRI sequences, and preoperative risk assessment — a student learning note.</p>
-        </a>
-
-        <a class="note" href="md-efficiency-20260612.html">
-          <p class="note-meta">Research diary · 2026.6.12</p>
-          <h3>100 ns MD trial run, tools, and a sudden efficiency jump</h3>
-          <p>Molecular dynamics setup, AI coding tools, and resetting before finals week.</p>
-        </a>
-      </div>
+  <main>
+    <section class="screen head">
+      <h1 class="fade-up" data-i18n="title">Notes</h1>
+      <p class="hint fade-up d1" data-i18n="sub">Reading, methods, and things I am still figuring out.</p>
     </section>
 
-    <section class="reveal">
-      <p class="sec-label">02</p>
-      <h2>From the life blog</h2>
-      <p class="section-desc">Chinese notes that are more reflective or methodology-focused.</p>
-      <div class="stack">
-        <a class="note" href="life/evar-indication-confounding.html">
-          <p class="note-meta">学术打假笔记 · 2026.9.17</p>
-          <h3>适应症混杂：EVAR「低死亡率」背后的打假</h3>
-          <p>不是支架有多神，而是能躺上手术台的本来就是幸运儿。</p>
-        </a>
-        <a class="note" href="life/mimic-aki-research.html">
-          <p class="note-meta">学术笔记 · 2026.7.4</p>
-          <h3>MIMIC 数据库首次接触与术后 AKI 研究规划</h3>
-          <p>从申请、伦理培训到队列定义与动态预测时间点设计。</p>
-        </a>
-        <a class="note" href="life/data-processing-ml.html">
-          <p class="note-meta">学术笔记 · 2026.7.6</p>
-          <h3>数据处理与机器学习：深入理解</h3>
-          <p>划分、缺失值、标准化与数据泄漏。</p>
-        </a>
-        <a class="note" href="life/supercritical-co2-paper.html">
-          <p class="note-meta">论文学习 · 2026.7.7</p>
-          <h3>超临界 CO₂ 系统中药物溶解度预测</h3>
-          <p>集成学习与论文精读笔记。</p>
-        </a>
-        <a class="note" href="life/father-and-medicine.html">
-          <p class="note-meta">家庭 · 成长 · 2026.5.8</p>
-          <h3>父亲的高度，和我慢慢走向医学的路</h3>
-          <p>从医初心与家庭托举。</p>
-        </a>
-      </div>
-      <div class="quick-strip" style="margin-top:18px">
-        <a class="action" href="life/index.html">Life blog home</a>
-        <a class="action gold" href="life/research-notes.html">All academic notes</a>
-        <a class="action ghost" href="projects.html">Projects</a>
-      </div>
+    <section class="screen links-screen" style="min-height:auto;padding-top:0;padding-bottom:120px">
+      <ul class="link-list fade-up d1">
+        <li>
+          <a href="spl-appendectomy-meta-note.html">
+            <span class="k" data-i18n="n1">Single-port appendectomy</span>
+            <span class="v">2026.4.7 · meta-analysis</span>
+          </a>
+        </li>
+        <li>
+          <a href="pediatric-meningioma-note.html">
+            <span class="k" data-i18n="n2">Pediatric meningioma</span>
+            <span class="v">2026.3.18 · learning note</span>
+          </a>
+        </li>
+        <li>
+          <a href="md-efficiency-20260612.html">
+            <span class="k" data-i18n="n3">100 ns MD diary</span>
+            <span class="v">2026.6.12 · research diary</span>
+          </a>
+        </li>
+        <li>
+          <a href="life/evar-indication-confounding.html">
+            <span class="k" data-i18n="n4">EVAR indication confounding</span>
+            <span class="v">2026.9.17 · life blog</span>
+          </a>
+        </li>
+        <li>
+          <a href="life/research-notes.html">
+            <span class="k" data-i18n="n5">All life-blog notes</span>
+            <span class="v" data-i18n="n5d">中文</span>
+          </a>
+        </li>
+      </ul>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <span>© 2026 Bizhi Wei · Posts</span>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="index.html#map">3D Map</a>
-        <a href="life/index.html">Life</a>
-        <a href="https://github.com/Bizhi-Wei" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="three.min.js"></script>
-  <script src="site-3d.js"></script>
+  <footer class="foot"><span>© 2026 Bizhi Wei</span></footer>
+  <script src="nav.js"></script>
   <script>
     (function () {
-      if (!('IntersectionObserver' in window)) {
-        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-      } else {
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-          });
-        }, { threshold: 0.08 });
-        document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-      }
-      try {
-        if (window.Site3D) {
-          Site3D.initAmbientBackground({
-            canvas: document.getElementById('bg-canvas'),
-            density: 0.75,
-            accent: Site3D.buildNotesSheets()
-          });
+      var I18N = {
+        en: {
+          title: 'Notes', sub: 'Reading, methods, and things I am still figuring out.',
+          n1: 'Single-port appendectomy', n2: 'Pediatric meningioma', n3: '100 ns MD diary',
+          n4: 'EVAR indication confounding', n5: 'All life-blog notes', n5d: 'Chinese'
+        },
+        zh: {
+          title: '笔记', sub: '阅读、方法，以及还在想清楚的事。',
+          n1: '单孔阑尾切除', n2: '小儿脑膜瘤', n3: '100 ns MD 日记',
+          n4: 'EVAR 适应症混杂', n5: '生活博客全部笔记', n5d: '中文'
         }
-      } catch (e) { console.error(e); }
+      };
+      var lang = 'en';
+      try { lang = localStorage.getItem('bw-lang') || 'en'; } catch (e) {}
+      function applyLang(l) {
+        var d = I18N[l] || I18N.en;
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var k = el.getAttribute('data-i18n');
+          if (d[k]) el.textContent = d[k];
+        });
+        document.getElementById('btn-en').classList.toggle('active', l !== 'zh');
+        document.getElementById('btn-zh').classList.toggle('active', l === 'zh');
+        document.title = (l === 'zh') ? '笔记 · 魏必治' : 'Notes · Bizhi Wei';
+        try { localStorage.setItem('bw-lang', l); } catch (e) {}
+      }
+      document.getElementById('btn-en').onclick = function () { applyLang('en'); };
+      document.getElementById('btn-zh').onclick = function () { applyLang('zh'); };
+      applyLang(lang);
     })();
   </script>
-<script src="nav.js"></script>
 </body>
 </html>
-
