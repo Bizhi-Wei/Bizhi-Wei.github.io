@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -171,15 +171,11 @@
       }
       try {
         if (window.Site3D) {
-          Site3D.initAmbientBackground({
-            canvas: document.getElementById('bg-canvas'),
-            theme: 'desk',
-            density: 0.45,
-            accent: Site3D.buildLifeLamp()
-          });
+          Site3D.initVitalBackground({ canvas: document.getElementById('bg-canvas') });
         }
       } catch (err) { console.error(err); }
     })();
   </script>
 </body>
 </html>
+
